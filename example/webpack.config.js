@@ -3,6 +3,7 @@ const fs = require('fs')
 var webpack = require('webpack');
 
 module.exports = {
+//  context:  path.join(__dirname, '..') ,
   entry: [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
@@ -34,7 +35,14 @@ module.exports = {
     // do not emit compiled assets that include errors
   ],
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
+    alias: { 
+      'loopback-redux': path.resolve(__dirname, '..', 'src') 
+    },
+    // modules: [
+    //   path.resolve(__dirname),
+    //   path.resolve(__dirname, '..', 'src')
+    // ]
   },
   output: {
     path: __dirname + '/dist',
@@ -48,13 +56,13 @@ module.exports = {
   devtool: 'eval-source-map'
 };
 
-const src = path.join(__dirname, '..', 'src')
-if (fs.existsSync(src)) {
-  // Use the latest src
-  module.exports.resolve = { alias: { 'redux-loopback': src } }
-  module.exports.module.loaders.push({
-    test: /\.js$/,
-    loaders: [ 'babel-loader' ],
-    include: src
-  })
-}
+// const src = 
+// if (fs.existsSync(src)) {
+//   // Use the latest src
+//   module.exports.resolve = { alias: { 'loopback-redux': src } }
+//   module.exports.module.loaders.push({
+//     test: /\.js$/,
+//     loaders: [ 'babel-loader' ],
+//     include: src
+//   })
+// }

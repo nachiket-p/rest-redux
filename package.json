@@ -6,6 +6,7 @@
   "author": "Nachiket Patel",
   "license": "MIT",
   "dependencies": {
+    "react": "^15.5.4",
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
@@ -13,6 +14,10 @@
     "prepublish": "rimraf dist && npm run build"
   },
   "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
     "rimraf": "^2.6.1"
   }
 }

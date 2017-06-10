@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
-
+import {connectModel} from 'loopback-redux'
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
     case 'SHOW_ALL':
@@ -27,9 +27,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const VisibleTodoList = connect(
+const VisibleTodoList = connectModel('Todo')(connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList)
+)(TodoList))
 
 export default VisibleTodoList
