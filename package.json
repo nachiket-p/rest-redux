@@ -1,0 +1,18 @@
+{
+  "name": "loopback-redux",
+  "version": "0.1.0",
+  "description": "Redux support for Loopback APIs",
+  "main": "index.js",
+  "author": "Nachiket Patel",
+  "license": "MIT",
+  "dependencies": {
+    "whatwg-fetch": "^2.0.3"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "prepublish": "rimraf dist && npm run build"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.1"
+  }
+}
