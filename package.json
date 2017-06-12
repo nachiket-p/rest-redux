@@ -6,18 +6,26 @@
   "author": "Nachiket Patel",
   "license": "MIT",
   "dependencies": {
+    "query-string": "^4.3.4",
     "react": "^15.5.4",
+    "redux-thunk": "^2.2.0",
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "build": "babel src --out-dir dist",
-    "prepublish": "rimraf dist && npm run build"
+    "prepublish": "rimraf dist && npm run build",
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
   },
   "devDependencies": {
+    "@types/jest": "^19.2.4",
     "babel-core": "^6.23.1",
+    "babel-jest": "^20.0.3",
     "babel-loader": "^6.3.2",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
+    "babel-register": "^6.24.1",
+    "jest": "^20.0.4",
     "rimraf": "^2.6.1"
   }
 }

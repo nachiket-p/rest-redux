@@ -1,17 +1,20 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import todoReducer from './todos/reducer'
-import {reducer as loopbackReducer} from 'loopback-redux';
+import {reducer as loopbackReducer, loopback as loopbackMiddleware} from 'loopback-redux';
 
 let reducer = combineReducers({
   todos: todoReducer,
   loopback: loopbackReducer
 })
-const createStoreWithMiddleware = applyMiddleware(
-  //loopbackMiddleware(null)
-)(createStore);
 
-let store = createStoreWithMiddleware(
+const middlewares = applyMiddleware(
+  loopbackMiddleware
+);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(middlewares)
 )
 export default store
