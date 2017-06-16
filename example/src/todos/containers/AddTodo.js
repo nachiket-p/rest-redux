@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions'
+import {createActions} from 'loopback-redux'
+const todoActions = createActions('todos');
 
 let AddTodo = ({ dispatch }) => {
   let input
@@ -12,7 +14,7 @@ let AddTodo = ({ dispatch }) => {
         if (!input.value.trim()) {
           return
         }
-        dispatch(addTodo(input.value))
+        dispatch(todoActions.create({text:input.value}))
         input.value = ''
       }}>
         <input ref={node => {

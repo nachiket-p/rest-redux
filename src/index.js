@@ -2,10 +2,10 @@ import React from 'react'
 import thunk from 'redux-thunk'
 import 'whatwg-fetch'
 
-import lbReducer from './reducer'
+import _createReducer from './createReducer'
 import {createActions as actionCreator} from './actions'
 
-export const reducer = lbReducer
+export const createReducer = _createReducer
 export const createActions = actionCreator
 
 export const connectModel = (model, filter) => (Component) =>{
@@ -13,7 +13,8 @@ export const connectModel = (model, filter) => (Component) =>{
   // QUESTION:?? Get filtered action here const instances = actions.find()
   return class ModelComponent extends React.Component {
     render() {
-      return <Component {...this.props} restActions={actions}/>
+      return <Component {...this.props} /> 
+      // restActions={actions}
     }
   }
 }
