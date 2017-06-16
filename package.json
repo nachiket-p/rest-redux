@@ -30,6 +30,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-register": "^6.24.1",
     "jest": "^20.0.4",
+    "redux-testkit": "^1.0.6",
     "rimraf": "^2.6.1"
   },
   "peerDependencies": {

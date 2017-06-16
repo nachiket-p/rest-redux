@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash'
-export const getTodo = (state, id) => state.loopback.todos[id]
-export const getTodos = state => _.values(state.loopback.todos)
+export const getTodos = state => _.values(state.loopback.todos.instances)
+export const isTodosLoading = state => state.loopback.todos.request.loading
+
 export const getFilter = state => state.todos.visibilityFilter
 
 export const getVisibleTodos = createSelector(

@@ -1,12 +1,21 @@
 import React from 'react'
 import thunk from 'redux-thunk'
+import _ from 'lodash'
 import 'whatwg-fetch'
 
 import _createReducer from './createReducer'
-import {createActions as actionCreator} from './actions'
+import {ModelActions} from './actions'
 
+//fixme
+let _config = {
+  basePath: 'http://localhost:3000/api'
+}
+export const configure = (config) => {
+  _.merge(_config, config)
+  console.log('setting config: ', _config)
+}
+export const createActions = (modelName, config) => new ModelActions(modelName, _.merge({}, _config, config))
 export const createReducer = _createReducer
-export const createActions = actionCreator
 
 export const connectModel = (model, filter) => (Component) =>{
   //const actions = createActions(model)
