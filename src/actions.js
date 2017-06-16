@@ -81,6 +81,23 @@ export const ModelActions = class {
     }
   }
 
+  _delete(path, params, requestCreator, successCreator) {
+    path = `${path}?${queryString.stringify(params)}`
+    return dispatch => {
+      dispatch(requestCreator())
+      fetch(path, { method: 'DELETE' })
+        .then(checkStatus)
+        .then(parseJSON)
+        .then((response) => {
+            dispatch(successCreator())
+        })
+        .catch((error) => {
+          console.log('request failed', error)
+          this._error(dispatch, error)
+        })
+    }
+  }
+
   _requestAction(type, others) {
     return { type, payload: _.merge({ modelName: this.modelName}, others) } 
   }
@@ -116,7 +133,12 @@ export const ModelActions = class {
     return { type: RESPONSE.FIND_ONE, payload: { modelName: this.modelName, filter } }
   }
 
-  destroyById(id) {
+  delete(id) {
+    return this._delete(`${this.apiPath}/${id}`, {}, 
+      () => this._requestAction(REQUEST.DELETE, {id}),
+      () => ({ type : RESPONSE.DELETE, payload : { modelName: this.modelName, ids: [id+''] } }))
+  }
+  deleteAll(filter) {
     return { type: RESPONSE.DESTROY_BY_ID, payload: { modelName: this.modelName, id } }
   }
   count(filter) {

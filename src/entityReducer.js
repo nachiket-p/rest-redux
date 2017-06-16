@@ -14,6 +14,10 @@ export default (entity) => {
             case RESPONSE.CREATE:
             case RESPONSE.UPDATE:
                 return  _.merge({}, state, payload.instances)
+            case RESPONSE.DELETE:
+            case RESPONSE.DELETE_ALL:
+                const newState  = _.merge({}, state)
+                return _.pick(newState, _.difference(_.keys(newState), payload.ids))
             default:
                 return state    
         }

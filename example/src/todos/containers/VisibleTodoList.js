@@ -17,6 +17,12 @@ const mapDispatchToProps = (dispatch) => {
     onTodoClick: (todo) => {
       dispatch(todoActions.update(todo.id, {completed: !todo.completed}))
     },
+    deleteTodo: (todo) => {
+      dispatch(todoActions.delete(todo.id))      
+    },
+    deleteAll: (todo) => {
+      dispatch(todoActions.deleteAll({}))      
+    }
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 
-const TodoList = ({ todos, loading, onTodoClick }) => {
+const TodoList = ({ todos, loading, onTodoClick, deleteTodo }) => {
   const loadingEl = loading ? <span>Loading ... </span> : null
   return (
     <div>
@@ -12,6 +12,7 @@ const TodoList = ({ todos, loading, onTodoClick }) => {
             key={todo.id}
             {...todo}
             onClick={() => onTodoClick(todo)}
+            onDelete={() => deleteTodo(todo)}
           />
         )}
       </ul>

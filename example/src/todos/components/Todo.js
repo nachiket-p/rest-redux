@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Todo = ({ onClick, completed, text }) => (
+const Todo = ({ onClick, completed, text, onDelete }) => (
   <li
-    onClick={onClick}
+    
     style={{
       textDecoration: completed ? 'line-through' : 'none'
     }}
   >
-    {text}
+    <span onClick={onClick}> {text} </span> 
+    <a href='javascript:;' onClick={onDelete}> x</a>
   </li>
 )
 
