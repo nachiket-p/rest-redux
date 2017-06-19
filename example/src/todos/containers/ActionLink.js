@@ -3,7 +3,7 @@ import {ActionLinks}  from '../actions'
 import Link from '../components/Link'
 
 const mapStateToProps = (state, ownProps) => {
-  
+  return {}
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
