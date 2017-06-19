@@ -55,10 +55,14 @@ export default class ModelActions {
   _errorHandler(dispatch) {
     return (error) => {
       console.log('request failed', error)
-      error.response.json().then((response) => {
-        const action = { type: ERROR, payload: { modelName: this.modelName, error: response.error, message: error.message } }
-        dispatch(action)
-      })
+      const dispatchError = (error, message) => dispatch({ type: ERROR, payload: { modelName: this.modelName, error, message } })
+      if(error.response) {
+        error.response.json().then((response) => {
+          dispatchError(response.error, error.message)
+        })
+      } else {
+        dispatchError(error, error.message)
+      }
     }
   }
 
