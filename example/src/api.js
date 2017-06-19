@@ -2,7 +2,15 @@ import LoopbackRedux from 'redux-loopback';
 
 const loopbackRedux = new LoopbackRedux({
   basePath: 'http://localhost:3000/api',
-  models: [{ modelName: 'todos' }, { modelName: 'users' },]
+  models: [{ 
+    modelName: 'todos',
+    schema: { //Uses normalizr.js (https://github.com/paularmstrong/normalizr)
+      definition: {},
+      options: {}
+    }
+  }, { 
+    modelName: 'users' 
+  },]
 })
 
 export const loopbackReducer = loopbackRedux.reducer

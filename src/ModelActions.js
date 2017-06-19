@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import _ from 'lodash'
 import { schema, normalize } from 'normalizr';
-import { REQUEST, RESPONSE, ACTION, ERROR } from './constants'
+import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED } from './constants'
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -45,16 +45,10 @@ export default class ModelActions {
   _successHandler(dispatch, creator) {
     return (response) => {
       console.log('request succeeded with JSON response', response)
-      let normalized
-      if (_.isArray(response)) {
-        normalized = normalize(response, [this.entitySchema])
-      } else {
-        normalized = normalize(response, this.entitySchema)
-      }
-      console.log('normalized: ', normalized)
-      _.each(normalized.entities, (entities, name) => {
-        dispatch(creator(entities, name))
-      })
+      const actionResult = creator(response)
+      const actions = _.isArray(actionResult) ? actionResult : [actionResult]
+      console.log('firing actions:', actions)
+      actions.forEach(action => dispatch(action))
     }
   }
 
@@ -83,16 +77,33 @@ export default class ModelActions {
     return { type, payload: { modelName, instances } }
   }
 
+  _createNormalized(type) {
+    return (response) => {
+      let normalized
+      if (_.isArray(response)) {
+        normalized = normalize(response, [this.entitySchema])
+      } else {
+        normalized = normalize(response, this.entitySchema)
+      }
+      console.log('normalized: ', normalized)
+      const actions = _.map(normalized.entities, (entities, modelName) => {
+        return { type, payload: { modelName, instances: entities } }
+      })
+      actions.push(this._createAction(SELECTED, {ids: normalized.result}))
+      return actions;
+    }
+  }
+
   create(data) {
     return this._call(this.apiPath, 'POST', { body: JSON.stringify(data), headers: this.headers },
       () => this._createAction(REQUEST.CREATE, { data }),
-      (instances, name) => this._responseAction(RESPONSE.CREATE, instances, name))
+      this._createNormalized(RESPONSE.CREATE))
   }
 
   update(id, data) {
     return this._call(`${this.apiPath}/${id}`, 'PATCH', { body: JSON.stringify(data), headers: this.headers },
       () => this._createAction(REQUEST.UPDATE, { id, data }),
-      (instances, name) => this._responseAction(RESPONSE.UPDATE, instances, name))
+      this._createNormalized(RESPONSE.UPDATE))
   }
 
   updateAll(where, data) {
@@ -104,20 +115,20 @@ export default class ModelActions {
 
   find(filter) {
     const params = { filter: JSON.stringify(filter) }
-    return this._call(this.apiPath, 'GET' , {params} ,
+    return this._call(this.apiPath, 'GET', { params },
       () => this._createAction(REQUEST.FIND, { params }),
-      (instances, name) => this._responseAction(RESPONSE.FIND, instances, name))
+      this._createNormalized(RESPONSE.FIND))
   }
 
   findById(id, filter) {
     const params = { filter: JSON.stringify(filter) }
     return this._call(`${this.apiPath}/${id}`, 'GET', { params },
       () => this._createAction(REQUEST.FIND_BY_ID, { id, filter }),
-      (instances, name) => this._responseAction(RESPONSE.FIND_BY_ID, instances, name))
+      this._createNormalized(RESPONSE.FIND_BY_ID))
   }
 
   delete(id) {
-    return this._call(`${this.apiPath}/${id}`, 'DELETE' , {},
+    return this._call(`${this.apiPath}/${id}`, 'DELETE', {},
       () => this._createAction(REQUEST.DELETE, { id }),
       (response) => this._createAction(RESPONSE.DELETE, { ids: [id + ''] })
     )
@@ -145,7 +156,7 @@ export default class ModelActions {
     //   (response) => _createPayload(RESPONSE.DELETE, { ids: response.ids })
     // )
   }
-  
+
   exists(id) {
     throw new Error('not implemented yet')
     // return this._get(`${this.apiPath}/${id}`, { filter: JSON.stringify(filter) },

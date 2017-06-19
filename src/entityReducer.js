@@ -1,7 +1,7 @@
 import { schema, normalize } from 'normalizr'
 import {combineReducers} from 'redux'
 import _ from 'lodash'
-import { REQUEST, RESPONSE, ERROR } from './constants'
+import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED } from './constants'
 
 export default (entity) => {
     const instances = (state = {}, { type, payload }) => {
@@ -57,8 +57,21 @@ export default (entity) => {
         }
     }
 
+    const selected = (state = [], { type, payload }) => {
+        if(payload && payload.modelName !== entity.modelName) {
+            return state
+        }
+        switch (type) {
+            case SELECTED:
+                return payload.ids
+            default:
+                return state
+        }
+    }
+
     return combineReducers({
         instances,
+        selected,
         request,
         error
     })
