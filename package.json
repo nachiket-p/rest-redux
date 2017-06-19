@@ -1,5 +1,5 @@
 {
-  "name": "loopback-redux",
+  "name": "redux-loopback",
   "version": "0.1.0",
   "description": "Redux support for Loopback APIs",
   "main": "index.js",

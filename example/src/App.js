@@ -2,9 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import TodoApp from './todos/App'
 import 'purecss/build/pure.css'
-import {createActions} from 'loopback-redux'
-
-const todoActions = createActions('todos');
+import {todoActions} from './api'
 
 export default ({store}) => {
   store.dispatch(todoActions.find({}))

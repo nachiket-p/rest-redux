@@ -4,18 +4,24 @@ import _ from 'lodash'
 import 'whatwg-fetch'
 
 import _createReducer from './createReducer'
-import {ModelActions} from './actions'
+import ModelActions from './ModelActions'
 
-//fixme
-let _config = {
-  basePath: 'http://localhost:3000/api'
+
+export default class Wrapper {
+  config
+  loopback
+  constructor(_config) {
+    this.config = _config
+    console.log('config set: ', this.config)
+    this.reducer = _createReducer(this.config.models)
+    this.loopback = thunk
+  }
+
+  createActions (modelName, _config) {
+    return new ModelActions(modelName, _.merge({}, this.config, _config))
+  }
+
 }
-export const configure = (config) => {
-  _.merge(_config, config)
-  console.log('setting config: ', _config)
-}
-export const createActions = (modelName, config) => new ModelActions(modelName, _.merge({}, _config, config))
-export const createReducer = _createReducer
 
 export const connectModel = (model, filter) => (Component) =>{
   //const actions = createActions(model)
@@ -28,4 +34,4 @@ export const connectModel = (model, filter) => (Component) =>{
   }
 }
 
-export const loopback = thunk
+

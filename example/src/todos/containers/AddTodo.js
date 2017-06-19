@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions'
-import {createActions} from 'loopback-redux'
-const todoActions = createActions('todos');
+import { todoActions } from '../../api'
 
+console.log( todoActions)
 let AddTodo = ({ dispatch }) => {
   let input
 

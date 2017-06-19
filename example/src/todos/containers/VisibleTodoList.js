@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
-import {connectModel} from 'loopback-redux'
-import {createActions} from 'loopback-redux'
+import {connectModel} from 'redux-loopback'
 import {getVisibleTodos, isTodosLoading} from '../selectors'
-const todoActions = createActions('todos')
+import { todoActions } from '../../api'
 
 const mapStateToProps = (state) => {
   return {

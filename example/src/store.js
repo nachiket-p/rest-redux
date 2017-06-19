@@ -1,10 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import todoReducer from './todos/reducer'
-import {createReducer, loopback as loopbackMiddleware} from 'loopback-redux';
-
-const loopbackReducer = createReducer([
-  {modelName: 'todos'}, {modelName: 'users'}, 
-])
+import {loopbackReducer, loopbackMiddleware} from './api';
 
 let reducer = combineReducers({
   todos: todoReducer,

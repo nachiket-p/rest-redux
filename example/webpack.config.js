@@ -37,7 +37,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx'],
     alias: { 
-      'loopback-redux': path.resolve(__dirname, '..', 'src') 
+      'redux-loopback': path.resolve(__dirname, '..', 'src') 
     },
     // modules: [
     //   path.resolve(__dirname),
@@ -59,7 +59,7 @@ module.exports = {
 // const src = 
 // if (fs.existsSync(src)) {
 //   // Use the latest src
-//   module.exports.resolve = { alias: { 'loopback-redux': src } }
+//   module.exports.resolve = { alias: { 'redux-loopback': src } }
 //   module.exports.module.loaders.push({
 //     test: /\.js$/,
 //     loaders: [ 'babel-loader' ],
