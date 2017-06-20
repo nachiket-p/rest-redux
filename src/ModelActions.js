@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import _ from 'lodash'
 import { schema, normalize } from 'normalizr';
-import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED } from './constants'
+import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED } from './constants'
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -90,10 +90,11 @@ export default class ModelActions {
         normalized = normalize(response, this.entitySchema)
       }
       console.log('normalized: ', normalized)
+      
       const actions = _.map(normalized.entities, (entities, modelName) => {
-        return { type, payload: { modelName, instances: entities } }
+          return { type:RECEIVED, payload: { modelName, instances: entities } }
       })
-      actions.push(this._createAction(SELECTED, {ids: normalized.result}))
+      actions.push(this._createAction(type, {ids: normalized.result}))
       return actions;
     }
   }
@@ -147,9 +148,9 @@ export default class ModelActions {
     throw new Error('not implemented yet')
 
     // const params = { filter: JSON.stringify(filter) }
-    // return this._call(`${this.apiPath}/count`, 'GET', { params },
-    //   () => this._createAction(REQUEST.COUNT, { filter }),
-    //   (response) => _createPayload(RESPONSE.COUNT, { count: count })
+    // return this._call(`${this.apiPath}/count`, 'GET', {params},
+    //   () => this._createAction(REQUEST.COUNT, { id }),
+    //   (response) => this._createAction(RESPONSE.COUNT, { count: response.count })
     // )
   }
 

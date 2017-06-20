@@ -73,6 +73,5 @@ export const ACTION = {
 }
 
 export const ERROR = 'redux-loopback/ERROR'
-export const SELECTED = 'redux-loopback/SELECTED'
 export const RECEIVED = 'redux-loopback/RECEIVED'
 export const CLEAR = 'redux-loopback/CLEAR'
