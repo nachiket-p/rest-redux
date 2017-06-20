@@ -7,8 +7,8 @@ import VisibleTodoList from './containers/VisibleTodoList'
 export default ({}) => {
   return <div>
     <h3>TODOS</h3>
+    <Footer />
     <AddTodo />
     <VisibleTodoList />
-    <Footer />
   </div>
 }

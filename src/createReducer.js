@@ -1,9 +1,9 @@
-import createEntityReducer from './entityReducer'
+import createModelReducer from './modelReducer'
 import {combineReducers} from 'redux'
 
 export default (entities)  => {
   const reducers = {};
-  entities.forEach(entity => reducers[entity.modelName] = createEntityReducer(entity) )
+  entities.forEach(entity => reducers[entity.modelName] = createModelReducer(entity) )
 
   return combineReducers(reducers)
 }

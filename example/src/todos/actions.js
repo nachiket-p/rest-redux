@@ -17,6 +17,14 @@ export function setVisibilityFilter(filter) {
 
 export const ActionLinks = {
   DELETE_ALL: () => (dispatch) => dispatch(todoActions.deleteAll({})),
-  COMPLETE_ALL: () => (dispatch) => dispatch(todoActions.updateAll({completed:false}, {completed: true})),
-  UNCOMPLETE_ALL: () => (dispatch) => dispatch(todoActions.updateAll({completed:true}, {completed: false})),
+  COMPLETE_ALL: () => (dispatch) => {
+    dispatch(todoActions.updateAll({completed:false}, {completed: true})).then(response=> {
+      dispatch(todoActions.find({}))
+    })
+  },
+  UNCOMPLETE_ALL: () => (dispatch) => {
+    dispatch(todoActions.updateAll({completed:true}, {completed: false})).then(response => {
+      dispatch(todoActions.find({}))
+    })
+  }
 }

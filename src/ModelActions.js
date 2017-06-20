@@ -114,8 +114,9 @@ export default class ModelActions {
   }
 
   updateAll(where, data) {
-    const body = { where: JSON.stringify(where) }
-    return this._call(`${this.apiPath}/update`, 'POST', { body, headers: this.headers },
+    const params = { where: JSON.stringify(where) }
+    const body = JSON.stringify(data)
+    return this._call(`${this.apiPath}/update`, 'POST', { params, body, headers: this.headers },
       () => this._createAction(REQUEST.UPDATE_ALL, { where, data }),
       (instances, name) => this._responseAction(RESPONSE.UPDATE_ALL, instances, name))
   }
