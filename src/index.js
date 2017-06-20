@@ -12,14 +12,23 @@ export default class Wrapper {
   loopback
   constructor(_config) {
     this.config = _config
+    const {models} = this.config
     console.log('config set: ', this.config)
-    this.reducer = _createReducer(this.config.models)
-    this.loopback = thunk
+    this.reducer = _createReducer(models)
+    this.middleware = thunk
+    this._models = _.keyBy(_.map(models, model => ({ 
+      modelName: model.modelName, 
+      actions: new ModelActions(model, this.config),
+      selectors: null 
+    })), 'modelName')
   }
 
-  createActions (modelName, _config) {
-    return new ModelActions(modelName, _.merge({}, this.config, _config))
-  }
+  get(modelName) {
+    return this._models[modelName]
+  } 
+  // createActions (modelName, _config) {
+  //   return new ModelActions(modelName, _.merge({}, this.config, _config))
+  // }
 
 }
 

@@ -12,7 +12,7 @@ export default ({store}) => {
   }).catch(err => console.log('CREATE ERROR', err))
   store.dispatch(todoActions.update(55, {text: 'X dummy'}))
   store.dispatch(todoActions.findById(1))
-  store.dispatch(todoActions.count())
+  store.dispatch(todoActions.count({}))
 
   return <Provider store={store}>
     <TodoApp />

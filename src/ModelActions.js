@@ -20,11 +20,11 @@ const DEFAULT_HEADERS = {
   'Content-Type': 'application/json'
 }
 export default class ModelActions {
-  constructor(modelName, config) {
+  constructor(model, config) {
     console.log('setting Action config: ', config)
-    this.modelName = modelName
-    this.apiPath = config.basePath + '/' + modelName
-    this.entitySchema = new schema.Entity(modelName)
+    this.modelName = model.modelName
+    this.apiPath = config.basePath + '/' + model.modelName
+    this.entitySchema = new schema.Entity(model.modelName)
     this.headers = config.headers || DEFAULT_HEADERS
   }
 

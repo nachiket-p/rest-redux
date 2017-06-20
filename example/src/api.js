@@ -14,7 +14,7 @@ const loopbackRedux = new LoopbackRedux({
 })
 
 export const loopbackReducer = loopbackRedux.reducer
-export const loopbackMiddleware = loopbackRedux.loopback
+export const loopbackMiddleware = loopbackRedux.middleware
 
-export const todoActions = loopbackRedux.createActions('todos')
-export const userActions = loopbackRedux.createActions('users')
+export const todoActions = loopbackRedux.get('todos').actions
+export const userActions = loopbackRedux.get('users').actions
