@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import _ from 'lodash'
 export const getTodos = state => _.values(state.loopback.todos.instances)
 export const isTodosLoading = state => state.loopback.todos.request.loading
+export const getTodosCount = state => state.loopback.todos.last.count
 
 export const getFilter = state => state.todos.visibilityFilter
 

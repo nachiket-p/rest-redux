@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 
-const TodoList = ({ todos, loading, onTodoClick, deleteTodo }) => {
+const TodoList = ({ todos, todosCount, loading, onTodoClick, deleteTodo }) => {
   const loadingEl = loading ? <span>Loading ... </span> : null
   return (
     <div>
-      <ul>
+      <ol>
         {todos.map(todo =>
           <Todo
             key={todo.id}
@@ -15,8 +15,9 @@ const TodoList = ({ todos, loading, onTodoClick, deleteTodo }) => {
             onDelete={() => deleteTodo(todo)}
           />
         )}
-      </ul>
+      </ol>
       {loadingEl}
+      <p>Total: {todosCount} </p>
     </div>
   )
 }

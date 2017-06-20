@@ -14,7 +14,9 @@ let AddTodo = ({ dispatch }) => {
         if (!input.value.trim()) {
           return
         }
-        dispatch(todoActions.create({text:input.value}))
+        dispatch(todoActions.create({text:input.value})).then(response => {
+            dispatch(todoActions.count())
+        })
         input.value = ''
       }}>
         <input ref={node => {

@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
 import {connectModel} from 'redux-loopback'
-import {getVisibleTodos, isTodosLoading} from '../selectors'
+import {getVisibleTodos, isTodosLoading, getTodosCount} from '../selectors'
 import { todoActions } from '../../api'
 
 const mapStateToProps = (state) => {
   return {
     todos: getVisibleTodos(state),
+    todosCount: getTodosCount(state),
     loading: isTodosLoading(state)
   }
 }
@@ -17,7 +18,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(todoActions.update(todo.id, {completed: !todo.completed}))
     },
     deleteTodo: (todo) => {
-      dispatch(todoActions.delete(todo.id))      
+      dispatch(todoActions.delete(todo.id)).then(response => {
+        dispatch(todoActions.count())
+      })      
     },
     deleteAll: (todo) => {
       dispatch(todoActions.deleteAll({}))      
