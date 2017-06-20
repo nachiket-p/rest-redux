@@ -49,6 +49,7 @@ export default class ModelActions {
       const actions = _.isArray(actionResult) ? actionResult : [actionResult]
       console.log('firing actions:', actions)
       actions.forEach(action => dispatch(action))
+      return response
     }
   }
 
@@ -56,20 +57,21 @@ export default class ModelActions {
     return (error) => {
       console.log('request failed', error)
       const dispatchError = (error, message) => dispatch({ type: ERROR, payload: { modelName: this.modelName, error, message } })
-      if(error.response) {
+      if (error.response) {
         error.response.json().then((response) => {
           dispatchError(response.error, error.message)
         })
       } else {
         dispatchError(error, error.message)
       }
+      return error
     }
   }
 
   _call(path, method, fetchOptions, requestCreator, successCreator) {
     return dispatch => {
       dispatch(requestCreator())
-      this._fetch(path, method, fetchOptions, this._successHandler(dispatch, successCreator), this._errorHandler(dispatch))
+      return this._fetch(path, method, fetchOptions, this._successHandler(dispatch, successCreator), this._errorHandler(dispatch))
     }
   }
 
@@ -90,11 +92,11 @@ export default class ModelActions {
         normalized = normalize(response, this.entitySchema)
       }
       console.log('normalized: ', normalized)
-      
+
       const actions = _.map(normalized.entities, (entities, modelName) => {
-          return { type:RECEIVED, payload: { modelName, instances: entities } }
+        return { type: RECEIVED, payload: { modelName, instances: entities } }
       })
-      actions.push(this._createAction(type, {ids: normalized.result}))
+      actions.push(this._createAction(type, { ids: normalized.result }))
       return actions;
     }
   }
@@ -145,13 +147,11 @@ export default class ModelActions {
   }
 
   count(filter) {
-    throw new Error('not implemented yet')
-
-    // const params = { filter: JSON.stringify(filter) }
-    // return this._call(`${this.apiPath}/count`, 'GET', {params},
-    //   () => this._createAction(REQUEST.COUNT, { id }),
-    //   (response) => this._createAction(RESPONSE.COUNT, { count: response.count })
-    // )
+    const params = { filter: JSON.stringify(filter) }
+    return this._call(`${this.apiPath}/count`, 'GET', { params },
+      () => this._createAction(REQUEST.COUNT, { filter }),
+      (response) => this._createAction(RESPONSE.COUNT, { count: response.count })
+    )
   }
 
   deleteAll(filter) {

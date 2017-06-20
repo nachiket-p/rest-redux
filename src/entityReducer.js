@@ -71,6 +71,8 @@ export default (entity) => {
                 return _.merge({}, state, { created: payload.ids })
             case RESPONSE.UPDATE:
                 return _.merge({}, state, { updated: payload.ids })
+            case RESPONSE.COUNT:
+                return _.merge({}, state, { count: payload.count })
             case RESPONSE.DELETE:
             case RESPONSE.DELETE_ALL:
                 return _.merge({}, state, { deleted: payload.ids })
