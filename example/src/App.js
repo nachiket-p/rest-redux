@@ -2,7 +2,8 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import TodoApp from './todos/App'
 import 'purecss/build/pure.css'
-import {todoActions} from './api'
+import {todo} from './api'
+const todoActions = todo.actions
 
 export default ({store}) => {
   store.dispatch(todoActions.find({}))

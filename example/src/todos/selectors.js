@@ -1,13 +1,15 @@
 // import { createSelector } from 'reselect'
 import _ from 'lodash'
-export const getTodos = state => _.values(state.loopback.todos.instances)
-export const isTodosLoading = state => state.loopback.todos.request.loading
-export const getTodosCount = state => state.loopback.todos.last.count
+import {todo} from '../api'
+const todoSelectors = todo.selectors
+
+export const isTodosLoading = todoSelectors.isLoading
+export const getTodosCount = todoSelectors.getCount
 
 export const getFilter = state => state.todos.visibilityFilter
 
 export const getVisibleTodos = state => {
-    const todos = getTodos(state)
+    const todos = todoSelectors.getAll(state)
     const filter = getFilter(state)
     switch (filter) {
       case 'SHOW_ALL':
