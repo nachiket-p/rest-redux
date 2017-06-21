@@ -20,11 +20,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteTodo: (todo) => {
       dispatch(todoActions.deleteById(todo.id)).then(response => {
+        dispatch(todoActions.find())
         dispatch(todoActions.count())
       })      
-    },
-    deleteAll: (todo) => {
-      dispatch(todoActions.deleteAll({}))      
     }
   }
 }
