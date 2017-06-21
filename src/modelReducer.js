@@ -11,8 +11,8 @@ export default (entity) => {
         switch (type) {
             case RECEIVED:
                 return _.merge({}, state, payload.instances)
+            case RESPONSE.DELETE_BY_ID:
             case RESPONSE.DELETE:
-            case RESPONSE.DELETE_ALL:
                 const newState = _.merge({}, state)
                 return _.pick(newState, _.difference(_.keys(newState), payload.ids))
             default:
@@ -42,15 +42,15 @@ export default (entity) => {
             case REQUEST.FIND_BY_ID:
             case REQUEST.CREATE:
             case REQUEST.UPDATE:
+            case REQUEST.DELETE_BY_ID:
             case REQUEST.DELETE:
-            case REQUEST.DELETE_ALL:
                 return _.merge({}, state, { loading: true })
             case RESPONSE.FIND:
             case RESPONSE.FIND_BY_ID:
             case RESPONSE.CREATE:
             case RESPONSE.UPDATE:
+            case RESPONSE.DELETE_BY_ID:
             case RESPONSE.DELETE:
-            case RESPONSE.DELETE_ALL:
             case ERROR:
                 return _.merge({}, state, { loading: false })
             default:
@@ -73,8 +73,8 @@ export default (entity) => {
                 return _.merge({}, state, { updated: payload.ids })
             case RESPONSE.COUNT:
                 return _.merge({}, state, { count: payload.count })
+            case RESPONSE.DELETE_BY_ID:
             case RESPONSE.DELETE:
-            case RESPONSE.DELETE_ALL:
                 return _.merge({}, state, { deleted: payload.ids })
             default:
                 return state

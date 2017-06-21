@@ -135,16 +135,11 @@ export default class ModelActions {
       this._createNormalized(RESPONSE.FIND_BY_ID))
   }
 
-  delete(id) {
+  deleteById(id) {
     return this._call(`${this.apiPath}/${id}`, 'DELETE', {},
-      () => this._createAction(REQUEST.DELETE, { id }),
-      (response) => this._createAction(RESPONSE.DELETE, { ids: [id + ''] })
+      () => this._createAction(REQUEST.DELETE_BY_ID, { id }),
+      (response) => this._createAction(RESPONSE.DELETE_BY_ID, { ids: [id + ''] })
     )
-  }
-
-  findOne(filter) {
-    throw new Error('not implemented yet')
-    // return { type: RESPONSE.FIND_ONE, payload: { modelName: this.modelName, filter } }
   }
 
   count(filter) {
@@ -155,10 +150,15 @@ export default class ModelActions {
     )
   }
 
-  deleteAll(filter) {
+  findOne(filter) {
+    throw new Error('not implemented yet')
+    // return { type: RESPONSE.FIND_ONE, payload: { modelName: this.modelName, filter } }
+  }
+
+  delete(filter) {
     throw new Error('not implemented yet')
     // return this._delete(`${this.apiPath}`, {filter: JSON.stringify(filter)},
-    //   () => this._createAction(REQUEST.DELETE_ALL, { filter }),
+    //   () => this._createAction(REQUEST.DELETE, { filter }),
     //   (response) => _createPayload(RESPONSE.DELETE, { ids: response.ids })
     // )
   }

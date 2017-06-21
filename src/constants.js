@@ -8,8 +8,8 @@ export const REQUEST = {
   FIND_BY_ID: 'redux-loopback/FIND_BY_ID->request',
   FIND: 'redux-loopback/FIND->request',
   FIND_ONE: 'redux-loopback/FIND_ONE->request',
+  DELETE_BY_ID: 'redux-loopback/DELETE_BY_ID->request',
   DELETE: 'redux-loopback/DELETE->request',
-  DELETE_ALL: 'redux-loopback/DELETE_ALL->request',
   UPDATE: 'redux-loopback/UPDATE->request',
   UPDATE_ALL: 'redux-loopback/UPDATE_ALL->request',
   EXISTS: 'redux-loopback/EXISTS->request',
@@ -21,8 +21,8 @@ export const RESPONSE = {
   FIND_BY_ID: 'redux-loopback/FIND_BY_ID->response',
   FIND: 'redux-loopback/FIND->response',
   FIND_ONE: 'redux-loopback/FIND_ONE->response',
+  DELETE_BY_ID: 'redux-loopback/DELETE_BY_ID->response',
   DELETE: 'redux-loopback/DELETE->response',
-  DELETE_ALL: 'redux-loopback/DELETE_ALL->response',
   UPDATE: 'redux-loopback/UPDATE->response',
   UPDATE_ALL: 'redux-loopback/UPDATE_ALL->response',
   EXISTS: 'redux-loopback/EXISTS->response',
@@ -54,13 +54,13 @@ export const ACTION = {
     REQUEST: REQUEST.UPDATE_ALL,
     RESPONSE: RESPONSE.UPDATE_ALL
   },
+  DELETE_BY_ID: {
+    REQUEST: REQUEST.DELETE_BY_ID,
+    RESPONSE: RESPONSE.DELETE_BY_ID
+  },
   DELETE: {
     REQUEST: REQUEST.DELETE,
     RESPONSE: RESPONSE.DELETE
-  },
-  DELETE_ALL: {
-    REQUEST: REQUEST.DELETE_ALL,
-    RESPONSE: RESPONSE.DELETE_ALL
   },
   EXIST: {
     REQUEST: REQUEST.EXIST,
