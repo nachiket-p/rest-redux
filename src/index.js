@@ -15,33 +15,30 @@ export default class Wrapper {
   config
   loopback
   constructor(_config) {
-    this.config = _.merge({}, DEFAULT_CONFIG, _config)
-    const {models} = this.config
+    this.config = { ...DEFAULT_CONFIG, ..._config }
+    const { models } = this.config
     console.log('config set: ', this.config)
     this.reducer = _createReducer(models)
     this.middleware = thunk
-    this._models = _.keyBy(_.map(models, model => ({ 
-      modelName: model.modelName, 
+    this._models = _.keyBy(_.map(models, model => ({
+      modelName: model.modelName,
       actions: new ModelActions(model, this.config),
-      selectors: modelSelectors(model, this.config.rootSelector) 
+      selectors: modelSelectors(model, this.config.rootSelector)
     })), 'modelName')
   }
 
   get(modelName) {
     return this._models[modelName]
-  } 
-  // createActions (modelName, _config) {
-  //   return new ModelActions(modelName, _.merge({}, this.config, _config))
-  // }
+  }
 
 }
 
-export const connectModel = (model, filter) => (Component) =>{
+export const connectModel = (model, filter) => (Component) => {
   //const actions = createActions(model)
   // QUESTION:?? Get filtered action here const instances = actions.find()
   return class ModelComponent extends React.Component {
     render() {
-      return <Component {...this.props} /> 
+      return <Component {...this.props} />
       // restActions={actions}
     }
   }

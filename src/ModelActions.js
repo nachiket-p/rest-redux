@@ -76,7 +76,7 @@ export default class ModelActions {
   }
 
   _createAction(type, others) {
-    return { type, payload: _.merge({ modelName: this.modelName }, others) }
+    return { type, payload: { ...others, modelName: this.modelName} }
   }
 
   _responseAction(type, instances, modelName) {
