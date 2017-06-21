@@ -18,5 +18,11 @@
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": {}
+  "methods": {
+    "deleteTodos": {
+      "accepts": { "arg": "where", "type": "Object", "required": false },
+      "http": { "path": "/deleteTodos", "verb": "post" },
+      "returns": { "arg": "count", "type": "number" }
+    }
+  }
 }

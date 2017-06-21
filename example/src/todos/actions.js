@@ -17,7 +17,10 @@ export function setVisibilityFilter(filter) {
 
 
 export const ActionLinks = {
-  DELETE_ALL: () => (dispatch) => dispatch(todoActions.delete({})),
+  //DELETE_ALL: () => (dispatch) => dispatch(todoActions.delete({})),
+  DELETE_ALL: () => (dispatch) => dispatch(todoActions.custom('DELETE_ALL','deleteTodos', 'POST')).then(response=> {
+      dispatch(todoActions.find({}))
+  }),
   COMPLETE_ALL: () => (dispatch) => {
     dispatch(todoActions.updateAll({completed:false}, {completed: true})).then(response=> {
       dispatch(todoActions.find({}))
