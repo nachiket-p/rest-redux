@@ -44,6 +44,7 @@ export default (entity) => {
             case REQUEST.UPDATE:
             case REQUEST.DELETE_BY_ID:
             case REQUEST.DELETE:
+            case REQUEST.CUSTOM:
                 return _.merge({}, state, { loading: true })
             case RESPONSE.FIND:
             case RESPONSE.FIND_BY_ID:
@@ -51,6 +52,7 @@ export default (entity) => {
             case RESPONSE.UPDATE:
             case RESPONSE.DELETE_BY_ID:
             case RESPONSE.DELETE:
+            case RESPONSE.CUSTOM:
             case ERROR:
                 return _.merge({}, state, { loading: false })
             default:
@@ -58,7 +60,7 @@ export default (entity) => {
         }
     }
 
-    const last = (state = {}, { type, payload }) => {
+    const last = (state = { custom: {}}, { type, payload }) => {
         if (payload && payload.modelName !== entity.modelName) {
             return state
         }
@@ -76,6 +78,8 @@ export default (entity) => {
             case RESPONSE.DELETE_BY_ID:
             case RESPONSE.DELETE:
                 return _.merge({}, state, { deleted: payload.ids })
+            case RESPONSE.CUSTOM:
+                return _.merge({}, state, { custom: _.merge({}, state.custom, { [payload.name]: payload.response})})
             default:
                 return state
         }

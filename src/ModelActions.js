@@ -129,7 +129,7 @@ export default class ModelActions {
   }
 
   findById(id, filter) {
-    const params = { filter: JSON.stringify(filter) }
+    const params = filter?{ filter: JSON.stringify(filter) }:null
     return this._call(`${this.apiPath}/${id}`, 'GET', { params },
       () => this._createAction(REQUEST.FIND_BY_ID, { id, filter }),
       this._createNormalized(RESPONSE.FIND_BY_ID))
@@ -147,6 +147,17 @@ export default class ModelActions {
     return this._call(`${this.apiPath}/count`, 'GET', { params },
       () => this._createAction(REQUEST.COUNT, { filter }),
       (response) => this._createAction(RESPONSE.COUNT, { count: response.count })
+    )
+  }
+
+  custom(name, path, method, options = {}) {
+    const _options = { headers: options.headers ? options.headers : {} }
+    if (options.params) _options.params = JSON.stringify(options.params)
+    if (options.body) _options.body = JSON.stringify(options.body)
+
+    return this._call(`${this.apiPath}/${path}`, method, _options,
+      () => this._createAction(REQUEST.CUSTOM, { name, path, method, options }),
+      (response) => this._createAction(RESPONSE.CUSTOM, { response: response, name })
     )
   }
 

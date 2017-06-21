@@ -1,4 +1,3 @@
-const CUSTOM = 'redux-loopback/CUSTOM'
 const REPLACE_OR_CREATE = 'redux-loopback/REPLACE_OR_CREATE'
 const PATCH_OR_CREATE = 'redux-loopback/PATCH_OR_CREAT'
 const REPLACE_BY_ID =  'redux-loopback/REPLACE_BY_ID'
@@ -14,6 +13,7 @@ export const REQUEST = {
   UPDATE_ALL: 'redux-loopback/UPDATE_ALL->request',
   EXISTS: 'redux-loopback/EXISTS->request',
   COUNT: 'redux-loopback/COUNT->request',
+  CUSTOM: 'redux-loopback/CUSTOM->request',
 }
 
 export const RESPONSE = {
@@ -27,6 +27,7 @@ export const RESPONSE = {
   UPDATE_ALL: 'redux-loopback/UPDATE_ALL->response',
   EXISTS: 'redux-loopback/EXISTS->response',
   COUNT: 'redux-loopback/COUNT->response',
+  CUSTOM: 'redux-loopback/CUSTOM->response',
 }
 
 export const ACTION = {
@@ -70,6 +71,10 @@ export const ACTION = {
     REQUEST: REQUEST.COUNT,
     RESPONSE: RESPONSE.COUNT
   },
+  CUSTOM: {
+    REQUEST: REQUEST.CUSTOM,
+    RESPONSE: RESPONSE.CUSTOM
+  }
 }
 
 export const ERROR = 'redux-loopback/ERROR'
