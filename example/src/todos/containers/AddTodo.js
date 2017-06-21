@@ -16,6 +16,7 @@ let AddTodo = ({ dispatch }) => {
           return
         }
         dispatch(todoActions.create({text:input.value})).then(response => {
+            dispatch(todoActions.find())
             dispatch(todoActions.count())
         })
         input.value = ''
