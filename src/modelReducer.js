@@ -14,7 +14,7 @@ export default (entity) => {
             case RESPONSE.DELETE_BY_ID:
             case RESPONSE.DELETE:
                 const newState = { ...state }
-                return _.pick(newState, _.difference(_.keys(newState), payload.ids))
+                return _.pick(newState, _.difference(_.keys(newState), [payload.id]))
             default:
                 return state
         }
@@ -60,7 +60,8 @@ export default (entity) => {
         }
     }
 
-    const last = (state = { custom: {} }, { type, payload }) => {
+    const DEFAULT_LAST_STATE = {find: [], delete: [], custom: {}}
+    const last = (state = DEFAULT_LAST_STATE, { type, payload }) => {
         if (payload && payload.modelName !== entity.modelName) {
             return state
         }
@@ -68,16 +69,25 @@ export default (entity) => {
             case RESPONSE.FIND:
                 return { ...state, find: payload.ids }
             case RESPONSE.FIND_BY_ID:
-                return { ...state, findById: payload.ids }
+                return { ...state, findById: payload.id }
             case RESPONSE.CREATE:
-                return { ...state, created: payload.ids }
+                return { ...state, create: payload.id }
             case RESPONSE.UPDATE:
-                return { ...state, updated: payload.ids }
+                return { ...state, update: payload.id }
+            case RESPONSE.UPDATE_ALL:
+                return { ...state, updateAll: payload.count }
             case RESPONSE.COUNT:
                 return { ...state, count: payload.count }
             case RESPONSE.DELETE_BY_ID:
-            case RESPONSE.DELETE:
-                return { ...state, deleted: payload.ids }
+            //case RESPONSE.DELETE:
+                const newState = { ...state, deleteById: payload.id }
+                if(newState.findById == payload.id) newState.findById = null
+                if(newState.create == payload.id) newState.create = null
+                if(newState.update == payload.id) newState.update = null
+                if(newState.find.indexOf(payload.id)>-1) {
+                    newState.find = newState.find.filter(id => id !== payload.id)
+                }
+                return newState
             case RESPONSE.CUSTOM:
                 return { ...state, custom: { ...state.custom, [payload.name]: payload.response } }
             default:

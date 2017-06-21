@@ -76,14 +76,14 @@ export default class ModelActions {
   }
 
   _createAction(type, others) {
-    return { type, payload: { ...others, modelName: this.modelName} }
+    return { type, payload: { ...others, modelName: this.modelName } }
   }
 
   _responseAction(type, instances, modelName) {
     return { type, payload: { modelName, instances } }
   }
 
-  _createNormalized(type) {
+  _createNormalized(type, singleInstance = false) {
     return (response) => {
       let normalized
       if (_.isArray(response)) {
@@ -96,7 +96,7 @@ export default class ModelActions {
       const actions = _.map(normalized.entities, (entities, modelName) => {
         return { type: RECEIVED, payload: { modelName, instances: entities } }
       })
-      actions.push(this._createAction(type, { ids: normalized.result }))
+      actions.push(this._createAction(type, { [singleInstance?'id':'ids']: normalized.result }))
       return actions;
     }
   }
@@ -104,13 +104,13 @@ export default class ModelActions {
   create(data) {
     return this._call(this.apiPath, 'POST', { body: JSON.stringify(data), headers: this.headers },
       () => this._createAction(REQUEST.CREATE, { data }),
-      this._createNormalized(RESPONSE.CREATE))
+      this._createNormalized(RESPONSE.CREATE, true))
   }
 
   update(id, data) {
     return this._call(`${this.apiPath}/${id}`, 'PATCH', { body: JSON.stringify(data), headers: this.headers },
       () => this._createAction(REQUEST.UPDATE, { id, data }),
-      this._createNormalized(RESPONSE.UPDATE))
+      this._createNormalized(RESPONSE.UPDATE, true))
   }
 
   updateAll(where, data) {
@@ -118,7 +118,7 @@ export default class ModelActions {
     const body = JSON.stringify(data)
     return this._call(`${this.apiPath}/update`, 'POST', { params, body, headers: this.headers },
       () => this._createAction(REQUEST.UPDATE_ALL, { where, data }),
-      (instances, name) => this._responseAction(RESPONSE.UPDATE_ALL, instances, name))
+      (response) => this._createAction(RESPONSE.UPDATE_ALL, { count: response.count }))
   }
 
   find(filter) {
@@ -129,16 +129,16 @@ export default class ModelActions {
   }
 
   findById(id, filter) {
-    const params = filter?{ filter: JSON.stringify(filter) }:null
+    const params = filter ? { filter: JSON.stringify(filter) } : null
     return this._call(`${this.apiPath}/${id}`, 'GET', { params },
       () => this._createAction(REQUEST.FIND_BY_ID, { id, filter }),
-      this._createNormalized(RESPONSE.FIND_BY_ID))
+      this._createNormalized(RESPONSE.FIND_BY_ID, true))
   }
 
   deleteById(id) {
     return this._call(`${this.apiPath}/${id}`, 'DELETE', {},
       () => this._createAction(REQUEST.DELETE_BY_ID, { id }),
-      (response) => this._createAction(RESPONSE.DELETE_BY_ID, { ids: [id + ''] })
+      (response) => this._createAction(RESPONSE.DELETE_BY_ID, { id: id })
     )
   }
 
