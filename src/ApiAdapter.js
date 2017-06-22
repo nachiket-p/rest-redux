@@ -15,6 +15,7 @@ function parse(response) {
   return response.json()
 }
 
+//TODO: Add custom fetch support with subclassing
 export default class APIAdapter {
   constructor(config) {
     this.globalOptions = config.globalOptions

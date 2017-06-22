@@ -2,8 +2,7 @@ import _ from 'lodash'
 import { schema, normalize } from 'normalizr';
 import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED } from '../constants'
 
-
-
+//TODO: Move URL related logic to APIAdapter
 export default class ModelActions {
   constructor(model, config, api) {
     this.modelName = model.modelName

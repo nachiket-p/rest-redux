@@ -21,6 +21,7 @@ const loopbackRedux = new LoopbackRedux({
 
 export default loopbackRedux
 //TODO: Should I use action instead??
+//TODO: Implement with Login
 loopbackRedux.updateGlobal({params:{}, headers: {
   'Authorization': 'ndyEqMAgS05FwiVCEryr9AYLJXeLI4clfaSRHaFMiwtYGEPDyAplpwLy7ZliM7pT'
 }, body:{} })
