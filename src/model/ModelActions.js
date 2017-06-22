@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import _ from 'lodash'
 import { schema, normalize } from 'normalizr';
-import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED } from './constants'
+import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED } from '../constants'
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {

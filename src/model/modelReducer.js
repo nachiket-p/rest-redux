@@ -1,7 +1,7 @@
 import { schema, normalize } from 'normalizr'
 import { combineReducers } from 'redux'
 import _ from 'lodash'
-import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED } from './constants'
+import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED } from '../constants'
 
 export default (entity) => {
     const instances = (state = {}, { type, payload }) => {

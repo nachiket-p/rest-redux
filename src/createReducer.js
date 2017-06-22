@@ -1,4 +1,4 @@
-import createModelReducer from './modelReducer'
+import createModelReducer from './model/modelReducer'
 import {combineReducers} from 'redux'
 
 export default (entities)  => {

@@ -4,8 +4,8 @@ import _ from 'lodash'
 import 'whatwg-fetch'
 
 import _createReducer from './createReducer'
-import ModelActions from './ModelActions'
-import modelSelectors from './modelSelectors'
+import ModelActions from './model/ModelActions'
+import modelSelectors from './model/modelSelectors'
 
 const DEFAULT_CONFIG = {
   models: [],
