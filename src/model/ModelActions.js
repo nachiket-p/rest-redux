@@ -16,26 +16,27 @@ function checkStatus(response) {
 function parseJSON(response) {
   return response.json()
 }
-const DEFAULT_HEADERS = {
-  'Content-Type': 'application/json'
-}
+
 export default class ModelActions {
   constructor(model, config) {
     console.log('setting Action config: ', config)
     this.modelName = model.modelName
     this.apiPath = config.basePath + '/' + model.modelName
     this.entitySchema = new schema.Entity(model.modelName)
-    this.headers = config.headers || DEFAULT_HEADERS
+    this.globalOptions = config.globalOptions
+    //this.headers = config.headers || DEFAULT_HEADERS
   }
 
   _fetch(path, method, fetchOptions, handler, errorHandler) {
-    const { params } = fetchOptions
+    const finalOptions = _.merge({}, this.globalOptions, fetchOptions)
+    const { params } = finalOptions
     if (params && !_.isEmpty(params)) {
       path = `${path}?${queryString.stringify(params)}`
       delete fetchOptions.params
     }
-    fetchOptions.method = method
-    return fetch(path, fetchOptions)
+    console.log('calling with options ', finalOptions, fetchOptions)
+    finalOptions.method = method
+    return fetch(path, finalOptions)
       .then(checkStatus)
       .then(parseJSON)
       .then(handler)
@@ -102,13 +103,13 @@ export default class ModelActions {
   }
 
   create(data) {
-    return this._call(this.apiPath, 'POST', { body: JSON.stringify(data), headers: this.headers },
+    return this._call(this.apiPath, 'POST', { body: JSON.stringify(data) },
       () => this._createAction(REQUEST.CREATE, { data }),
       this._createNormalized(RESPONSE.CREATE, true))
   }
 
   update(id, data) {
-    return this._call(`${this.apiPath}/${id}`, 'PATCH', { body: JSON.stringify(data), headers: this.headers },
+    return this._call(`${this.apiPath}/${id}`, 'PATCH', { body: JSON.stringify(data) },
       () => this._createAction(REQUEST.UPDATE, { id, data }),
       this._createNormalized(RESPONSE.UPDATE, true))
   }
@@ -116,7 +117,7 @@ export default class ModelActions {
   updateAll(where, data) {
     const params = { where: JSON.stringify(where) }
     const body = JSON.stringify(data)
-    return this._call(`${this.apiPath}/update`, 'POST', { params, body, headers: this.headers },
+    return this._call(`${this.apiPath}/update`, 'POST', { params, body },
       () => this._createAction(REQUEST.UPDATE_ALL, { where, data }),
       (response) => this._createAction(RESPONSE.UPDATE_ALL, { count: response.count }))
   }
@@ -151,7 +152,7 @@ export default class ModelActions {
   }
 
   custom(name, path, method, options = {}) {
-    const _options = { headers: options.headers ? options.headers : {} }
+    const _options = { headers: options.headers }
     if (options.params) _options.params = JSON.stringify(options.params)
     if (options.body) _options.body = JSON.stringify(options.body)
 

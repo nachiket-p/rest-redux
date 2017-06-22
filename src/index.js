@@ -9,13 +9,18 @@ import modelSelectors from './model/modelSelectors'
 
 const DEFAULT_CONFIG = {
   models: [],
+  globalOptions: {
+    params: null,
+    headers: null,
+    body: null
+  },
   rootSelector: (state) => state.loopback
 }
 export default class Wrapper {
   config
   loopback
   constructor(_config) {
-    this.config = { ...DEFAULT_CONFIG, ..._config }
+    this.config = _.merge({}, DEFAULT_CONFIG, _config )
     const { models } = this.config
     console.log('config set: ', this.config)
     this.reducer = _createReducer(models)
@@ -29,6 +34,10 @@ export default class Wrapper {
 
   get(modelName) {
     return this._models[modelName]
+  }
+
+  updateGlobal(options) {
+    _.merge(this.config.globalOptions, options)
   }
 
 }
