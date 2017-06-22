@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import _ from 'lodash'
 import 'whatwg-fetch'
 
+import ApiAdapter from './ApiAdapter'
 import _createReducer from './createReducer'
 import ModelActions from './model/ModelActions'
 import modelSelectors from './model/modelSelectors'
@@ -24,10 +25,13 @@ export default class Wrapper {
     const { models } = this.config
     console.log('config set: ', this.config)
     this.reducer = _createReducer(models)
+    //TODO: Should I have thunk here? 
     this.middleware = thunk
+
+    const apiAdapter = new ApiAdapter(this.config)
     this._models = _.keyBy(_.map(models, model => ({
       modelName: model.modelName,
-      actions: new ModelActions(model, this.config),
+      actions: new ModelActions(model, this.config, apiAdapter),
       selectors: modelSelectors(model, this.config.rootSelector)
     })), 'modelName')
   }

@@ -1,46 +1,16 @@
-import queryString from 'query-string'
 import _ from 'lodash'
 import { schema, normalize } from 'normalizr';
 import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED } from '../constants'
 
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response
-  } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
-  }
-}
 
-function parseJSON(response) {
-  return response.json()
-}
 
 export default class ModelActions {
-  constructor(model, config) {
-    console.log('setting Action config: ', config)
+  constructor(model, config, api) {
     this.modelName = model.modelName
     this.apiPath = config.basePath + '/' + model.modelName
     this.entitySchema = new schema.Entity(model.modelName)
     this.globalOptions = config.globalOptions
-    //this.headers = config.headers || DEFAULT_HEADERS
-  }
-
-  _fetch(path, method, fetchOptions, handler, errorHandler) {
-    const finalOptions = _.merge({}, this.globalOptions, fetchOptions)
-    const { params } = finalOptions
-    if (params && !_.isEmpty(params)) {
-      path = `${path}?${queryString.stringify(params)}`
-      delete fetchOptions.params
-    }
-    console.log('calling with options ', finalOptions, fetchOptions)
-    finalOptions.method = method
-    return fetch(path, finalOptions)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(handler)
-      .catch(errorHandler)
+    this.api = api
   }
 
   _successHandler(dispatch, creator) {
@@ -72,7 +42,7 @@ export default class ModelActions {
   _call(path, method, fetchOptions, requestCreator, successCreator) {
     return dispatch => {
       dispatch(requestCreator())
-      return this._fetch(path, method, fetchOptions, this._successHandler(dispatch, successCreator), this._errorHandler(dispatch))
+      return this.api.fetch(path, method, fetchOptions, this._successHandler(dispatch, successCreator), this._errorHandler(dispatch))
     }
   }
 
