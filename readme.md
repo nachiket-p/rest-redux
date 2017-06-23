@@ -1,6 +1,8 @@
 # redux-loopback
 Provides actions & reducers to communicate with loopback backend. 
 
+## NOTE: WIP, Under active development. 
+
 ## Summary
 redux-loopback makes communication with loopback server very easy. 
 It manages normalized data state for apis & provides easy to use api.
@@ -14,7 +16,7 @@ Add redux-loopback to your package.json dependencies.
 ## Code
 
 ### Setup redux-loopback 
-s
+
 ```javascript
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import LoopbackRedux from 'redux-loopback';
