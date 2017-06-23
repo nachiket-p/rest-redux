@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions'
+import { todo } from '../../api'
 
+const todoActions = todo.actions
+console.log( todoActions)
 let AddTodo = ({ dispatch }) => {
   let input
 
@@ -12,7 +15,10 @@ let AddTodo = ({ dispatch }) => {
         if (!input.value.trim()) {
           return
         }
-        dispatch(addTodo(input.value))
+        dispatch(todoActions.create({text:input.value})).then(response => {
+            dispatch(todoActions.find())
+            dispatch(todoActions.count())
+        })
         input.value = ''
       }}>
         <input ref={node => {

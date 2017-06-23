@@ -1,28 +1,28 @@
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
+import {connectModel} from 'redux-loopback'
+import {getVisibleTodos, isTodosLoading, getTodosCount} from '../selectors'
+import { todo } from '../../api'
 
-const getVisibleTodos = (todos, filter) => {
-  switch (filter) {
-    case 'SHOW_ALL':
-      return todos
-    case 'SHOW_COMPLETED':
-      return todos.filter(t => t.completed)
-    case 'SHOW_ACTIVE':
-      return todos.filter(t => !t.completed)
-  }
-}
-
+const todoActions = todo.actions
 const mapStateToProps = (state) => {
   return {
-    todos: getVisibleTodos(state.todos.todos, state.todos.visibilityFilter)
+    todos: getVisibleTodos(state),
+    todosCount: getTodosCount(state),
+    loading: isTodosLoading(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTodoClick: (id) => {
-      dispatch(toggleTodo(id))
+    onTodoClick: (todo) => {
+      dispatch(todoActions.update(todo.id, {completed: !todo.completed}))
+    },
+    deleteTodo: (todo) => {
+      dispatch(todoActions.deleteById(todo.id)).then(response => {
+        dispatch(todoActions.find())
+        dispatch(todoActions.count())
+      })      
     }
   }
 }
@@ -32,4 +32,4 @@ const VisibleTodoList = connect(
   mapDispatchToProps
 )(TodoList)
 
-export default VisibleTodoList
+export default connectModel('todos')(VisibleTodoList)
