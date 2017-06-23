@@ -34,7 +34,8 @@ export default class ModelActions {
       } else {
         dispatchError(error, error.message)
       }
-      return error
+      throw error
+      //return error
     }
   }
 
