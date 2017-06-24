@@ -5,8 +5,7 @@ import 'whatwg-fetch'
 
 import ApiAdapter from './ApiAdapter'
 import _createReducer from './createReducer'
-import ModelActions from './model/ModelActions'
-import modelSelectors from './model/modelSelectors'
+import Model from './model'
 
 const DEFAULT_CONFIG = {
   models: [],
@@ -17,23 +16,20 @@ const DEFAULT_CONFIG = {
   },
   rootSelector: (state) => state.loopback
 }
+
+
 export default class Wrapper {
   config
   loopback
   constructor(_config) {
-    this.config = _.merge({}, DEFAULT_CONFIG, _config )
+    this.config = _.merge({}, DEFAULT_CONFIG, _config)
     const { models } = this.config
     console.log('config set: ', this.config)
     this.reducer = _createReducer(models)
     //TODO: Should I have thunk here? 
     this.middleware = thunk
-
     const apiAdapter = new ApiAdapter(this.config)
-    this._models = _.keyBy(_.map(models, model => ({
-      modelName: model.modelName,
-      actions: new ModelActions(model, this.config, apiAdapter),
-      selectors: modelSelectors(model, this.config.rootSelector)
-    })), 'modelName')
+    this._models = _.keyBy(_.map(models, model => new Model(model, this.config, apiAdapter)), 'modelName')
   }
 
   get(modelName) {
@@ -44,6 +40,20 @@ export default class Wrapper {
     _.merge(this.config.globalOptions, options)
   }
 
+  // createModelWrapper(model) {
+  //   const modelWrapper =
+  //    {
+  //     modelName: model.modelName,
+  //     actions: new ModelActions(model, this.config, this.apiAdapter),
+  //     selectors: modelSelectors(model, this.config.rootSelector),
+  //     createList: name => {
+  //       return {
+  //         name: name,
+  //         actions: new ListActions()
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 export const connectModel = (model, filter) => (Component) => {
