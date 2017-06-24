@@ -29,6 +29,27 @@ export const loopbackMiddleware = loopbackRedux.middleware
 export const todo = loopbackRedux.get('todos')
 export const user = loopbackRedux.get('users')
 
-// const options = {params: {}, body: {}, headers: {}}
-//export const myTodos = todo.createList('paging', options)
-//const {actions, selectors} = myTodos
+const options = {
+  pageSize:10,
+  startPage: 0 
+}
+export const myTodosList = todo.createList('paging', options)
+
+const {actions, selectors} = myTodosList
+// actions.setOptions({userId: 2})
+// actions.page(2) //page
+// actions.next() //page
+// actions.prev()
+// actions.first()
+// actions.last()
+
+// selectors.getInstances()
+// selectors.getTotal()
+// selectors.getPages()
+// selectors.isFirst()
+// selectors.isLast()
+
+//myTodosList.setOptions({pageSize, startPage})
+
+//HOC: 
+// list(name, filter) => {instances, pages, total, isFirst, isLast}
