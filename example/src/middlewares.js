@@ -5,7 +5,6 @@ const todoActions = todo.actions
 export const authEventsMiddleware = store => next => action => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      debugger
       loopbackRedux.updateGlobal({
         headers: {
           'Authorization': action.payload.token.id
