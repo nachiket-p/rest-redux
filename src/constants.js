@@ -1,6 +1,6 @@
-const REPLACE_OR_CREATE = 'redux-loopback/REPLACE_OR_CREATE'
-const PATCH_OR_CREATE = 'redux-loopback/PATCH_OR_CREAT'
-const REPLACE_BY_ID =  'redux-loopback/REPLACE_BY_ID'
+// const REPLACE_OR_CREATE = 'redux-loopback/REPLACE_OR_CREATE'
+// const PATCH_OR_CREATE = 'redux-loopback/PATCH_OR_CREAT'
+// const REPLACE_BY_ID =  'redux-loopback/REPLACE_BY_ID'
 
 export const REQUEST = {
   CREATE: 'redux-loopback/CREATE->request',
@@ -30,53 +30,62 @@ export const RESPONSE = {
   CUSTOM: 'redux-loopback/CUSTOM->response',
 }
 
-export const ACTION = {
-  FIND: {
-    REQUEST: REQUEST.FIND,
-    RESPONSE: RESPONSE.FIND
-  },
-  FIND_BY_ID: {
-    REQUEST: REQUEST.FIND_BY_ID,
-    RESPONSE: RESPONSE.FIND_BY_ID
-  },
-  FIND_ONE: {
-    REQUEST: REQUEST.FIND_ONE,
-    RESPONSE: RESPONSE.FIND_ONE
-  },
-  CREATE: {
-    REQUEST: REQUEST.CREATE,
-    RESPONSE: RESPONSE.CREATE
-  },
-  UPDATE: {
-    REQUEST: REQUEST.UPDATE,
-    RESPONSE: RESPONSE.UPDATE
-  },
-  UPDATE_ALL: {
-    REQUEST: REQUEST.UPDATE_ALL,
-    RESPONSE: RESPONSE.UPDATE_ALL
-  },
-  DELETE_BY_ID: {
-    REQUEST: REQUEST.DELETE_BY_ID,
-    RESPONSE: RESPONSE.DELETE_BY_ID
-  },
-  DELETE: {
-    REQUEST: REQUEST.DELETE,
-    RESPONSE: RESPONSE.DELETE
-  },
-  EXIST: {
-    REQUEST: REQUEST.EXIST,
-    RESPONSE: RESPONSE.EXIST
-  },
-  COUNT: {
-    REQUEST: REQUEST.COUNT,
-    RESPONSE: RESPONSE.COUNT
-  },
-  CUSTOM: {
-    REQUEST: REQUEST.CUSTOM,
-    RESPONSE: RESPONSE.CUSTOM
-  }
-}
-
 export const ERROR = 'redux-loopback/ERROR'
 export const RECEIVED = 'redux-loopback/RECEIVED'
 export const CLEAR = 'redux-loopback/CLEAR'
+
+export const LIST = {
+  SET_OPTIONS: 'redux-loopback/SET_OPTIONS->list',
+  PAGE: 'redux-loopback/PAGE->list',
+  NEXT: 'redux-loopback/NEXT->list',
+  PREV: 'redux-loopback/PREV->list',
+  LAST: 'redux-loopback/LAST->list',
+  FIRST: 'redux-loopback/FIRST->list',
+}
+
+// export const ACTION = {
+//   FIND: {
+//     REQUEST: REQUEST.FIND,
+//     RESPONSE: RESPONSE.FIND
+//   },
+//   FIND_BY_ID: {
+//     REQUEST: REQUEST.FIND_BY_ID,
+//     RESPONSE: RESPONSE.FIND_BY_ID
+//   },
+//   FIND_ONE: {
+//     REQUEST: REQUEST.FIND_ONE,
+//     RESPONSE: RESPONSE.FIND_ONE
+//   },
+//   CREATE: {
+//     REQUEST: REQUEST.CREATE,
+//     RESPONSE: RESPONSE.CREATE
+//   },
+//   UPDATE: {
+//     REQUEST: REQUEST.UPDATE,
+//     RESPONSE: RESPONSE.UPDATE
+//   },
+//   UPDATE_ALL: {
+//     REQUEST: REQUEST.UPDATE_ALL,
+//     RESPONSE: RESPONSE.UPDATE_ALL
+//   },
+//   DELETE_BY_ID: {
+//     REQUEST: REQUEST.DELETE_BY_ID,
+//     RESPONSE: RESPONSE.DELETE_BY_ID
+//   },
+//   DELETE: {
+//     REQUEST: REQUEST.DELETE,
+//     RESPONSE: RESPONSE.DELETE
+//   },
+//   EXIST: {
+//     REQUEST: REQUEST.EXIST,
+//     RESPONSE: RESPONSE.EXIST
+//   },
+//   COUNT: {
+//     REQUEST: REQUEST.COUNT,
+//     RESPONSE: RESPONSE.COUNT
+//   },
+//   CUSTOM: {
+//     REQUEST: REQUEST.CUSTOM,
+//     RESPONSE: RESPONSE.CUSTOM
+//   }
+// }
