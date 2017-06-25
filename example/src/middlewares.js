@@ -1,5 +1,5 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from './user/actions'
-import loopbackRedux, { todo } from './api'
+import loopbackRedux, { todo, myTodosList } from './api'
 const todoActions = todo.actions
 
 export const authEventsMiddleware = store => next => action => {
@@ -11,6 +11,9 @@ export const authEventsMiddleware = store => next => action => {
         }
       })
       store.dispatch(todoActions.find({}))
+      //const {actions, selectors} = myTodosList
+      // actions.setOptions({userId: 2})
+      store.dispatch(myTodosList.actions.page(2))
       break
     case LOGOUT_SUCCESS:
       loopbackRedux.updateGlobal({headers: {

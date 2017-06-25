@@ -10,6 +10,10 @@ const loopbackRedux = new LoopbackRedux({
   },
   models: [{ 
     modelName: 'todos',
+    lists: [
+      {name:'personal', options:{pageSize: 5}},
+      {name:'public'}
+    ],
     schema: { //Uses normalizr.js (https://github.com/paularmstrong/normalizr)
       definition: {},
       options: {}
@@ -33,11 +37,9 @@ const options = {
   pageSize:10,
   startPage: 0 
 }
-export const myTodosList = todo.createList('paging', options)
+export const myTodosList = todo.lists.personal
 
-const {actions, selectors} = myTodosList
-// actions.setOptions({userId: 2})
-// actions.page(2) //page
+
 // actions.next() //page
 // actions.prev()
 // actions.first()

@@ -8,9 +8,13 @@ export default class Model {
     this.config = config
     this.actions = new ModelActions(model, config, apiAdapter)
     this.selectors = modelSelectors(model, config.rootSelector)
+    this.lists = {}
+    if(model.lists) {
+      model.lists.forEach(list => this.lists[list.name] = this.createList(list))
+    }
   }
 
-  createList(name) {
-    return new List(name, this.config)
+  createList({name, options}) {
+    return new List(name, this, this.config)
   }
 }

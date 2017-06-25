@@ -50,11 +50,7 @@ export default class ModelActions {
     return { type, payload: { ...others, modelName: this.modelName } }
   }
 
-  _responseAction(type, instances, modelName) {
-    return { type, payload: { modelName, instances } }
-  }
-
-  _createNormalized(type, singleInstance = false) {
+  _createNormalized(type, singleInstance = false, listName = undefined) {
     return (response) => {
       let normalized
       if (_.isArray(response)) {
@@ -67,7 +63,7 @@ export default class ModelActions {
       const actions = _.map(normalized.entities, (entities, modelName) => {
         return { type: RECEIVED, payload: { modelName, instances: entities } }
       })
-      actions.push(this._createAction(type, { [singleInstance?'id':'ids']: normalized.result }))
+      actions.push(this._createAction(type, { [singleInstance ? 'id' : 'ids']: normalized.result, listName }))
       return actions;
     }
   }
@@ -92,11 +88,11 @@ export default class ModelActions {
       (response) => this._createAction(RESPONSE.UPDATE_ALL, { count: response.count }))
   }
 
-  find(filter) {
+  find(filter, listName = undefined) {
     const params = { filter: JSON.stringify(filter) }
     return this._call(this.apiPath, 'GET', { params },
-      () => this._createAction(REQUEST.FIND, { params }),
-      this._createNormalized(RESPONSE.FIND))
+      () => this._createAction(REQUEST.FIND, { params, listName }),
+      this._createNormalized(RESPONSE.FIND, false, listName))
   }
 
   findById(id, filter) {
@@ -149,6 +145,6 @@ export default class ModelActions {
     throw new Error('not implemented yet')
     // return this._get(`${this.apiPath}/${id}`, { filter: JSON.stringify(filter) },
     //   () => this._createAction(REQUEST.EXISTS, { id, filter }),
-    //   (instances, name) => this._responseAction(RESPONSE.EXISTS, instances, name))
+    //   (instances, name) => this._createAction(RESPONSE.EXISTS, instances, name))
   }
 }

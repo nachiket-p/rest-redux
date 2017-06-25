@@ -1,13 +1,10 @@
-
-class ListActions {
-
-}
-const listSelectors = (list, rootSelector) => ({})
+import ListActions from './ListActions'
+import listSelectors from './listSelectors'
 
 export default class List {
-  constructor(listName, config, apiAdapter) {
+  constructor(listName, model, config) {
     this.listName = listName
-    this.actions = new ListActions(listName, config, apiAdapter)
-    this.selectors = listSelectors(listName, config.rootSelector)
+    this.selectors = listSelectors(listName, model.selectors)
+    this.actions = new ListActions(listName, this.selectors, model.actions)
   }
 }
