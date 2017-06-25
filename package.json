@@ -16,8 +16,9 @@
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
-    "build": "babel src --out-dir dist",
-    "prepublish": "rimraf dist && npm run build",
+    "clean": "rimraf lib",
+    "build": "babel --presets es2015,stage-0 -d lib/ src/",
+    "prepublish": "npm run clean && npm run build",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
