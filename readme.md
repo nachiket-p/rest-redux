@@ -21,19 +21,29 @@ Add redux-loopback to your package.json dependencies.
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import LoopbackRedux from 'redux-loopback';
 
+import LoopbackRedux from 'redux-loopback';
 
 const loopbackRedux = new LoopbackRedux({
-  basePath: 'http://localhost:3000/api',
+  basePath: 'http://localhost:3000/api',  
+  globalOptions: {  //global options, you can set headers & params 
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  },
   models: [{ 
     modelName: 'todos',
-    //Uses normalizr.js for schema (https://github.com/paularmstrong/normalizr)
-    schema: { 
+    lists: [  //List allow to fetch paging data
+      {name:'my', options:{pageSize: 5}},
+      {name:'public'}
+    ],
+    schema: { //Uses normalizr.js (https://github.com/paularmstrong/normalizr)
       definition: {},
       options: {}
     }
   }, { 
     modelName: 'users' 
-  }]
+  },]
 })
 
 let reducer = combineReducers({
@@ -50,9 +60,12 @@ let store = createStore(
   middlewares
 )
 
-// create actions for each model using following API
-export const todoActions = loopbackRedux.createActions('todos')
-export const userActions = loopbackRedux.createActions('users')
+// create actions/selectors for each model  using following API
+export const todo = loopbackRedux.get('todos')
+export const user = loopbackRedux.get('users')
+
+const todoActions = todo.actions
+const todoSelectors = todo.selectors
 
 ```
 
@@ -61,26 +74,77 @@ export const userActions = loopbackRedux.createActions('users')
 create, update, updateAll, deleteById, find, findById, 
 
 ```javascript
-const todoActions = loopbackRedux.createActions('todos')
+const todoActions = loopbackRedux.get('todos').actions
 
 //create Todo
-dispatch(todoAction.create({text:'This is new todo'}))
+dispatch(todoActions.create({text:'This is new todo'}))
 
 //update Todo
-dispatch(todoAction.update(1, {completed:true}))
+dispatch(todoActions.update(1, {completed:true}))
 
 //delete todo
-dispatch(todoAction.deleteById(1))
+dispatch(todoActions.deleteById(1))
 ```
 
-### Using Listing methods
-Listing methods provides easy way to manage multiple listing for any model.
+### Using Selectors  
+**Available methods:**
+getInstances, isLoading, getCount, getFound 
 
 ```javascript
-// State saved to loopback-state -> modelName -> lists -> default
-dispatch(todoAction.find({completed:false))
+const todoSelectors = loopbackRedux.get('todos').selectors
+//get All available instances
+todoSelectors.getInstances(state)
 
-// State saved to loopback-state -> modelName -> lists -> NOT_COMPLETED
-dispatch(todoAction.find({completed:false), 'NOT_COMPLETED')
+//get All last find result instances
+todoSelectors.getFound(state)
 
+//get Count API result
+todoSelectors.getCount(state)
+
+//get loading state, true when any API is executing on the Model
+todoSelectors.isLoading(state)
+
+```
+
+### Using Lists (At Concept stage )
+List feature provides easy way to manage multiple find/filter REST requests with paging for any model.
+
+#### Actions & Selectors
+```javascript
+const todos = loopbackRedux.get('todos')
+//each list instance has actions & selectors
+const myTodosList = todos.lists.my
+
+dispatch(myTodosList.actions.setOptions({params: {userId: myId} }))
+dispatch(myTodosList.actions.page(2))
+
+//Get all instances found in this list
+myTodosList.selectors.getInstances(state)
+
+//Returns the current page
+myTodosList.selectors.getCurrentPage(state)
+
+//Returns list of page numbers
+myTodosList.selectors.getPages(state)
+
+//Returns total number of pages available
+myTodosList.selectors.getTotal(state)
+
+//Returns whether page is first or not
+myTodosList.selectors.isFirst(state)
+
+//Returns whether page is last or not
+myTodosList.selectors.isLast(state)
+```
+
+#### List HOC (Higher Order Component)
+```javascript
+import listHoc from 'redux-loopback'
+
+listHoc('my')(MyTodoView)
+const MyTodoView => ({instances, pages, total, isFirst, isLast}) {
+  return <div>
+    ....
+  </div>
+}
 ```
