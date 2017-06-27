@@ -8,7 +8,7 @@ const DemoList = ({ instances, pages, total, isFirst, isLast,
   console.log('rendering demolist', instances, pages, total)
   return (
     <div>
-      <h3>Completed Todos</h3>
+      <h3>Incomplete Todos</h3>
       <ol>
         {instances.map(todo => {
           return <Todo

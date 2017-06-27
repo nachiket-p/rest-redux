@@ -12,10 +12,13 @@ const restRedux = new RestRedux({
     modelName: 'todos',
     lists: [
       {name:'personal', options:{pageSize: 5}},
-      {name:'public'},
-      {name:'completed', options: {
+      {name:'incomplete', options: {
         pageSize: 3, 
         params: {completed:false}
+      }},
+      {name:'completed', options: {
+        pageSize: 3, 
+        params: {completed:true}
       }},
     ],
     schema: { //Uses normalizr.js (https://github.com/paularmstrong/normalizr)
@@ -38,6 +41,7 @@ export const todo = restRedux.get('todos')
 export const user = restRedux.get('users')
 
 export const completedTodos = todo.lists.completed
+export const incompleteTodos = todo.lists.incomplete
 
 
 // actions.next() //page

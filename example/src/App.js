@@ -5,7 +5,9 @@ import 'purecss/build/pure.css'
 import Footer from './todos/components/Footer'
 import AddTodo from './todos/containers/AddTodo'
 import VisibleTodoList from './todos/containers/VisibleTodoList'
-import DemoList from './todos/containers/DemoList'
+import IncompleteTodos from './todos/containers/IncompleteTodos'
+import CompletedTodos from './todos/containers/CompletedTodos'
+
 import Login from './user/containers/Login'
 
 export default ({ store }) => {
@@ -17,7 +19,8 @@ export default ({ store }) => {
       <Footer />
       <AddTodo />
       <VisibleTodoList />
-      <DemoList />
+      <IncompleteTodos />
+      <CompletedTodos />
     </div>
   }
 
