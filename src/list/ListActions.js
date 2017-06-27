@@ -15,7 +15,7 @@ export default class ListActions {
   }
 
   _page(page, dispatch, state) {
-    dispatch({ type: PAGE, payload: { page } })
+    dispatch({ type: PAGE, payload: { page, listName: this.listName } })
     
     const listObj = this.listSelectors.getListObj(state)    
     const where = listObj.params
