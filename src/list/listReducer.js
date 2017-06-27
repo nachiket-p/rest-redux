@@ -18,10 +18,10 @@ export function listReducer(model, list) {
       return state
     }
     
-    if (payload && payload.modelName !== model.modelName && payload.listName !== list.name) {
+    if (payload.modelName !== model.modelName || payload.listName !== list.name) {
       return state
     }
-    
+    console.log('reducing for ', list.name, payload.listName, payload.modelName, model.modelName);
     switch (type) {
       case SET_OPTIONS:
         return { ...state, ...payload }
