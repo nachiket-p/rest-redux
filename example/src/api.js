@@ -12,7 +12,11 @@ const loopbackRedux = new LoopbackRedux({
     modelName: 'todos',
     lists: [
       {name:'personal', options:{pageSize: 5}},
-      {name:'public'}
+      {name:'public'},
+      {name:'completed', options: {
+        pageSize: 3, 
+        params: {completed:false}
+      }},
     ],
     schema: { //Uses normalizr.js (https://github.com/paularmstrong/normalizr)
       definition: {},
@@ -33,11 +37,7 @@ export const loopbackMiddleware = loopbackRedux.middleware
 export const todo = loopbackRedux.get('todos')
 export const user = loopbackRedux.get('users')
 
-const options = {
-  pageSize:10,
-  startPage: 0 
-}
-export const myTodosList = todo.lists.personal
+export const completedTodos = todo.lists.completed
 
 
 // actions.next() //page
