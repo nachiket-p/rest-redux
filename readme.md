@@ -148,3 +148,21 @@ const MyTodoView => ({instances, pages, total, isFirst, isLast}) {
   </div>
 }
 ```
+
+
+### Running Example
+It works directly with src folder (using Webpack alias).
+you need to do npm install in /, /example & /example/server before starting  
+
+#### Start Backend Server (with in memory DB & dummy Data)
+```bash
+cd example/server
+npm start
+```
+
+#### Start Front end App Development Server 
+```bash
+cd example
+npm start
+```
+
