@@ -14,13 +14,14 @@ const DEFAULT_CONFIG = {
     headers: null,
     body: null
   },
-  rootSelector: (state) => state.loopback
+  rootSelector: (state) => state.rest
 }
 
 
 export default class Wrapper {
   config
-  loopback
+  reducer
+  middleware
   constructor(_config) {
     this.config = _.merge({}, DEFAULT_CONFIG, _config)
     const { models } = this.config

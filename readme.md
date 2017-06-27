@@ -1,29 +1,27 @@
-# redux-loopback
-Provides actions & reducers to communicate with loopback backend. 
+# rest-redux
+Provides actions & reducers to communicate with REST API Backend. 
 
-## NOTE: WIP, Under active development. 
+#### NOTE: WIP, Under active development. And will support [Loopback](http://loopback.io) API out of the box, as its intended to use on that internally
 
 ## Summary
-redux-loopback makes communication with loopback server very easy. 
-It manages normalized data state for apis & provides easy to use api.
+rest-redux makes communication with REST API very easy. It reduces lot of boilerplate code. 
+It manages normalized redux state for apis & provides easy to use actions/selectors.
 
 ## Installation
-Add redux-loopback to your package.json dependencies.  
+Add rest-redux to your package.json dependencies.  
 
-```npm install redux-loopback --save```
+```npm install rest-redux --save```
 
 
 ## Code
 
-### Setup redux-loopback 
+### Setup rest-redux 
 
 ```javascript
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import LoopbackRedux from 'redux-loopback';
+import RestRedux from 'rest-redux'
 
-import LoopbackRedux from 'redux-loopback';
-
-const loopbackRedux = new LoopbackRedux({
+const restRedux = new RestRedux({
   basePath: 'http://localhost:3000/api',  
   globalOptions: {  //global options, you can set headers & params 
     headers: {
@@ -47,12 +45,12 @@ const loopbackRedux = new LoopbackRedux({
 })
 
 let reducer = combineReducers({
-  loopback: loopbackRedux.reducer,
+  rest: restRedux.reducer,
   otherReducers: ...
 })
 
 const middlewares = applyMiddleware(
-  loopbackRedux.loopback
+  restRedux.middleware
 );
 
 let store = createStore(
@@ -61,8 +59,8 @@ let store = createStore(
 )
 
 // create actions/selectors for each model  using following API
-export const todo = loopbackRedux.get('todos')
-export const user = loopbackRedux.get('users')
+export const todo = restRedux.get('todos')
+export const user = restRedux.get('users')
 
 const todoActions = todo.actions
 const todoSelectors = todo.selectors
@@ -74,7 +72,7 @@ const todoSelectors = todo.selectors
 create, update, updateAll, deleteById, find, findById, 
 
 ```javascript
-const todoActions = loopbackRedux.get('todos').actions
+const todoActions = restRedux.get('todos').actions
 
 //create Todo
 dispatch(todoActions.create({text:'This is new todo'}))
@@ -91,7 +89,7 @@ dispatch(todoActions.deleteById(1))
 getInstances, isLoading, getCount, getFound 
 
 ```javascript
-const todoSelectors = loopbackRedux.get('todos').selectors
+const todoSelectors = restRedux.get('todos').selectors
 //get All available instances
 todoSelectors.getInstances(state)
 
@@ -111,7 +109,7 @@ List feature provides easy way to manage multiple find/filter REST requests with
 
 #### Actions & Selectors
 ```javascript
-const todos = loopbackRedux.get('todos')
+const todos = restRedux.get('todos')
 //each list instance has actions & selectors
 const myTodosList = todos.lists.my
 
@@ -139,7 +137,7 @@ myTodosList.selectors.isLast(state)
 
 #### List HOC (Higher Order Component)
 ```javascript
-import listHoc from 'redux-loopback'
+import listHoc from 'rest-redux'
 
 listHoc('my')(MyTodoView)
 const MyTodoView => ({instances, pages, total, isFirst, isLast}) {

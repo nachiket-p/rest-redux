@@ -1,11 +1,11 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from './user/actions'
-import loopbackRedux, { todo, completedTodos } from './api'
+import restRedux, { todo, completedTodos } from './api'
 const todoActions = todo.actions
 
 export const authEventsMiddleware = store => next => action => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      loopbackRedux.updateGlobal({
+      restRedux.updateGlobal({
         headers: {
           'Authorization': action.payload.token.id
         }
@@ -16,7 +16,7 @@ export const authEventsMiddleware = store => next => action => {
       store.dispatch(completedTodos.actions.page(0))
       break
     case LOGOUT_SUCCESS:
-      loopbackRedux.updateGlobal({headers: {
+      restRedux.updateGlobal({headers: {
         'Authorization': null
       }})
       //TODO: Fire Clean event to clear DB

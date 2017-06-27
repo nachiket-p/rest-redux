@@ -2,16 +2,16 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import todoReducer from './todos/reducer'
 import userReducer from './user/reducer'
 import {authEventsMiddleware} from './middlewares'
-import {loopbackReducer, loopbackMiddleware} from './api';
+import {restReduxReducer, restReduxMiddleware} from './api';
 
 let reducer = combineReducers({
   todos: todoReducer,
   user: userReducer,
-  loopback: loopbackReducer
+  rest: restReduxReducer
 })
 
 const middlewares = applyMiddleware(
-  loopbackMiddleware,
+  restReduxMiddleware,
   authEventsMiddleware
 );
 

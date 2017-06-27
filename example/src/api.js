@@ -1,6 +1,6 @@
-import LoopbackRedux from 'redux-loopback';
+import RestRedux from 'rest-redux';
 
-const loopbackRedux = new LoopbackRedux({
+const restRedux = new RestRedux({
   basePath: 'http://localhost:3000/api',
   globalOptions: {
     headers: {
@@ -27,15 +27,15 @@ const loopbackRedux = new LoopbackRedux({
   },]
 })
 
-export default loopbackRedux
+export default restRedux
 //TODO: Should I use action instead??
 //TODO: Implement with Login
 
-export const loopbackReducer = loopbackRedux.reducer
-export const loopbackMiddleware = loopbackRedux.middleware
+export const restReduxReducer = restRedux.reducer
+export const restReduxMiddleware = restRedux.middleware
 
-export const todo = loopbackRedux.get('todos')
-export const user = loopbackRedux.get('users')
+export const todo = restRedux.get('todos')
+export const user = restRedux.get('users')
 
 export const completedTodos = todo.lists.completed
 

@@ -1,47 +1,47 @@
-// const REPLACE_OR_CREATE = 'redux-loopback/REPLACE_OR_CREATE'
-// const PATCH_OR_CREATE = 'redux-loopback/PATCH_OR_CREAT'
-// const REPLACE_BY_ID =  'redux-loopback/REPLACE_BY_ID'
+// const REPLACE_OR_CREATE = 'rest-redux/REPLACE_OR_CREATE'
+// const PATCH_OR_CREATE = 'rest-redux/PATCH_OR_CREAT'
+// const REPLACE_BY_ID =  'rest-redux/REPLACE_BY_ID'
 
 export const REQUEST = {
-  CREATE: 'redux-loopback/CREATE->request',
-  FIND_BY_ID: 'redux-loopback/FIND_BY_ID->request',
-  FIND: 'redux-loopback/FIND->request',
-  FIND_ONE: 'redux-loopback/FIND_ONE->request',
-  DELETE_BY_ID: 'redux-loopback/DELETE_BY_ID->request',
-  DELETE: 'redux-loopback/DELETE->request',
-  UPDATE: 'redux-loopback/UPDATE->request',
-  UPDATE_ALL: 'redux-loopback/UPDATE_ALL->request',
-  EXISTS: 'redux-loopback/EXISTS->request',
-  COUNT: 'redux-loopback/COUNT->request',
-  CUSTOM: 'redux-loopback/CUSTOM->request',
+  CREATE: 'rest-redux/CREATE->request',
+  FIND_BY_ID: 'rest-redux/FIND_BY_ID->request',
+  FIND: 'rest-redux/FIND->request',
+  FIND_ONE: 'rest-redux/FIND_ONE->request',
+  DELETE_BY_ID: 'rest-redux/DELETE_BY_ID->request',
+  DELETE: 'rest-redux/DELETE->request',
+  UPDATE: 'rest-redux/UPDATE->request',
+  UPDATE_ALL: 'rest-redux/UPDATE_ALL->request',
+  EXISTS: 'rest-redux/EXISTS->request',
+  COUNT: 'rest-redux/COUNT->request',
+  CUSTOM: 'rest-redux/CUSTOM->request',
 }
 
 export const RESPONSE = {
-  CREATE: 'redux-loopback/CREATE->response',
-  FIND_BY_ID: 'redux-loopback/FIND_BY_ID->response',
-  FIND: 'redux-loopback/FIND->response',
-  FIND_ONE: 'redux-loopback/FIND_ONE->response',
-  DELETE_BY_ID: 'redux-loopback/DELETE_BY_ID->response',
-  DELETE: 'redux-loopback/DELETE->response',
-  UPDATE: 'redux-loopback/UPDATE->response',
-  UPDATE_ALL: 'redux-loopback/UPDATE_ALL->response',
-  EXISTS: 'redux-loopback/EXISTS->response',
-  COUNT: 'redux-loopback/COUNT->response',
-  CUSTOM: 'redux-loopback/CUSTOM->response',
+  CREATE: 'rest-redux/CREATE->response',
+  FIND_BY_ID: 'rest-redux/FIND_BY_ID->response',
+  FIND: 'rest-redux/FIND->response',
+  FIND_ONE: 'rest-redux/FIND_ONE->response',
+  DELETE_BY_ID: 'rest-redux/DELETE_BY_ID->response',
+  DELETE: 'rest-redux/DELETE->response',
+  UPDATE: 'rest-redux/UPDATE->response',
+  UPDATE_ALL: 'rest-redux/UPDATE_ALL->response',
+  EXISTS: 'rest-redux/EXISTS->response',
+  COUNT: 'rest-redux/COUNT->response',
+  CUSTOM: 'rest-redux/CUSTOM->response',
 }
 
-export const ERROR = 'redux-loopback/ERROR'
-export const RECEIVED = 'redux-loopback/RECEIVED'
-export const CLEAR = 'redux-loopback/CLEAR'
+export const ERROR = 'rest-redux/ERROR'
+export const RECEIVED = 'rest-redux/RECEIVED'
+export const CLEAR = 'rest-redux/CLEAR'
 
 export const LIST = {
-  SET_OPTIONS: 'redux-loopback/SET_OPTIONS->list',
-  PAGE: 'redux-loopback/PAGE->list',
-  NEXT: 'redux-loopback/NEXT->list',
-  PREV: 'redux-loopback/PREV->list',
-  LAST: 'redux-loopback/LAST->list',
-  FIRST: 'redux-loopback/FIRST->list',
-  REFRESH: 'redux-loopback/REFRESH->list',
+  SET_OPTIONS: 'rest-redux/SET_OPTIONS->list',
+  PAGE: 'rest-redux/PAGE->list',
+  NEXT: 'rest-redux/NEXT->list',
+  PREV: 'rest-redux/PREV->list',
+  LAST: 'rest-redux/LAST->list',
+  FIRST: 'rest-redux/FIRST->list',
+  REFRESH: 'rest-redux/REFRESH->list',
 }
 
 // export const ACTION = {

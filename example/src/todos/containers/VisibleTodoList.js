@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
-import {connectModel} from 'redux-loopback'
+import {connectModel} from 'rest-redux'
 import {getVisibleTodos, isTodosLoading, getTodosCount} from '../selectors'
 import { todo } from '../../api'
 

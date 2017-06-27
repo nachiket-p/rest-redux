@@ -37,7 +37,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx'],
     alias: { 
-      'redux-loopback': path.resolve(__dirname, '..', 'src') 
+      'rest-redux': path.resolve(__dirname, '..', 'src') 
     },
     // modules: [
     //   path.resolve(__dirname),
@@ -55,14 +55,3 @@ module.exports = {
   },
   devtool: 'eval-source-map'
 };
-
-// const src = 
-// if (fs.existsSync(src)) {
-//   // Use the latest src
-//   module.exports.resolve = { alias: { 'redux-loopback': src } }
-//   module.exports.module.loaders.push({
-//     test: /\.js$/,
-//     loaders: [ 'babel-loader' ],
-//     include: src
-//   })
-// }

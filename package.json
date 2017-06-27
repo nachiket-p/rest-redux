@@ -1,7 +1,7 @@
 {
-  "name": "redux-loopback",
+  "name": "rest-redux",
   "version": "0.1.0",
-  "description": "Redux support for Loopback APIs",
+  "description": "Redux support for REST APIs",
   "main": "index.js",
   "author": "Nachiket Patel",
   "license": "MIT",
