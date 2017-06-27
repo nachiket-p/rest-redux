@@ -9,33 +9,57 @@ export default class ListActions {
     this.listName = listName
   }
 
-  setOptions({ headers, params }) {
-    return { type: SET_OPTIONS, payload: { headers, params, listName: this.listName } }
+  setOptions({ headers, params, pageSize }) {
+    const payload = _.omitBy({ headers, params, pageSize, listName: this.listName }, _.isNil)
+    return { type: SET_OPTIONS, payload }
+  }
+
+  _page(page, dispatch, state) {
+    dispatch({ type: PAGE, payload: { page } })
+    
+    const listObj = this.listSelectors.getListObj(state)    
+    const where = listObj.params
+    const filter = { where, limit: listObj.pageSize, skip: page * listObj.pageSize }
+    
+    dispatch(this.modelActions.find(filter, this.listName))
+    dispatch(this.modelActions.count(where, this.listName))
   }
 
   page(page) {
-    return (dispatch, getState) => {
-      dispatch({ type: PAGE, payload: { page } })
-      const listObj = this.listSelectors.getListObj(getState())
-      const filter = JSON.stringify({ limit: listObj.pageSize, skip: page * listObj.pageSize })
-      dispatch(this.modelActions.find({ filter: filter }, this.listName))
-    }
-
+    return (dispatch, getState) => this._page(page, dispatch, getState())
   }
 
-  // next() {
+  next() {
+    return (dispatch, getState) => {
+      const currentPage = this.listSelectors.getCurrentPage(getState())
+      return this._page(currentPage + 1, dispatch, getState())
+    }
+  }
 
-  // } 
+  prev() {
+    return (dispatch, getState) => {
+      const currentPage = this.listSelectors.getCurrentPage(getState())
+      return this._page(currentPage - 1, dispatch, getState())
+    }
+  }
 
-  // prev() {
+  refresh() {
+    return (dispatch, getState) => {
+      const currentPage = this.listSelectors.getCurrentPage(getState())
+      return this._page(currentPage, dispatch, getState())
+    }
+  }
 
-  // }
+  first() {
+    return (dispatch, getState) => this._page(0, dispatch, getState())
+  }
 
-  // first() {
-
-  // }
-
-  // last() {
-
-  // }
+  last() {
+    return (dispatch, getState) => {
+      const state = getState()
+      const pageSize = this.listSelectors.getListObj(state).pageSize
+      const total = this.listSelectors.getTotal(state)
+      return this._page(Math.floor(total / pageSize), dispatch, state)
+    }
+  }
 }

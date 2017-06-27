@@ -15,6 +15,6 @@ export default class Model {
   }
 
   createList({name, options}) {
-    return new List(name, this, this.config)
+    return new List(name, this, options)
   }
 }

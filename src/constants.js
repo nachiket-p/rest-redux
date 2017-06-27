@@ -41,6 +41,7 @@ export const LIST = {
   PREV: 'redux-loopback/PREV->list',
   LAST: 'redux-loopback/LAST->list',
   FIRST: 'redux-loopback/FIRST->list',
+  REFRESH: 'redux-loopback/REFRESH->list',
 }
 
 // export const ACTION = {

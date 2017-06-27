@@ -66,6 +66,11 @@ export default (model) => {
     if (payload && payload.modelName !== model.modelName) {
       return state
     }
+
+    if(payload && payload.listName) {
+      return state
+    }
+
     switch (type) {
       case RESPONSE.FIND:
         return { ...state, find: payload.ids }

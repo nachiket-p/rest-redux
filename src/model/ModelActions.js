@@ -109,11 +109,11 @@ export default class ModelActions {
     )
   }
 
-  count(filter) {
-    const params = { filter: JSON.stringify(filter) }
+  count(where, listName=null) {
+    const params = { where: JSON.stringify(where) }
     return this._call(`${this.apiPath}/count`, 'GET', { params },
-      () => this._createAction(REQUEST.COUNT, { filter }),
-      (response) => this._createAction(RESPONSE.COUNT, { count: response.count })
+      () => this._createAction(REQUEST.COUNT, { where, listName }),
+      (response) => this._createAction(RESPONSE.COUNT, { count: response.count, listName })
     )
   }
 

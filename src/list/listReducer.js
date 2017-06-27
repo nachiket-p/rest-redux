@@ -5,11 +5,19 @@ const DEFAULT = {
   offset: 0,
   pageSize: 10,
   total: null,
-  result: []
+  result: [],
+  headers: {},
+  params: {}
 }
 
 export function listReducer(model, list) {
-  const reducer = (state = DEFAULT, { payload, type }) => {
+  const defaultState = {...DEFAULT, ...list.options}
+  const reducer = (state = defaultState, { payload, type }) => {
+    //REJECT actions withouts listName
+    if(!payload || !payload.listName) {
+      return state
+    }
+    
     if (payload && payload.modelName !== model.modelName && payload.listName !== list.name) {
       return state
     }
@@ -21,6 +29,8 @@ export function listReducer(model, list) {
         return { ...state, offset: state.pageSize * payload.page }
       case RESPONSE.FIND:
         return { ...state, result: payload.ids }
+      case RESPONSE.COUNT:
+        return { ...state, total: payload.count }
       default:
         return state
     }
