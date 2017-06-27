@@ -6,6 +6,7 @@ import 'whatwg-fetch'
 import ApiAdapter from './ApiAdapter'
 import _createReducer from './createReducer'
 import Model from './model'
+import pagingHoc from './hoc/paging'
 
 const DEFAULT_CONFIG = {
   models: [],
@@ -69,3 +70,4 @@ export const connectModel = (model, filter) => (Component) => {
 }
 
 
+export const paging = pagingHoc
