@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const paging = (list) => (Component) => {
+const paging = (list, props) => (Component) => {
   const {actions, selectors } = list
   const mapStateToProps = (state) => {
     return {
@@ -26,7 +26,7 @@ const paging = (list) => (Component) => {
   
   class ListHoc extends React.Component {
     render() {
-      return <Component {...this.props} />
+      return <Component {...this.props} {...props} />
       // restActions={actions}
     }
   }
