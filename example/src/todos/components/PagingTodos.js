@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 
-const DemoList = ({ instances, pages, total, isFirst, isLast, hasNext, hasPrev,
+const DemoList = ({title, instances, pages, total, isFirst, isLast, hasNext, hasPrev,
   gotoPage, next, prev, first, last, refresh }) => {
   const loadingEl = null;//loading ? <span>Loading ... </span> : null
   console.log('rendering demolist', instances, pages, total)
   return (
     <div>
-      <h3>Incomplete Todos</h3>
+      <h3>{title}</h3>
       <ol>
         {instances.map(todo => {
           return <Todo
