@@ -11,6 +11,8 @@ const paging = (list) => (Component) => {
       total: selectors.getTotal(state),
       isFirst: selectors.isFirst(state),
       isLast: selectors.isLast(state),
+      hasNext: selectors.hasNext(state),
+      hasPrev: selectors.hasPrev(state),
     }
   }
   const mapDispatchToProps =  (dispatch) => {

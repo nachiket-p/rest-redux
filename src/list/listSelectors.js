@@ -29,8 +29,14 @@ export default (list, modelSelectors) => {
     const pages = Math.ceil(listObj.total/listObj.pageSize)
     return [...Array(pages)].map((_, i) => i++)
   }
+  const hasNext = (state) => {
+    const listObj = getListObj(state)
+    return (listObj.offset + listObj.pageSize < listObj.total)
+  }
+
+  const hasPrev = (state) => getListObj(state).offset > 0
 
   return {
-    getListObj, getInstances, getTotal, getPages, isFirst, isLast, getCurrentPage
+    getListObj, getInstances, getTotal, getPages, isFirst, isLast, getCurrentPage, hasNext, hasPrev
   }
 }
