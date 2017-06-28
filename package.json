@@ -1,6 +1,6 @@
 {
   "name": "rest-redux",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Redux support for REST APIs",
   "main": "index.js",
   "author": "Nachiket Patel",
