@@ -20,7 +20,10 @@
     "build": "babel --presets es2015,stage-0 -d lib/ src/",
     "prepublish": "npm run clean && npm run build",
     "test": "jest",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "generate-changelog": "github-changes -n ${npm_package_version} --only-pulls --use-commit-body",
+    "preversion": "npm test",
+    "version": "npm run generate-changelog && git add CHANGELOG.md"
   },
   "devDependencies": {
     "@types/jest": "^19.2.4",
