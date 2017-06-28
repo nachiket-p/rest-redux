@@ -2,7 +2,8 @@
 Provides actions & reducers to communicate with REST API Backend. 
 
 [![Build Status](https://travis-ci.org/nachiket-p/rest-redux.svg?branch=master)](https://travis-ci.org/nachiket-p/rest-redux)
-[![Coverage Status](https://coveralls.io/repos/github/nachiket-p/rest-redux/badge.svg?branch=master)](https://coveralls.io/github/nachiket-p/rest-redux?branch=master)
+[![Coverage](https://codecov.io/gh/nachiket-p/rest-redux/branch/master/graph/badge.svg)](https://codecov.io/gh/nachiket-p/rest-redux)
+[![npm version](https://badge.fury.io/js/rest-redux.svg)](https://badge.fury.io/js/rest-redux)
 
 #### NOTE: WIP, Under active development. And will support [Loopback](http://loopback.io) API out of the box, as its intended to use on that internally
 

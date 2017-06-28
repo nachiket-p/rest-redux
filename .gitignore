@@ -3,3 +3,4 @@ lib
 dist
 yarn.lock
 *.log
+coverage
