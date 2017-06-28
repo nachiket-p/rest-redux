@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { schema, normalize } from 'normalizr';
-import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED } from '../constants'
+import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED, CLEAR } from '../constants'
 
 //TODO: Move URL related logic to APIAdapter
 export default class ModelActions {
@@ -128,9 +128,8 @@ export default class ModelActions {
     )
   }
 
-  findOne(filter) {
-    throw new Error('not implemented yet')
-    // return { type: RESPONSE.FIND_ONE, payload: { modelName: this.modelName, filter } }
+  clear() {
+    return this._createAction(CLEAR, { })
   }
 
   delete(filter) {
@@ -141,10 +140,4 @@ export default class ModelActions {
     // )
   }
 
-  exists(id) {
-    throw new Error('not implemented yet')
-    // return this._get(`${this.apiPath}/${id}`, { filter: JSON.stringify(filter) },
-    //   () => this._createAction(REQUEST.EXISTS, { id, filter }),
-    //   (instances, name) => this._createAction(RESPONSE.EXISTS, instances, name))
-  }
 }

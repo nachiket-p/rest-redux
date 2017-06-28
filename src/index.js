@@ -42,6 +42,10 @@ export default class Wrapper {
     _.merge(this.config.globalOptions, options)
   }
 
+  clear(dispatch) {
+    _.each(this._models, model => dispatch(model.actions.clear()))
+  }
+
   // createModelWrapper(model) {
   //   const modelWrapper =
   //    {

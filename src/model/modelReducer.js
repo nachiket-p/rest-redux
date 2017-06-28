@@ -1,7 +1,7 @@
 import { schema, normalize } from 'normalizr'
 import { combineReducers } from 'redux'
 import _ from 'lodash'
-import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED } from '../constants'
+import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED, CLEAR } from '../constants'
 import { createListReducers } from '../list/listReducer'
 
 export default (model) => {
@@ -16,6 +16,8 @@ export default (model) => {
       case RESPONSE.DELETE:
         const newState = { ...state }
         return _.pick(newState, _.difference(_.keys(newState), [payload.id]))
+      case CLEAR:
+        return {}
       default:
         return state
     }
@@ -28,6 +30,8 @@ export default (model) => {
     switch (type) {
       case ERROR:
         return payload
+      case CLEAR:
+        return null
       default:
         return state
     }
@@ -56,6 +60,8 @@ export default (model) => {
       case RESPONSE.CUSTOM:
       case ERROR:
         return { ...state, loading: false }
+      case CLEAR:
+        return { ...DEFAULT_REQUEST }
       default:
         return state
     }
@@ -67,7 +73,7 @@ export default (model) => {
       return state
     }
 
-    if(payload && payload.listName) {
+    if (payload && payload.listName) {
       return state
     }
 
@@ -96,6 +102,8 @@ export default (model) => {
         return newState
       case RESPONSE.CUSTOM:
         return { ...state, custom: { ...state.custom, [payload.name]: payload.response } }
+      case CLEAR:
+        return { ...DEFAULT_LAST_STATE }
       default:
         return state
     }
