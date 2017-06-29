@@ -132,11 +132,11 @@ myTodosList.selectors.getPages(state)
 //Returns total number of pages available
 myTodosList.selectors.getTotal(state)
 
-//Returns whether page is first or not
-myTodosList.selectors.isFirst(state)
+//Returns whether previous page is avaliable or not
+myTodosList.selectors.hasPrev(state)
 
-//Returns whether page is last or not
-myTodosList.selectors.isLast(state)
+//Returns whether next page is avaliable or not
+myTodosList.selectors.hasNext(state)
 ```
 
 #### List HOC (Higher Order Component)
@@ -144,7 +144,7 @@ myTodosList.selectors.isLast(state)
 import listHoc from 'rest-redux'
 
 listHoc('my')(MyTodoView)
-const MyTodoView => ({instances, pages, total, isFirst, isLast}) {
+const MyTodoView => ({instances, pages, total, hasNext, hasPrev}) {
   return <div>
     ....
   </div>
