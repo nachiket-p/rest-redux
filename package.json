@@ -1,6 +1,6 @@
 {
   "name": "rest-redux",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "repository": "https://github.com/nachiket-p/rest-redux",
   "description": "Redux support for REST APIs",
   "main": "index.js",
