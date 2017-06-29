@@ -9,8 +9,6 @@ const paging = (list, props) => (Component) => {
       pages: selectors.getPages(state),
       currentPage: selectors.getCurrentPage(state),
       total: selectors.getTotal(state),
-      isFirst: selectors.isFirst(state),
-      isLast: selectors.isLast(state),
       hasNext: selectors.hasNext(state),
       hasPrev: selectors.hasPrev(state),
     }

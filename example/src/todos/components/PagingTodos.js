@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 
-const DemoList = ({title, instances, pages, total, isFirst, isLast, hasNext, hasPrev,
+const DemoList = ({title, instances, pages, total, hasNext, hasPrev,
   gotoPage, next, prev, first, last, refresh }) => {
   const loadingEl = null;//loading ? <span>Loading ... </span> : null
   console.log('rendering demolist', instances, pages, total)
