@@ -14,10 +14,10 @@ export function listReducer(model, list) {
   const defaultState = { ...DEFAULT, ...list.options }
   const reducer = (state = defaultState, { payload, type }) => {
     //REJECT actions without payloads & modelName
-    if (!payload || payload.modelName) {
+    if (!payload || !payload.modelName) {
       return state
     }
-
+    
     if (payload.modelName !== model.modelName || payload.listName !== list.name) {
       if (payload.modelName == model.modelName && type == CLEAR) {
         return { ...defaultState }

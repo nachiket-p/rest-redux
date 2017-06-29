@@ -6,17 +6,6 @@
   "main": "index.js",
   "author": "Nachiket Patel",
   "license": "MIT",
-  "dependencies": {
-    "github-changes": "^1.1.0",
-    "normalizr": "^3.2.3",
-    "prop-types": "^15.5.10",
-    "query-string": "^4.3.4",
-    "react": "^15.5.4",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1",
-    "whatwg-fetch": "^2.0.3"
-  },
   "scripts": {
     "clean": "rimraf lib",
     "build": "babel --presets es2015,stage-0 -d lib/ src/",
@@ -26,6 +15,18 @@
     "generate-changelog": "./node_modules/github-changes/bin/index.js -o nachiket-p -r rest-redux -n ${npm_package_version} --only-pulls --use-commit-body",
     "preversion": "npm test",
     "version": "npm run generate-changelog && git add CHANGELOG.md"
+  },
+  "dependencies": {
+    "github-changes": "^1.1.0",
+    "lodash": "^4.17.4",
+    "normalizr": "^3.2.3",
+    "prop-types": "^15.5.10",
+    "query-string": "^4.3.4",
+    "react": "^15.5.4",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "@types/jest": "^19.2.4",
@@ -38,6 +39,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
     "jest": "^20.0.4",
+    "react-redux": "^5.0.5",
     "redux-testkit": "^1.0.6",
     "rimraf": "^2.6.1"
   },
@@ -46,7 +48,7 @@
     "redux": "^3.6.0"
   },
   "jest": {
-  "coverageDirectory": "./coverage/",
+    "coverageDirectory": "./coverage/",
     "collectCoverage": true
   }
 }
