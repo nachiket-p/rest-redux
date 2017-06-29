@@ -6,12 +6,6 @@ export default (list, modelSelectors) => {
   
   const getTotal = (state) => getListObj(state).total
   
-  const isFirst = (state) => getListObj(state).offset == 0
-  
-  const isLast = (state) => {
-    getListObj(state).offset == 0
-  }
-
   const getInstances = (state) => {
     const result = getListObj(state).result
     //modelSelectors.getInstances() won't work, as it returns Array, instead of Object Map
@@ -37,6 +31,6 @@ export default (list, modelSelectors) => {
   const hasPrev = (state) => getListObj(state).offset > 0
 
   return {
-    getListObj, getInstances, getTotal, getPages, isFirst, isLast, getCurrentPage, hasNext, hasPrev
+    getListObj, getInstances, getTotal, getPages, getCurrentPage, hasNext, hasPrev
   }
 }
