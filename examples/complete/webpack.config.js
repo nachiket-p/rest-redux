@@ -3,7 +3,7 @@ const fs = require('fs')
 var webpack = require('webpack');
 
 module.exports = {
-//  context:  path.join(__dirname, '..') ,
+  //  context:  path.join(__dirname, '..') ,
   entry: [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -36,8 +36,8 @@ module.exports = {
   ],
   resolve: {
     extensions: ['*', '.js', '.jsx'],
-    alias: { 
-      'rest-redux': path.resolve(__dirname, '..', 'src') 
+    alias: {
+      'rest-redux': path.resolve(__dirname, '..', '..', 'src')
     },
     // modules: [
     //   path.resolve(__dirname),
