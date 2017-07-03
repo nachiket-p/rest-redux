@@ -1,5 +1,4 @@
 import React from 'react'
-import thunk from 'redux-thunk'
 import _ from 'lodash'
 import 'whatwg-fetch'
 
@@ -28,8 +27,7 @@ export default class Wrapper {
     const { models } = this.config
     console.log('config set: ', this.config)
     this.reducer = _createReducer(models)
-    //TODO: Should I have thunk here? 
-    this.middleware = thunk
+    this.middleware = store => next => action => next(action)
     const apiAdapter = new ApiAdapter(this.config)
     this._models = _.keyBy(_.map(models, model => new Model(model, this.config, apiAdapter)), 'modelName')
   }

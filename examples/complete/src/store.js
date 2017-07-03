@@ -3,7 +3,7 @@ import todoReducer from './todos/reducer'
 import userReducer from './user/reducer'
 import {authEventsMiddleware} from './middlewares'
 import {restReduxReducer, restReduxMiddleware} from './api';
-
+import thunk from 'redux-thunk'
 let reducer = combineReducers({
   todos: todoReducer,
   user: userReducer,
@@ -11,6 +11,7 @@ let reducer = combineReducers({
 })
 
 const middlewares = applyMiddleware(
+  thunk,
   restReduxMiddleware,
   authEventsMiddleware
 );

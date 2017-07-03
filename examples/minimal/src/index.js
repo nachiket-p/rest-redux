@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import RestRedux from 'rest-redux';
 import { connect } from 'react-redux'
+import thunk from 'redux-thunk';
 
 // There are more options, which are important, e.g. schema & lists for models.
 const restRedux = new RestRedux({
@@ -23,6 +24,7 @@ let reducer = combineReducers({
 let store = createStore(
   reducer,
   applyMiddleware(
+    thunk,
     restRedux.middleware
   )
 )
@@ -50,7 +52,7 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-//LOGIN & FETCH TODOS
+//Dispatch Custom Login Action on Users
 const options = { body: { email: 'john@doe.com', password: 'gotthemilk' } }
 store.dispatch(users.actions.custom('LOGIN', 'login', 'POST', options))
   .then(response => {
@@ -61,7 +63,6 @@ store.dispatch(users.actions.custom('LOGIN', 'login', 'POST', options))
         'Authorization': response.id
       }
     })
-    //Fire Fetch Action
-    store.dispatch(todos.actions.find({}))
-    setTimeout(()=> console.log("STATE: ", todos.selectors.getFound(store.getState())), 1000)    
+    //Dispatch Fetch Action
+    store.dispatch(todos.actions.find({}))   
   })

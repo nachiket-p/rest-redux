@@ -23,6 +23,7 @@ Add rest-redux to your package.json dependencies.
 
 ```javascript
 import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'  //rest-redux requires this.
 import RestRedux from 'rest-redux'
 
 const restRedux = new RestRedux({
@@ -53,7 +54,10 @@ let reducer = combineReducers({
   otherReducers: ...
 })
 
+//IMPORTANT: thunk middleware is required for rest-redux to function. 
+//And it should come before restRedux in middleware chain
 const middlewares = applyMiddleware(
+  thunk,
   restRedux.middleware
 );
 
