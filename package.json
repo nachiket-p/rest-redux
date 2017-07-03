@@ -12,7 +12,7 @@
     "prepublish": "npm run clean && npm run build",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "generate-changelog": "./node_modules/github-changes/bin/index.js -o nachiket-p -r rest-redux -n ${npm_package_version} --only-pulls --use-commit-body",
+    "generate-changelog": "./node_modules/github-changes/bin/index.js -o nachiket-p -r rest-redux -n ${npm_package_version} --use-commit-body",
     "preversion": "npm test",
     "version": "npm run generate-changelog && git add CHANGELOG.md"
   },
