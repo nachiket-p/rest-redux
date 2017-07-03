@@ -22,6 +22,8 @@
     "prop-types": "^15.5.10",
     "query-string": "^4.3.4",
     "react": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.1",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
@@ -36,12 +38,10 @@
     "babel-register": "^6.24.1",
     "github-changes": "^1.1.0",
     "jest": "^20.0.4",
-    "react-redux": "^5.0.5",
     "redux-testkit": "^1.0.6",
     "rimraf": "^2.6.1"
   },
   "peerDependencies": {
-    "react-redux": "^5.0.5",
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0"
   },
