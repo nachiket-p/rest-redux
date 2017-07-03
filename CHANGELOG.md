@@ -1,6 +1,9 @@
 ## Change Log
 
-### 0.2.0 (2017/07/03 12:05 +00:00)
+### 0.2.1 (2017/07/03 12:19 +00:00)
+- [d939674](https://github.com/nachiket-p/rest-redux/commit/d9396741416dac0ff63722bd82cff1263179b176) 0.2.0 (@nachiket-p)
+- [ca0bed9](https://github.com/nachiket-p/rest-redux/commit/ca0bed9c5eee8a1b6e6eb52c28cbd899d0bea789) changelog output now prints commit as well (@nachiket-p)
+- [446d514](https://github.com/nachiket-p/rest-redux/commit/446d5148aa01561a7a572e7e2aead8826a430e0f) removed .babelrc for npm publish (@nachiket-p)
 - [64a3556](https://github.com/nachiket-p/rest-redux/commit/64a355675c0fc7ff627007b755dcb582d949ec9c) Changed react-redux & redux dep (@nachiket-p)
 - [dc370f3](https://github.com/nachiket-p/rest-redux/commit/dc370f32cb1f9e21b4a03db8e3d4566ebd74fcb7) Removed Thunk dependency, Must be available as peer (@nachiket-p)
 - [497d694](https://github.com/nachiket-p/rest-redux/commit/497d694f7ccdfeff80eabbaa622ec813f5511a42) Added Minimal Example (@nachiket-p)
