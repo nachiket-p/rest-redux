@@ -27,7 +27,8 @@ module.exports = function (app) {
       Todo.create([
         { text: 'Remember the milk', completed: false },
         { text: 'Reminder to remember the milk', completed: false },
-        { text: 'Visualize milk as beer', completed: false },
+        { text: 'Visualize milk as beer', completed: true },
+        { text: 'Don\'t forget the milk at the store', completed: false },
       ], cb);
     });
   }
