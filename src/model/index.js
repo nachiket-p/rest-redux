@@ -4,7 +4,7 @@ import List from '../list'
 
 export default class Model {
   constructor(model, config, apiAdapter, requestAdapter) {
-    model.apiPath = model.apiPath || config.basePath + '/' + model.modelName
+    model.apiPath = model.apiPath ? config.basePath + model.apiPath : config.basePath + '/' + model.modelName
 
     this.modelName = model.modelName
     this.config = config
