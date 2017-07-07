@@ -38,5 +38,9 @@
   "Todo": {
     "dataSource": "db",
     "public": true
+  },
+  "Comment": {
+    "dataSource": "db",
+    "public": false
   }
 }

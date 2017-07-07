@@ -14,7 +14,11 @@ const restRedux = new RestRedux({
       'Content-Type': 'application/json'
     }
   },
-  models: [{ modelName: 'todos' }, { modelName: 'users' }]
+  models: [{ modelName: 'todos', apiPath: '/mytodos' }, { modelName: 'users' }, {
+    modelName: 'comments', urlResolver: () => {
+
+    }
+  }]
 })
 
 let reducer = combineReducers({
@@ -32,7 +36,7 @@ const todos = restRedux.get('todos')
 const users = restRedux.get('users')
 
 //Stateless View Component
-const ListComponent = ({todos}) => <div>
+const ListComponent = ({ todos }) => <div>
   <h3>Todos</h3>
   <ul>
     {todos.map(todo => <li key={todo.id} style={{
@@ -64,5 +68,5 @@ store.dispatch(users.actions.custom('LOGIN', 'login', 'POST', options))
       }
     })
     //Dispatch Fetch Action
-    store.dispatch(todos.actions.find({}))   
+    store.dispatch(todos.actions.find({}))
   })

@@ -1,28 +1,29 @@
 {
-  "name": "Todo",
+  "name": "Comment",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
-  },
-  "http": {
-    "path":"/mytodos"
   },
   "properties": {
     "text": {
       "type": "string",
       "required": true
     },
-    "completed": {
-      "type": "boolean",
-      "default": false
+    "todoId": {
+      "type": "string",
+      "required": true
+    },
+    "addedBy": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "comments": {
-      "type": "hasMany",
-      "model": "Comment",
+    "todo": {
+      "type": "belongsTo",
+      "model": "Todo",
       "foreignKey": "todoId"
     }
   },
@@ -51,19 +52,9 @@
   ],
   "methods": {
     "deleteTodos": {
-      "accepts": {
-        "arg": "where",
-        "type": "Object",
-        "required": false
-      },
-      "http": {
-        "path": "/deleteTodos",
-        "verb": "post"
-      },
-      "returns": {
-        "arg": "count",
-        "type": "number"
-      }
+      "accepts": { "arg": "where", "type": "Object", "required": false },
+      "http": { "path": "/deleteTodos", "verb": "post" },
+      "returns": { "arg": "count", "type": "number" }
     }
   }
 }
