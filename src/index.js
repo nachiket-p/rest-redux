@@ -2,7 +2,9 @@ import React from 'react'
 import _ from 'lodash'
 import 'whatwg-fetch'
 
-import ApiAdapter from './ApiAdapter'
+import ApiAdapter from './adapter/ApiAdapter'
+import RequestAdapter from './adapter/RequestAdapter'
+
 import _createReducer from './createReducer'
 import Model from './model'
 import pagingHoc from './hoc/paging'
@@ -29,7 +31,8 @@ export default class Wrapper {
     this.reducer = _createReducer(models)
     this.middleware = store => next => action => next(action)
     const apiAdapter = new ApiAdapter(this.config)
-    this._models = _.keyBy(_.map(models, model => new Model(model, this.config, apiAdapter)), 'modelName')
+    const requestAdapter = new RequestAdapter(this.config)
+    this._models = _.keyBy(_.map(models, model => new Model(model, this.config, apiAdapter, requestAdapter)), 'modelName')
   }
 
   get(modelName) {

@@ -4,12 +4,11 @@ import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED, CLEAR } from '../
 
 //TODO: Move URL related logic to APIAdapter
 export default class ModelActions {
-  constructor(model, config, api) {
-    this.modelName = model.modelName
-    this.apiPath = config.basePath + '/' + model.modelName
+  constructor(model, config, api, requestAdapter) {
+    this.model = model
     this.entitySchema = new schema.Entity(model.modelName)
-    this.globalOptions = config.globalOptions
     this.api = api
+    this.requestAdapter = requestAdapter
   }
 
   _successHandler(dispatch, creator) {
@@ -26,7 +25,7 @@ export default class ModelActions {
   _errorHandler(dispatch) {
     return (error) => {
       console.log('request failed', error)
-      const dispatchError = (error, message) => dispatch({ type: ERROR, payload: { modelName: this.modelName, error, message } })
+      const dispatchError = (error, message) => dispatch({ type: ERROR, payload: { modelName: this.model.modelName, error, message } })
       if (error.response) {
         error.response.json().then((response) => {
           dispatchError(response.error, error.message)
@@ -47,7 +46,7 @@ export default class ModelActions {
   }
 
   _createAction(type, others) {
-    return { type, payload: { ...others, modelName: this.modelName } }
+    return { type, payload: { ...others, modelName: this.model.modelName } }
   }
 
   _createNormalized(type, singleInstance = false, listName = undefined) {
@@ -67,63 +66,64 @@ export default class ModelActions {
       return actions;
     }
   }
-
+  
   create(data) {
-    return this._call(this.apiPath, 'POST', { body: JSON.stringify(data) },
+    const {url, method, options} = this.requestAdapter.create(data, this.model)
+    return this._call(url, method, options,
       () => this._createAction(REQUEST.CREATE, { data }),
       this._createNormalized(RESPONSE.CREATE, true))
   }
 
   update(id, data) {
-    return this._call(`${this.apiPath}/${id}`, 'PATCH', { body: JSON.stringify(data) },
+    const {url, method, options} = this.requestAdapter.update(id, data, this.model)
+
+    return this._call(url, method, options,
       () => this._createAction(REQUEST.UPDATE, { id, data }),
       this._createNormalized(RESPONSE.UPDATE, true))
   }
 
   updateAll(where, data) {
-    const params = { where: JSON.stringify(where) }
-    const body = JSON.stringify(data)
-    return this._call(`${this.apiPath}/update`, 'POST', { params, body },
+    const {url, method, options} = this.requestAdapter.updateAll(where, data, this.model)
+
+    return this._call(url, method, options,
       () => this._createAction(REQUEST.UPDATE_ALL, { where, data }),
       (response) => this._createAction(RESPONSE.UPDATE_ALL, { count: response.count }))
   }
 
   find(filter, listName = undefined) {
-    const params = { filter: JSON.stringify(filter) }
-    return this._call(this.apiPath, 'GET', { params },
-      () => this._createAction(REQUEST.FIND, { params, listName }),
+    const {url, method, options} = this.requestAdapter.find(filter, this.model)
+    return this._call(url, method, options,
+      () => this._createAction(REQUEST.FIND, { filter, listName }),
       this._createNormalized(RESPONSE.FIND, false, listName))
   }
 
   findById(id, filter) {
-    const params = filter ? { filter: JSON.stringify(filter) } : null
-    return this._call(`${this.apiPath}/${id}`, 'GET', { params },
+    const {url, method, options} = this.requestAdapter.findById(id, filter, this.model)
+    return this._call(url, method, options,
       () => this._createAction(REQUEST.FIND_BY_ID, { id, filter }),
       this._createNormalized(RESPONSE.FIND_BY_ID, true))
   }
 
   deleteById(id) {
-    return this._call(`${this.apiPath}/${id}`, 'DELETE', {},
+    const {url, method, options} = this.requestAdapter.deleteById(id, this.model)
+    return this._call(url, method, options,
       () => this._createAction(REQUEST.DELETE_BY_ID, { id }),
       (response) => this._createAction(RESPONSE.DELETE_BY_ID, { id: id })
     )
   }
 
   count(where, listName=null) {
-    const params = { where: JSON.stringify(where) }
-    return this._call(`${this.apiPath}/count`, 'GET', { params },
+    const {url, method, options} = this.requestAdapter.count(where, this.model)
+    return this._call(url, method, options,
       () => this._createAction(REQUEST.COUNT, { where, listName }),
       (response) => this._createAction(RESPONSE.COUNT, { count: response.count, listName })
     )
   }
 
-  custom(name, path, method, options = {}) {
-    const _options = { headers: options.headers }
-    if (options.params) _options.params = JSON.stringify(options.params)
-    if (options.body) _options.body = JSON.stringify(options.body)
-
-    return this._call(`${this.apiPath}/${path}`, method, _options,
-      () => this._createAction(REQUEST.CUSTOM, { name, path, method, options }),
+  custom(name, path, _method, _options = {}) {
+    const {url, method, options} = this.requestAdapter.custom(name, path, _method, _options, this.model)
+    return this._call(url, method, options,
+      () => this._createAction(REQUEST.CUSTOM, { name, path, _method, _options }),
       (response) => this._createAction(RESPONSE.CUSTOM, { response: response, name })
     )
   }
