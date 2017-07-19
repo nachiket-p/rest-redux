@@ -10,7 +10,7 @@ const DEFAULT = {
   params: {}
 }
 
-export function listReducer(model, list) {
+export default  function listReducer(model, list) {
   const defaultState = { ...DEFAULT, ...list.options }
   const reducer = (state = defaultState, { payload, type }) => {
     //REJECT actions without payloads & modelName
