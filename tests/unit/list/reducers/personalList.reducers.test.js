@@ -1,11 +1,11 @@
 import { Reducer } from 'redux-testkit'
-import modelReducer from '../../../../src/list/listReducer'
+import {listReducer} from '../../../../src/list/listReducer'
 import Model from '../../../../src/list'
 import List from '../../../../src/list'
 import { LIST, RESPONSE, CLEAR } from '../../../../src/constants'
 const { SET_OPTIONS, PAGE, NEXT, PREV, LAST, FIRST } = LIST
 
-const todoReducer = modelReducer({ modelName: 'todos' }, { name: 'personal' })
+const todoReducer = listReducer({ modelName: 'todos' }, { name: 'personal' })
 const ID = 3
 describe(' personal list reducer', () => {
 	let model, list
