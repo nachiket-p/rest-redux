@@ -8,8 +8,12 @@ export default class Model {
 
     this.modelName = model.modelName
     this.config = config
-    this.actions = new ModelActions(model, config, apiAdapter, requestAdapter)
-    this.selectors = modelSelectors(model, config.rootSelector)
+    this.actions = (routeParams) => {
+      return new ModelActions(model, config, routeParams, apiAdapter, requestAdapter)
+    }
+    this.selectors = (routeParams) => {
+      return modelSelectors(model, routeParams, config.rootSelector)
+    }
     this.lists = {}
     if(model.lists) {
       model.lists.forEach(list => this.lists[list.name] = this.createList(list))

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export default (model, rootSelector) => {
+export default (model, routeParams, rootSelector) => {
   const getModelObj = state => rootSelector(state)[model.modelName]
   const getInstances = state => _.values(rootSelector(state)[model.modelName].instances)
   const isLoading = state => rootSelector(state)[model.modelName].request.loading

@@ -14,7 +14,7 @@ const restRedux = new RestRedux({
       'Content-Type': 'application/json'
     }
   },
-  models: [{ modelName: 'todos', apiPath: '/mytodos' }, { modelName: 'users' }, {
+  models: [{ modelName: 'todos', apiPath: '/mytodos' }, { modelName: 'todoComments', apiPath: '/mytodos/{id}/comments' }, { modelName: 'users' }, {
     modelName: 'comments', urlResolver: () => {
 
     }
@@ -33,6 +33,7 @@ let store = createStore(
   )
 )
 const todos = restRedux.get('todos')
+const todoComments = restRedux.get('todoComments')
 const users = restRedux.get('users')
 
 //Stateless View Component
@@ -47,7 +48,8 @@ const ListComponent = ({ todos }) => <div>
 
 //Redux Connect
 const App = connect((state) => ({
-  todos: todos.selectors.getFound(state)
+  todos: todos.selectors().getFound(state),
+  todoComments: todoComments.selectors({id: 4}).getFound()
 }), null)(ListComponent)
 
 //RENDER APP
@@ -68,5 +70,7 @@ store.dispatch(users.actions.custom('LOGIN', 'login', 'POST', options))
       }
     })
     //Dispatch Fetch Action
-    store.dispatch(todos.actions.find({}))
+    store.dispatch(todos.actions().find({}))
+    //Returns todos of URL with 4
+    store.dispatch(todoComments.actions({id: 4}).find({}))
   })

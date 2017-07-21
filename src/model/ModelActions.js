@@ -4,9 +4,10 @@ import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED, CLEAR } from '../
 
 //TODO: Move URL related logic to APIAdapter
 export default class ModelActions {
-  constructor(model, config, api, requestAdapter) {
+  constructor(model, config, routeParams, api, requestAdapter) {
     this.model = model
     this.entitySchema = new schema.Entity(model.modelName)
+    this.routeParams = routeParams
     this.api = api
     this.requestAdapter = requestAdapter
   }
