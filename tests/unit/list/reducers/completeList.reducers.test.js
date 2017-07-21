@@ -1,11 +1,11 @@
 import { Reducer } from 'redux-testkit'
 import {listReducer} from '../../../../src/list/listReducer'
-import Model from '../../../../src/list'
 import List from '../../../../src/list'
 import { LIST, RESPONSE, CLEAR } from '../../../../src/constants'
 const { SET_OPTIONS, PAGE, NEXT, PREV, LAST, FIRST } = LIST
 
-const todoReducer = listReducer({ modelName: 'todos' }, { name: 'completed' })
+const completeReducer = listReducer({ modelName: 'todos' }, { name: 'completed' })
+const errorReducer = listReducer({modelName : 'users'}, { name: 'completed' })
 const ID = 4
 describe(' complete list reducer', () => {
 	let model, list
@@ -22,7 +22,7 @@ describe(' complete list reducer', () => {
 			headers: {},
 			params: {}
 		}
-		const state = todoReducer({ pageSize: ID, params: { completed: true } }, ACTION_CUSTOM_SET_OPTIONS)
+		const state = completeReducer({ pageSize: ID ,params : {"completed" : true}}, ACTION_CUSTOM_SET_OPTIONS)
 		expect(state.pageSize).toEqual(ID)
 		expect(state.params.completed).toEqual(true)
 	})
@@ -35,9 +35,9 @@ describe(' complete list reducer', () => {
 				modelName: 'todos'
 			}
 		}
-		const state = todoReducer({ pageSize: ID, params: { completed: true } }, ACTION_CUSTOM_PAGE)
+		const state = completeReducer({ pageSize: ID }, ACTION_CUSTOM_PAGE)
 		console.log(ACTION_CUSTOM_PAGE)
-		expect(state.offset).toEqual(16)
+		expect(state.offset).toEqual(ID * ACTION_CUSTOM_PAGE.payload.page)
 	})
 	it('should test response find ', () => {
 		const ACTION_CUSTOM_RESPONSE_FIND = {
@@ -50,8 +50,11 @@ describe(' complete list reducer', () => {
 				modelName: 'todos'
 			}
 		}
-		const state = todoReducer({ pageSize: ID, params: { completed: true } }, ACTION_CUSTOM_RESPONSE_FIND)
-		expect(state.result).toEqual([3])
+		const state = completeReducer({ pageSize: ID }, ACTION_CUSTOM_RESPONSE_FIND)
+		expect(state.result).toEqual(ACTION_CUSTOM_RESPONSE_FIND.payload.ids)
+		//Error case as model name does not matches 
+		const errState = errorReducer({ pageSize: ID }, ACTION_CUSTOM_RESPONSE_FIND)
+		expect(errState.result).toEqual(ACTION_CUSTOM_RESPONSE_FIND.payload.ids)
 	})
 	it('should test response count', () => {
 		const ACTION_CUSTOM_RESPONSE_COUNT = {
@@ -62,7 +65,7 @@ describe(' complete list reducer', () => {
 				modelName: 'todos'
 			}
 		}
-		const state = todoReducer({ pageSize: ID, params: { completed: true } },ACTION_CUSTOM_RESPONSE_COUNT)
+		const state = completeReducer({ pageSize: ID },ACTION_CUSTOM_RESPONSE_COUNT)
 		expect(state.total).toEqual(ID)
 	})
 })
