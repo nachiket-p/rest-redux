@@ -6,15 +6,14 @@ import { LIST, RESPONSE, CLEAR } from '../../../../src/constants'
 const { SET_OPTIONS, PAGE, NEXT, PREV, LAST, FIRST } = LIST
 
 const todoReducer = modelReducer({ modelName: 'todos' }, { name: 'incomplete' })
-
+const ID = 5
 describe(' incomplete list reducer', () => {
 	let model, list
 	beforeEach(() => {
-		model = new Model({ modelName: 'todos' }, { basePath: 'http://localhost:3000/api' })
-		list = new List({ name: 'incomplete' })
+		list = new List({ name: 'incomplete' },{modelName: 'todos'},{pageSize: ID})
 	})
 	it('should test SET_OPTIONS action ', () => {
-		const ID = 5
+		
 		const ACTION_CUSTOM_SET_OPTIONS = {
 			type: SET_OPTIONS,
 			offset: 1,
@@ -29,7 +28,6 @@ describe(' incomplete list reducer', () => {
 		expect(state.params.completed).toEqual(false)
 	})
 	it('should test PAGE action', () => {
-		const ID = 2
 		const ACTION_CUSTOM_PAGE = {
 			type: PAGE,
 			"payload": {
@@ -40,10 +38,9 @@ describe(' incomplete list reducer', () => {
 		}
 		const state = todoReducer({ pageSize: ID, params: { completed: false } }, ACTION_CUSTOM_PAGE)
 		console.log(ACTION_CUSTOM_PAGE)
-		expect(state.offset).toEqual(8)
+		expect(state.offset).toEqual(20)
 	})
 	it('should test response find ', () => {
-		const ID = 4
 		const ACTION_CUSTOM_RESPONSE_FIND = {
 			type: RESPONSE.FIND,
 			"payload": {
@@ -58,7 +55,6 @@ describe(' incomplete list reducer', () => {
 		expect(state.result).toEqual([3])
 	})
 	it('should test response count', () => {
-		const ID = 4
 		const ACTION_CUSTOM_RESPONSE_COUNT = {
 			type: RESPONSE.COUNT,
 			"payload": {
