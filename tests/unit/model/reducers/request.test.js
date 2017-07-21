@@ -1,7 +1,6 @@
 import { Reducer } from 'redux-testkit';
 import modelReducer from '../../../../src/model/modelReducer';
 import Model from '../../../../src/model'
-import instances from '../../../../src/model/modelReducer'
 import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED, CLEAR } from '../../../../src/constants'
 const todoReducer = modelReducer({ modelName: 'todos' })
 

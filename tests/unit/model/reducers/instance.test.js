@@ -34,7 +34,6 @@ describe('counter reducer', () => {
 
 
 		})
-		console.log(store)
 		expect(store.instances).toEqual({ 1: { "name": 'todos' }, 2: { "name": 'example' } })
 
 	})
