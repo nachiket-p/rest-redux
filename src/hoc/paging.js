@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const paging = (list, props) => (Component) => {
-  const {actions, selectors } = list
+const paging = (list, routeParams, props) => (Component) => {
+  const actions = list.actions(routeParams)
+  const selectors = list.selectors(routeParams)
+  
   const mapStateToProps = (state) => {
     return {
       instances: selectors.getInstances(state),
