@@ -3,6 +3,9 @@
 #### Minimal
 Minimal configuration example for getting basics of rest-redux
 
+#### Minimal-Features
+Minimal App code with many features of rest-redux
+
 #### Complete
 This example covers all the features & functions of rest-redux
 
