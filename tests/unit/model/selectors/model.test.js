@@ -1,6 +1,6 @@
 import modelSelectors from '../../../../src/model/modelSelectors'
 import { DEFAULT_CONFIG } from '../../../../src'
-
+import _ from 'lodash'
 const STATE ={
   rest: {
     todos: {
@@ -38,6 +38,7 @@ const STATE ={
           3
         ],
         'delete': [],
+        count : 3 ,
         custom: {}
       },
       request: {
@@ -66,6 +67,7 @@ const STATE ={
     }
   }
 }
+const instances = STATE.rest.todos.instances
 
 describe('Model Selectors ', () => {
   let selectors
@@ -80,6 +82,10 @@ describe('Model Selectors ', () => {
   it('should have following methods', () => {
     expect(selectors.getInstances).toBeDefined()
     expect(selectors.isLoading).toBeDefined()
+    expect(selectors.getModelObj).toBeDefined()
+    expect(selectors.getCount).toBeDefined()
+    expect(selectors.getFound).toBeDefined()
+
   })
 
   it('should return ModelObject', () => {
@@ -87,8 +93,15 @@ describe('Model Selectors ', () => {
   })
 
   it('should return found Instances', () => {
-    const instances = STATE.rest.todos.instances
     expect(selectors.getFound(STATE)).toEqual([ instances['1'], instances['2'], instances['3']])
   })
-
+  it('should return instances' ,() => {
+    expect(selectors.getInstances(STATE)).toEqual(_.values(STATE.rest.todos.instances))
+  })
+  it('should return loading',() => {
+    expect(selectors.isLoading(STATE)).toEqual(STATE.rest.todos.request.loading)
+  })
+  it('should return count ',() => {
+    expect(selectors.getCount(STATE)).toEqual(STATE.rest.todos.last.count)
+  })
 })
