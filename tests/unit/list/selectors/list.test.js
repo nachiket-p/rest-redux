@@ -5,7 +5,10 @@ import _ from 'lodash'
 const STATE = {
 	rest: {
 		todos: {
-			instances: {},
+			instances: {
+				'1': { name: 'todos' },
+				'2': { name: 'users' }
+			},
 			last: {
 				find: [],
 				'delete': [],
@@ -35,10 +38,10 @@ const STATE = {
 					}
 				},
 				completed: {
-					offset: 0,
-					pageSize: 3,
-					total: null,
-					result: [],
+					offset: 10,
+					pageSize: 2,
+					total: 15,
+					result: [1, 2],
 					headers: {},
 					params: {
 						completed: true
@@ -68,16 +71,37 @@ const STATE = {
 	}
 }
 
-const model = modelSelectors({ modelName: 'todos' }, {}, DEFAULT_CONFIG.rootSelector)
+const modelSelector = modelSelectors({ modelName: 'todos' }, {}, DEFAULT_CONFIG.rootSelector)
 describe('List Selector', () => {
 	let selectors
 	beforeEach(() => {
-		selectors = listSelectors( 'completed' , model)
+		selectors = listSelectors('completed', modelSelector)
 	})
 	it('should return list Obj', () => {
-		console.log(selectors.getListObj(STATE))
-		console.log(model.getModelObj(STATE).lists['completed'])
-		expect(selectors.getListObj(STATE)).toEqual(model.getModelObj(STATE).lists['completed'])
+		expect(selectors.getListObj(STATE)).toEqual(modelSelector.getModelObj(STATE).lists['completed'])
+	})
+	it('should return total', () => {
+		expect(selectors.getTotal(STATE)).toEqual(selectors.getListObj(STATE).total)
+	})
+	it('should return instaces', () => {
+		const instances = STATE.rest.todos.instances
+		expect(selectors.getInstances(STATE)).toEqual([instances['1'], instances['2']])
+	})
+	it('should return get curent page', () => {
+		const listObj = selectors.getListObj(STATE)
+		expect(selectors.getCurrentPage(STATE)).toEqual(listObj.offset / listObj.pageSize)
+	})
+	it('should return get pages ', () => {
+		const listObj = selectors.getListObj(STATE)
+		const pages = Math.ceil(listObj.total / listObj.pageSize)
+		expect(selectors.getPages(STATE)).toEqual([...Array(pages)].map((_, i) => i++))
+})
+	it('should return has Next', () => {
+		const listObj = selectors.getListObj(STATE)
+		expect(selectors.hasNext(STATE)).toEqual(listObj.offset + listObj.pageSize < listObj.total)
+	})
+	it('should return has prev', () => {
+		expect(selectors.hasPrev(STATE)).toEqual(selectors.getListObj(STATE).offset > 0)
 	})
 })
 
