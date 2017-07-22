@@ -4,7 +4,7 @@ import {connectModel} from 'rest-redux'
 import {getVisibleTodos, isTodosLoading, getTodosCount} from '../selectors'
 import { todo } from '../../api'
 
-const todoActions = todo.actions
+const todoActions = todo.actions()
 const mapStateToProps = (state) => {
   return {
     todos: getVisibleTodos(state),

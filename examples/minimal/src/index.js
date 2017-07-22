@@ -14,53 +14,36 @@ const restRedux = new RestRedux({
       'Content-Type': 'application/json'
     }
   },
-  models: [
-    { modelName: 'todos', apiPath: '/mytodos' }, 
-    { modelName: 'todoComments', apiPath: '/mytodos/{id}/comments' }, 
-    { modelName: 'users' }, 
-    { modelName: 'comments'}
-  ]
+  models: [{ modelName: 'todos' }, { modelName: 'users' }]
 })
 
 let reducer = combineReducers({
   rest: restRedux.reducer
 })
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 let store = createStore(
   reducer,
-  composeEnhancers(applyMiddleware(
+  applyMiddleware(
     thunk,
     restRedux.middleware
-  ))
+  )
 )
 const todos = restRedux.get('todos')
-const todoComments = restRedux.get('todoComments')
 const users = restRedux.get('users')
 
 //Stateless View Component
-const ListComponent = ({ todos, todoComments }) => <div>
+const ListComponent = ({todos}) => <div>
   <h3>Todos</h3>
   <ul>
     {todos.map(todo => <li key={todo.id} style={{
       textDecoration: todo.completed ? 'line-through' : 'none'
     }}>{todo.text}</li>)}
   </ul>
-
-  <h4>Comments of a single Todo</h4>
-  <ul>
-    {todoComments.map(comment => <li key={comment.id}>{comment.text}</li>)}
-  </ul>
 </div>
-
-//First TODO
-const TODO_ID = 1;
 
 //Redux Connect
 const App = connect((state) => ({
-  todos: todos.selectors().getFound(state),
-  todoComments: todoComments.selectors({id: TODO_ID}).getFound(state)
+  todos: todos.selectors().getFound(state)
 }), null)(ListComponent)
 
 //RENDER APP
@@ -81,7 +64,5 @@ store.dispatch(users.actions().custom('LOGIN', 'login', 'POST', options))
       }
     })
     //Dispatch Fetch Action
-    store.dispatch(todos.actions().find({}))
-    //Returns todos of URL with TODO_ID
-    store.dispatch(todoComments.actions({id: TODO_ID}).find({}))
+    store.dispatch(todos.actions().find({}))   
   })

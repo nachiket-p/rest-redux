@@ -27,10 +27,10 @@ const DemoList = ({title, instances, pages, total, hasNext, hasPrev,
       </p>
       <p>
         <a onClick={() => hasPrev && first()}> First </a>
-        <a onClick={() => hasPrev && prev()}> Prev </a>
+        <a onClick={() => hasPrev && prev()}> {hasPrev?'prev':'no-prev'} Prev </a>
         {pages.map((page) => <a onClick={() => gotoPage(page)} key={page}> {page} </a>)}
-        <a onClick={() => hasNext && next()}> Next </a>
-        <a onClick={() => hasPrev && last()}> Last</a>
+        <a onClick={() => hasNext && next()}> {hasNext?'next':'no-next'} Next </a>
+        <a onClick={() => hasNext && last()}> Last</a>
       </p>
     </div>
   )

@@ -1,6 +1,6 @@
 import { user } from '../api'
 
-const userActions = user.actions
+const userActions = user.actions()
 export const LOGIN_SUCCESS = 'USER/LOGIN_SUCCESS'
 export const LOGIN_FAILED = 'USER/LOGIN_FAILED'
 export const LOGOUT_SUCCESS = 'USER/LOGOUT_SUCCESS'

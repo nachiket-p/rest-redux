@@ -6,7 +6,7 @@
     "validateUpsert": true
   },
   "http": {
-    "path":"/mytodos"
+    "path":"/todos"
   },
   "properties": {
     "text": {

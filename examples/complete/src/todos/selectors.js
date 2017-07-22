@@ -1,7 +1,7 @@
 // import { createSelector } from 'reselect'
 import _ from 'lodash'
 import {todo} from '../api'
-const todoSelectors = todo.selectors
+const todoSelectors = todo.selectors()
 
 export const isTodosLoading = todoSelectors.isLoading
 export const getTodosCount = todoSelectors.getCount

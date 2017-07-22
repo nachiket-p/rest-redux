@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { addTodo } from '../actions'
 import { todo } from '../../api'
 
-const todoActions = todo.actions
+const todoActions = todo.actions()
 console.log( todoActions)
 let AddTodo = ({ dispatch }) => {
   let input
