@@ -9,7 +9,7 @@ import _createReducer from './createReducer'
 import Model from './model'
 import pagingHoc from './hoc/paging'
 
-const DEFAULT_CONFIG = {
+export const DEFAULT_CONFIG = {
   models: [],
   globalOptions: {
     params: null,
