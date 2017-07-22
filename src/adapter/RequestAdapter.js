@@ -1,13 +1,28 @@
+function template(str, data) {
+  data = data || {};
+
+  const matcher = str.match(/{(.+?)}/g);
+  if(!matcher) return str
+  
+  matcher.forEach(function(key) {
+   str = str.replace(key, data[key.replace('{','').replace('}', '')]);
+  });
+  return str;
+}
 
 export default class RequestResolver {
   constructor(config) {
     this.globalOptions = config.globalOptions
   }
 
-  create(data, model) {
+  resolveRouteParams(model, routeParams) {
+    return template(model.apiPath, routeParams)
+  }
+
+  create(data, requestOptions) {
     //{params, body, headers}
     return {
-      url: model.apiPath,
+      url: requestOptions.apiPath,
       method: 'POST',
       options: { 
         body: JSON.stringify(data) 
@@ -15,9 +30,9 @@ export default class RequestResolver {
     }
   }
 
-  update(id, data, model) {
+  update(id, data, requestOptions) {
     return {
-      url: `${model.apiPath}/${id}`,
+      url: `${requestOptions.apiPath}/${id}`,
       method: 'PATCH',
       options: {
         body: JSON.stringify(data)
@@ -25,59 +40,59 @@ export default class RequestResolver {
     }
   }
 
-  updateAll(where, data, model) {
+  updateAll(where, data, requestOptions) {
     const params = { where: JSON.stringify(where) }
     const body = JSON.stringify(data)
 
     return {
-      url: `${model.apiPath}/update`,
+      url: `${requestOptions.apiPath}/update`,
       method: 'POST',
       options: { params, body }
     }
   }
 
-  find(filter, model) {
+  find(filter, requestOptions) {
     const params = { filter: JSON.stringify(filter) }
     return {
-      url: model.apiPath,
+      url: requestOptions.apiPath,
       method: 'GET',
       options: { params }
     }
   }
 
-  findById(id, filter, model) {
+  findById(id, filter, requestOptions) {
     const params = filter ? { filter: JSON.stringify(filter) } : null
     return {
-      url: `${model.apiPath}/${id}`,
+      url: `${requestOptions.apiPath}/${id}`,
       method: 'GET',
       options: { params }
     }
   }
 
-  deleteById(id, model) {
+  deleteById(id, requestOptions) {
     return {
-      url: `${model.apiPath}/${id}`,
+      url: `${requestOptions.apiPath}/${id}`,
       method: 'DELETE',
       options: { }
     }
   }
 
-  count(where, model) {
+  count(where, requestOptions) {
     const params = { where: JSON.stringify(where) }
     return {
-      url: `${model.apiPath}/count`,
+      url: `${requestOptions.apiPath}/count`,
       method: 'GET',
       options: { params }
     }
   }
 
-  custom(name, path, method, options = {}, model) {
+  custom(name, path, method, options = {}, requestOptions) {
     const _options = { headers: options.headers }
     if (options.params) _options.params = JSON.stringify(options.params)
     if (options.body) _options.body = JSON.stringify(options.body)
 
     return {
-      url: `${model.apiPath}/${path}`,
+      url: `${requestOptions.apiPath}/${path}`,
       method,
       options: _options
     }

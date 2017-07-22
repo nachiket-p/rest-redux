@@ -6,7 +6,7 @@ describe('ModelActions', () => {
     model = new Model({modelName: 'todos'}, { basePath: 'http://localhost:3000/api' })
   })
   it('should create a ModelActions', () => { 
-    const todoActions = model.actions
+    const todoActions = model.actions()
     expect(todoActions).toBeDefined()
     expect(todoActions.create).toBeDefined()
     expect(todoActions.find).toBeDefined()

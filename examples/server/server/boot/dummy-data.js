@@ -33,10 +33,23 @@ module.exports = function (app) {
     });
   }
 
+  const createComments = (users, todos, cb) => {
+    ds.automigrate('Comment', function (err) {
+      if (err) return cb(err);
+      var Comment = app.models.Comment;
+      Comment.create([
+        { text: 'How are you gonna do this?', todoId: todos[0].id, addedBy: users[0].id },
+        { text: 'Fear is a great motivator :)', todoId: todos[0].id, addedBy: users[1].id },
+        { text: 'Oh, good strategy.', todoId: todos[0].id, addedBy: users[0].id }
+      ], cb);
+    });
+  }
+
   createRoles((err, roles) => 
     createUsers(roles, (err,users) =>
-      createTodos(roles, (err,todos) => console.log('SEED DATA INIT DONE'))
+      createTodos(roles, (err,todos) => 
+        createComments(users, todos, (err,comments) => console.log('SEED DATA INIT DONE'))
     )
-  )
+  ))
 }
   

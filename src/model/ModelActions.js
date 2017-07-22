@@ -4,7 +4,7 @@ import { REQUEST, RESPONSE, ACTION, ERROR, SELECTED, RECEIVED, CLEAR } from '../
 
 //TODO: Move URL related logic to APIAdapter
 export default class ModelActions {
-  constructor(model, config, routeParams, api, requestAdapter) {
+  constructor(model, config, routeParams = {}, api, requestAdapter) {
     this.model = model
     this.entitySchema = new schema.Entity(model.modelName)
     this.routeParams = routeParams
@@ -69,14 +69,16 @@ export default class ModelActions {
   }
   
   create(data) {
-    const {url, method, options} = this.requestAdapter.create(data, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.create(data, {apiPath})
     return this._call(url, method, options,
       () => this._createAction(REQUEST.CREATE, { data }),
       this._createNormalized(RESPONSE.CREATE, true))
   }
 
   update(id, data) {
-    const {url, method, options} = this.requestAdapter.update(id, data, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.update(id, data, {apiPath})
 
     return this._call(url, method, options,
       () => this._createAction(REQUEST.UPDATE, { id, data }),
@@ -84,7 +86,8 @@ export default class ModelActions {
   }
 
   updateAll(where, data) {
-    const {url, method, options} = this.requestAdapter.updateAll(where, data, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.updateAll(where, data, {apiPath})
 
     return this._call(url, method, options,
       () => this._createAction(REQUEST.UPDATE_ALL, { where, data }),
@@ -92,21 +95,24 @@ export default class ModelActions {
   }
 
   find(filter, listName = undefined) {
-    const {url, method, options} = this.requestAdapter.find(filter, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.find(filter, {apiPath})
     return this._call(url, method, options,
       () => this._createAction(REQUEST.FIND, { filter, listName }),
       this._createNormalized(RESPONSE.FIND, false, listName))
   }
 
   findById(id, filter) {
-    const {url, method, options} = this.requestAdapter.findById(id, filter, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.findById(id, filter, {apiPath})
     return this._call(url, method, options,
       () => this._createAction(REQUEST.FIND_BY_ID, { id, filter }),
       this._createNormalized(RESPONSE.FIND_BY_ID, true))
   }
 
   deleteById(id) {
-    const {url, method, options} = this.requestAdapter.deleteById(id, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.deleteById(id, {apiPath})
     return this._call(url, method, options,
       () => this._createAction(REQUEST.DELETE_BY_ID, { id }),
       (response) => this._createAction(RESPONSE.DELETE_BY_ID, { id: id })
@@ -114,7 +120,8 @@ export default class ModelActions {
   }
 
   count(where, listName=null) {
-    const {url, method, options} = this.requestAdapter.count(where, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.count(where, {apiPath})
     return this._call(url, method, options,
       () => this._createAction(REQUEST.COUNT, { where, listName }),
       (response) => this._createAction(RESPONSE.COUNT, { count: response.count, listName })
@@ -122,7 +129,8 @@ export default class ModelActions {
   }
 
   custom(name, path, _method, _options = {}) {
-    const {url, method, options} = this.requestAdapter.custom(name, path, _method, _options, this.model)
+    const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    const {url, method, options} = this.requestAdapter.custom(name, path, _method, _options, {apiPath})
     return this._call(url, method, options,
       () => this._createAction(REQUEST.CUSTOM, { name, path, _method, _options }),
       (response) => this._createAction(RESPONSE.CUSTOM, { response: response, name })
