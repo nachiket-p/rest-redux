@@ -1,6 +1,8 @@
 ## Change Log
 
-### 0.2.1 (2017/07/03 12:19 +00:00)
+### 0.3.0 (2017/07/23 17:16 +00:00)
+- [b1cc326](https://github.com/nachiket-p/rest-redux/commit/b1cc326942b009ddc587dd2c65a47bff6c619cb8) 0.2.1 (@nachiket-p)
+- [ff67c94](https://github.com/nachiket-p/rest-redux/commit/ff67c94701ec4c74afce9078807ea17c4f366da9) added babelrc (@nachiket-p)
 - [d939674](https://github.com/nachiket-p/rest-redux/commit/d9396741416dac0ff63722bd82cff1263179b176) 0.2.0 (@nachiket-p)
 - [ca0bed9](https://github.com/nachiket-p/rest-redux/commit/ca0bed9c5eee8a1b6e6eb52c28cbd899d0bea789) changelog output now prints commit as well (@nachiket-p)
 - [446d514](https://github.com/nachiket-p/rest-redux/commit/446d5148aa01561a7a572e7e2aead8826a430e0f) removed .babelrc for npm publish (@nachiket-p)
