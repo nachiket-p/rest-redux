@@ -96,6 +96,7 @@ export default class ModelActions {
 
   find(filter, listName = undefined) {
     const apiPath = this.requestAdapter.resolveRouteParams(this.model, this.routeParams)
+    console.log('using apiPath', apiPath)
     const {url, method, options} = this.requestAdapter.find(filter, {apiPath})
     return this._call(url, method, options,
       () => this._createAction(REQUEST.FIND, { filter, listName }),
