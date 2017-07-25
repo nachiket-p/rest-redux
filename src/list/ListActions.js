@@ -3,10 +3,11 @@ import { LIST } from '../constants'
 
 const { SET_OPTIONS, PAGE, FIRST, NEXT, LAST, PREV } = LIST
 export default class ListActions {
-  constructor(listName, listSelectors, modelActions) {
+  constructor(listName, listSelectors, model, modelActions) {
     this.modelActions = modelActions
     this.listSelectors = listSelectors
     this.listName = listName
+    this.modelName = model.modelName
   }
 
   setOptions({ headers, params, pageSize }) {
@@ -15,7 +16,7 @@ export default class ListActions {
   }
 
   _page(page, dispatch, state) {
-    dispatch({ type: PAGE, payload: { page, listName: this.listName, modelName: this.modelActions.modelName } })
+    dispatch({ type: PAGE, payload: { page, listName: this.listName, modelName: this.modelName } })
 
     const listObj = this.listSelectors.getListObj(state)
     const where = listObj.params

@@ -17,17 +17,13 @@
     "version": "npm run generate-changelog && git add CHANGELOG.md"
   },
   "dependencies": {
-    "expect": "^1.20.2",
     "lodash": "^4.17.4",
-    "nock": "^9.0.13",
     "normalizr": "^3.2.3",
     "prop-types": "^15.5.10",
     "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-redux": "^5.0.5",
     "redux": "^3.7.1",
-    "redux-mock-store": "^1.2.3",
-    "redux-thunk": "^2.2.0",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
@@ -42,7 +38,10 @@
     "babel-register": "^6.24.1",
     "github-changes": "^1.1.0",
     "jest": "^20.0.4",
+    "nock": "^9.0.13",
+    "redux-mock-store": "^1.2.3",
     "redux-testkit": "^1.0.6",
+    "redux-thunk": "^2.2.0",
     "rimraf": "^2.6.1"
   },
   "peerDependencies": {
