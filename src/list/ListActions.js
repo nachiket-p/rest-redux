@@ -10,8 +10,8 @@ export default class ListActions {
     this.modelName = model.modelName
   }
 
-  setOptions({ headers, params, pageSize }) {
-    const payload = _.omitBy({ headers, params, pageSize, listName: this.listName }, _.isNil)
+  setOptions({ headers, params, pageSize, offset }) {
+    const payload = _.omitBy({ headers, params, pageSize, offset, listName: this.listName, modelName: this.modelName }, _.isNil)
     return { type: SET_OPTIONS, payload }
   }
 

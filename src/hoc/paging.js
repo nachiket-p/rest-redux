@@ -13,6 +13,7 @@ const paging = (list, routeParams, props) => (Component) => {
       total: selectors.getTotal(state),
       hasNext: selectors.hasNext(state),
       hasPrev: selectors.hasPrev(state),
+      pageSize: selectors.getPageSize(state)
     }
   }
   const mapDispatchToProps =  (dispatch) => {
@@ -22,7 +23,8 @@ const paging = (list, routeParams, props) => (Component) => {
       last: () => dispatch(actions.last()),
       next: () => dispatch(actions.next()),
       prev: () => dispatch(actions.prev()),
-      refresh: () => dispatch(actions.refresh())
+      refresh: () => dispatch(actions.refresh()),
+      setOptions: (options) => dispatch(actions.setOptions(options))
     }
   }
   

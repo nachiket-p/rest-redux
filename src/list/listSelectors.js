@@ -30,7 +30,12 @@ export default (list, modelSelectors) => {
 
   const hasPrev = (state) => getListObj(state).offset > 0
 
+  const getPageSize = (state) => {
+    const listObj = getListObj(state)
+    return listObj.pageSize
+  }
+
   return {
-    getListObj, getInstances, getTotal, getPages, getCurrentPage, hasNext, hasPrev
+    getListObj, getInstances, getTotal, getPages, getCurrentPage, hasNext, hasPrev, getPageSize
   }
 }
