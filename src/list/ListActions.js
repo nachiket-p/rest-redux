@@ -10,8 +10,8 @@ export default class ListActions {
     this.modelName = model.modelName
   }
 
-  setOptions({ headers, params, pageSize, offset }) {
-    const payload = _.omitBy({ headers, params, pageSize, offset, listName: this.listName, modelName: this.modelName }, _.isNil)
+  setOptions({ headers, params, pageSize, offset, include }) {
+    const payload = _.omitBy({ headers, params, pageSize, offset, listName: this.listName, modelName: this.modelName, include }, _.isNil)
     return { type: SET_OPTIONS, payload }
   }
 
@@ -20,7 +20,8 @@ export default class ListActions {
 
     const listObj = this.listSelectors.getListObj(state)
     const where = listObj.params
-    const filter = { where, limit: listObj.pageSize, skip: page * listObj.pageSize }
+    const include = listObj.include
+    const filter = { where, limit: listObj.pageSize, skip: page * listObj.pageSize, include }
 
     dispatch(this.modelActions.find(filter, this.listName))
     dispatch(this.modelActions.count(where, this.listName))
