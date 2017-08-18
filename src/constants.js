@@ -38,6 +38,7 @@ export const LIST = {
   LAST: 'rest-redux/LAST->list',
   FIRST: 'rest-redux/FIRST->list',
   REFRESH: 'rest-redux/REFRESH->list',
+  SET_PARAMS:'rest-redux/SET_PARAMS->list'
 }
 
 // export const ACTION = {

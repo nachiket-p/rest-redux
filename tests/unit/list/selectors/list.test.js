@@ -4,40 +4,40 @@ import { DEFAULT_CONFIG } from '../../../../src'
 import _ from 'lodash'
 const data = {
 	'1': {
-					text: 'Remember the milk',
-					completed: false,
-					id: 1
-				},
-				'2': {
-					text: 'Reminder to remember the milk',
-					completed: false,
-					id: 2
-				},
-				'3': {
-					text: 'Visualize milk as beer',
-					completed: false,
-					id: 3
-				},
-				'4': {
-					text: 'Don\'t forget the milk at the store',
-					completed: false,
-					id: 4
-				},
-				'5': {
-					text: 'fifth',
-					completed: false,
-					id: 5
-				},
-				'6': {
-					text: 'sixth',
-					completed: false,
-					id: 6
-				},
-				'7': {
-					text: 'seventh',
-					completed: false,
-					id: 7
-				}
+		text: 'Remember the milk',
+		completed: false,
+		id: 1
+	},
+	'2': {
+		text: 'Reminder to remember the milk',
+		completed: false,
+		id: 2
+	},
+	'3': {
+		text: 'Visualize milk as beer',
+		completed: false,
+		id: 3
+	},
+	'4': {
+		text: 'Don\'t forget the milk at the store',
+		completed: false,
+		id: 4
+	},
+	'5': {
+		text: 'fifth',
+		completed: false,
+		id: 5
+	},
+	'6': {
+		text: 'sixth',
+		completed: false,
+		id: 6
+	},
+	'7': {
+		text: 'seventh',
+		completed: false,
+		id: 7
+	}
 }
 const STATE_FIRST_PAGE = {
 	rest: {
@@ -70,7 +70,7 @@ const STATE_FIRST_PAGE = {
 					result: [1, 2, 3],
 					headers: {},
 					params: {
-						completed: true
+						where: { completed: false }
 					}
 				}
 			}
@@ -82,7 +82,7 @@ const STATE_MIDDLE_PAGE = {
 	rest: {
 		todos: {
 			instances: {
-			data
+				data
 			},
 			last: {
 				find: [
@@ -109,7 +109,7 @@ const STATE_MIDDLE_PAGE = {
 					result: [4, 5, 6],
 					headers: {},
 					params: {
-						completed: true
+						where: { completed: false }
 					}
 				}
 			}
@@ -121,7 +121,7 @@ const STATE_LAST_PAGE = {
 	rest: {
 		todos: {
 			instances: {
-			data
+				data
 			},
 			last: {
 				find: [
@@ -148,7 +148,7 @@ const STATE_LAST_PAGE = {
 					result: [7],
 					headers: {},
 					params: {
-						completed: true
+						where: { completed: false }
 					}
 				}
 			}

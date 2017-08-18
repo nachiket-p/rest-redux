@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { LIST } from '../constants'
 
-const { SET_OPTIONS, PAGE, FIRST, NEXT, LAST, PREV } = LIST
+const { SET_OPTIONS, PAGE, FIRST, NEXT, LAST, PREV, SET_PARAMS } = LIST
 export default class ListActions {
   constructor(listName, listSelectors, model, modelActions) {
     this.modelActions = modelActions
@@ -10,18 +10,21 @@ export default class ListActions {
     this.modelName = model.modelName
   }
 
-  setOptions({ headers, params, pageSize, offset, include }) {
-    const payload = _.omitBy({ headers, params, pageSize, offset, listName: this.listName, modelName: this.modelName, include }, _.isNil)
+  setOptions({ headers, params, pageSize, offset }) {
+    const payload = _.omitBy({ headers, params, pageSize, offset, listName: this.listName, modelName: this.modelName }, _.isNil)
     return { type: SET_OPTIONS, payload }
+  }
+
+  setParams(params) {
+    const payload = _.omitBy({ ...params, listName: this.listName, modelName: this.modelName }, _.isNil)
+    return { type: SET_PARAMS, payload }
   }
 
   _page(page, dispatch, state) {
     dispatch({ type: PAGE, payload: { page, listName: this.listName, modelName: this.modelName } })
-
     const listObj = this.listSelectors.getListObj(state)
-    const where = listObj.params
-    const include = listObj.include
-    const filter = { where, limit: listObj.pageSize, skip: page * listObj.pageSize, include }
+    const { where, include } = listObj.params
+    const filter = _.omitBy({ where, limit: listObj.pageSize, skip: page * listObj.pageSize, include }, _.isNil)
 
     dispatch(this.modelActions.find(filter, this.listName))
     dispatch(this.modelActions.count(where, this.listName))

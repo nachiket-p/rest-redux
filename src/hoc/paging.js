@@ -24,7 +24,8 @@ const paging = (list, routeParams, props) => (Component) => {
       next: () => dispatch(actions.next()),
       prev: () => dispatch(actions.prev()),
       refresh: () => dispatch(actions.refresh()),
-      setOptions: (options) => dispatch(actions.setOptions(options))
+      setOptions: (options) => dispatch(actions.setOptions(options)),
+      setParams: (params) => dispatch(actions.setParams(params))
     }
   }
   

@@ -14,11 +14,15 @@ const restRedux = new RestRedux({
       {name:'personal', options:{pageSize: 5}},
       {name:'incomplete', options: {
         pageSize: 3, 
-        params: {completed:false}
+        params: {
+          where:{completed:false}
+        }
       }},
       {name:'completed', options: {
         pageSize: 3, 
-        params: {completed:true}
+        params: {
+          where:{completed:true}
+        }
       }},
     ],
     schema: { //Uses normalizr.js (https://github.com/paularmstrong/normalizr)
