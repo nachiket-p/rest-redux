@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { LIST, RESPONSE, CLEAR } from '../constants'
-const { SET_OPTIONS, PAGE, NEXT, PREV, LAST, FIRST } = LIST
+const { SET_OPTIONS, PAGE, NEXT, PREV, LAST, FIRST, SET_PARAMS } = LIST
 const DEFAULT = {
   offset: 0,
   pageSize: 10,
@@ -17,7 +17,7 @@ export function listReducer(model, list) {
     if (!payload || !payload.modelName) {
       return state
     }
-    
+
     if (payload.modelName !== model.modelName || payload.listName !== list.name) {
       if (payload.modelName == model.modelName && type == CLEAR) {
         return { ...defaultState }
@@ -29,6 +29,8 @@ export function listReducer(model, list) {
     switch (type) {
       case SET_OPTIONS:
         return { ...state, ...payload }
+      case SET_PARAMS:
+        return { ...state, params: { ...state.params, ...payload } }
       case PAGE:
         return { ...state, offset: state.pageSize * payload.page }
       case RESPONSE.FIND:
