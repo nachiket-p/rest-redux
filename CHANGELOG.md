@@ -1,6 +1,21 @@
 ## Change Log
 
-### 0.3.1 (2017/07/24 12:31 +00:00)
+### 0.4.0 (2017/08/19 03:08 +00:00)
+- [5969173](https://github.com/nachiket-p/rest-redux/commit/5969173a5d2e6f5a1671a4a1f1bed505e4285b8f) Merge branch 'dev' (@nachiket-p)
+- [#10](https://github.com/nachiket-p/rest-redux/pull/10) Added Model action test (@agarwalraghav01)
+- [47e5714](https://github.com/nachiket-p/rest-redux/commit/47e57141e88ede50b8607c2a30d2ec05c9b025ec) Added Model action test (@agarwalraghav01)
+
+### v0.3.1 (2017/07/24 12:31 +00:00)
+- [9c56d49](https://github.com/nachiket-p/rest-redux/commit/9c56d4907c0d234a98ef9fcdb7c9584f62d8c226) 0.3.1 (@nachiket-p)
+- [#9](https://github.com/nachiket-p/rest-redux/pull/9) Corrected list selector test (@agarwalraghav01)
+- [669c661](https://github.com/nachiket-p/rest-redux/commit/669c661ba20fa09f029edb7ac469431fb9440725) Bugfix: offset was not getting set properly (@nachiket-p)
+- [0609204](https://github.com/nachiket-p/rest-redux/commit/0609204d91fce629fd27c441c4516dd6a7439b4d) Added test for hasPrev and hasNext in list selector (@agarwalraghav01)
+- [22e17d0](https://github.com/nachiket-p/rest-redux/commit/22e17d065b538319d3f8bcb588d38f9a565cdbd0) Added .yarnclean file (@nachiket-p)
+- [7c41853](https://github.com/nachiket-p/rest-redux/commit/7c418533b46b1fb894cff69d02d8c3498b670e4f) Merge branch 'dev' of https://github.com/nachiket-p/rest-redux into dev (@agarwalraghav01)
+- [0ccf7b1](https://github.com/nachiket-p/rest-redux/commit/0ccf7b199ca0c7f308570c93d6aa7c1e483b6b5c) Added some action tests & Removed unsed tests (@nachiket-p)
+- [edacabe](https://github.com/nachiket-p/rest-redux/commit/edacabea73a2d9b2b7140ae3e282c4f4f58e6405) corrected package deps (@nachiket-p)
+- [b423784](https://github.com/nachiket-p/rest-redux/commit/b4237841cf12e974f29d5c037e5719feb9a5b45e) removed unnecessary test from list selector (@agarwalraghav01)
+- [ca007ed](https://github.com/nachiket-p/rest-redux/commit/ca007edc8d5e0eecccb6c53e7c58a5697e824c31) changes made in hasNext and hasPrev in list selector (@agarwalraghav01)
 - [dceff35](https://github.com/nachiket-p/rest-redux/commit/dceff3509e12702ff046289146a317d271cea142) 0.3.0 (@nachiket-p)
 - [#8](https://github.com/nachiket-p/rest-redux/pull/8) Completed selector test (@agarwalraghav01)
 - [03ada1f](https://github.com/nachiket-p/rest-redux/commit/03ada1f45222a74b728ca998312fdb77d5882014) completed list selector test (@agarwalraghav01)
@@ -27,8 +42,12 @@
 - [2e2cf74](https://github.com/nachiket-p/rest-redux/commit/2e2cf749a4f08bb8b33e4611e54bb544e4e6ca97) complex example testing (@nachiket-p)
 - [344b176](https://github.com/nachiket-p/rest-redux/commit/344b1768953b9ff1a4bb70655a71b0ea751e17be) custom API Path issue fixed (@nachiket-p)
 - [34b95c8](https://github.com/nachiket-p/rest-redux/commit/34b95c887178cff490cdd985bc1a5e6554570da6) Created RequestAdapter for extending (@nachiket-p)
+
+### v0.2.1 (2017/07/03 12:19 +00:00)
 - [b1cc326](https://github.com/nachiket-p/rest-redux/commit/b1cc326942b009ddc587dd2c65a47bff6c619cb8) 0.2.1 (@nachiket-p)
 - [ff67c94](https://github.com/nachiket-p/rest-redux/commit/ff67c94701ec4c74afce9078807ea17c4f366da9) added babelrc (@nachiket-p)
+
+### v0.2.0 (2017/07/03 12:06 +00:00)
 - [d939674](https://github.com/nachiket-p/rest-redux/commit/d9396741416dac0ff63722bd82cff1263179b176) 0.2.0 (@nachiket-p)
 - [ca0bed9](https://github.com/nachiket-p/rest-redux/commit/ca0bed9c5eee8a1b6e6eb52c28cbd899d0bea789) changelog output now prints commit as well (@nachiket-p)
 - [446d514](https://github.com/nachiket-p/rest-redux/commit/446d5148aa01561a7a572e7e2aead8826a430e0f) removed .babelrc for npm publish (@nachiket-p)
@@ -37,16 +56,24 @@
 - [497d694](https://github.com/nachiket-p/rest-redux/commit/497d694f7ccdfeff80eabbaa622ec813f5511a42) Added Minimal Example (@nachiket-p)
 - [8e83cab](https://github.com/nachiket-p/rest-redux/commit/8e83cab86657ea07785e1169b22d6955bcfa711a) Example: Added completed todo in initial data (@nachiket-p)
 - [7fbb62c](https://github.com/nachiket-p/rest-redux/commit/7fbb62c61218c739f5511663cf75b5911d77f14f) Examples restructure (@nachiket-p)
+
+### v0.1.8 (2017/06/29 12:56 +00:00)
 - [869e25e](https://github.com/nachiket-p/rest-redux/commit/869e25e3a675ae68ce8686b07f28bc3532c2ab43) 0.1.8 (@nachiket-p)
 - [de1b1e8](https://github.com/nachiket-p/rest-redux/commit/de1b1e8cd4d037908a011cb5f407cdf52de6f6e1) added npmignore to add lib in npm (@nachiket-p)
 - [3c5d62a](https://github.com/nachiket-p/rest-redux/commit/3c5d62a31a7b900b638e1c36f2f88d1635f652d2) Merge branch 'dev' of github.com:nachiket-p/rest-redux into dev (@nachiket-p)
 - [#3](https://github.com/nachiket-p/rest-redux/pull/3) Remove unused paging attribute (@jariwalabhavesh)
+
+### v0.1.7 (2017/06/29 12:22 +00:00)
 - [d2c38ea](https://github.com/nachiket-p/rest-redux/commit/d2c38ea8e506a15db45ab6a1a7ed9cba8e52096c) 0.1.7 (@nachiket-p)
 - [dc5d820](https://github.com/nachiket-p/rest-redux/commit/dc5d82045aad8d6e417f4974f6319cee8eeb3415) corrected main path (@nachiket-p)
+
+### v0.1.6 (2017/06/29 11:42 +00:00)
 - [7eecfa1](https://github.com/nachiket-p/rest-redux/commit/7eecfa1472eb701581651bcf0f0a0c9d6ca1bbc8) 0.1.6 (@nachiket-p)
 - [9b2e7ff](https://github.com/nachiket-p/rest-redux/commit/9b2e7ffddc7456afa9f3030f900ddc0be51d4d78) corrected main path (@nachiket-p)
 - [6a11902](https://github.com/nachiket-p/rest-redux/commit/6a1190294d748ba74665d87957dedf4ebb415e43) 1.Readme  modified
 - [a8b8dad](https://github.com/nachiket-p/rest-redux/commit/a8b8dad9a9406ac9b03f93f282f6b8924d8fc705) Remove unused paging attribute
+
+### v0.1.5 (2017/06/29 06:35 +00:00)
 - [9af5593](https://github.com/nachiket-p/rest-redux/commit/9af5593021960fff3aae3620b45730c56c44ce4a) 0.1.5 (@nachiket-p)
 - [b9b88b7](https://github.com/nachiket-p/rest-redux/commit/b9b88b748674457632fb74af2431a52d6f1dbbaf) corrected deps in package.json, fixed major bug (@nachiket-p)
 - [2d7bf4f](https://github.com/nachiket-p/rest-redux/commit/2d7bf4f5821bdbf7c7232ae16d4d8933669744ce) added codecov & coverage settings (@nachiket-p)
