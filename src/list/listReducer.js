@@ -28,9 +28,8 @@ export function listReducer(model, list) {
     console.log('reducing for ', list.name, payload.listName, payload.modelName, model.modelName);
     switch (type) {
       case SET_OPTIONS:
-        return { ...state, ...payload }
-      case SET_PARAMS:
-        return { ...state, params: { ...state.params, ...payload } }
+        const params = payload.params ? { ...state.params, ...payload.params } : state.params
+        return { ...state, ...payload, params }
       case PAGE:
         return { ...state, offset: state.pageSize * payload.page }
       case RESPONSE.FIND:

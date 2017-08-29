@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { LIST } from '../constants'
 
-const { SET_OPTIONS, PAGE, FIRST, NEXT, LAST, PREV, SET_PARAMS } = LIST
+const { SET_OPTIONS, PAGE, FIRST, NEXT, LAST, PREV } = LIST
 export default class ListActions {
   constructor(listName, listSelectors, model, modelActions) {
     this.modelActions = modelActions
@@ -13,11 +13,6 @@ export default class ListActions {
   setOptions({ headers, params, pageSize, offset }) {
     const payload = _.omitBy({ headers, params, pageSize, offset, listName: this.listName, modelName: this.modelName }, _.isNil)
     return { type: SET_OPTIONS, payload }
-  }
-
-  setParams(params) {
-    const payload = _.omitBy({ ...params, listName: this.listName, modelName: this.modelName }, _.isNil)
-    return { type: SET_PARAMS, payload }
   }
 
   _page(page, dispatch, state) {

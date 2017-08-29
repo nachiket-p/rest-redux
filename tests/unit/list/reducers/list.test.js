@@ -3,7 +3,7 @@ import { listReducer } from '../../../../src/list/listReducer'
 import Model from '../../../../src/list'
 import List from '../../../../src/list'
 import { LIST, RESPONSE, CLEAR } from '../../../../src/constants'
-const { SET_OPTIONS, PAGE, NEXT, PREV, LAST, FIRST, SET_PARAMS } = LIST
+const { SET_OPTIONS, PAGE, NEXT, PREV, LAST, FIRST } = LIST
 
 const completeListReducer = listReducer({ modelName: 'todos' }, { name: 'completed' })
 const errorListReducer = listReducer({ modelName: 'todos' }, { name: 'incomplete' })
@@ -74,18 +74,20 @@ describe(' complete list reducer', () => {
 		const state = completeListReducer({ pageSize: ID }, ACTION_CUSTOM_RESPONSE_COUNT)
 		expect(state.total).toEqual(ID)
 	})
-	it('should test SET_PARAMS action ', () => {
-		const ACTION_CUSTOM_SET_PARAMS = {
-			type: SET_PARAMS,
+	it('should test params change in SET_OPTIONS action ', () => {
+		const ACTION_CUSTOM_SET_OPTIONS = {
+			type: SET_OPTIONS,
 			payload: {
-				include: ['items'],
+				where: {
+					include: ['items']
+				},
 				listName: 'completed',
 				modelName: 'todos'
 			}
 		}
-		const state = completeListReducer({params:{where:{completed:true}}}, ACTION_CUSTOM_SET_PARAMS)
-		expect(state.params.include).toEqual(ACTION_CUSTOM_SET_PARAMS.payload.include)
-		expect(state.params.where).toEqual({completed:true})
+		const state = completeListReducer({ params: { where: { completed: true } } }, ACTION_CUSTOM_SET_OPTIONS)
+		expect(state.params.include).toEqual(ACTION_CUSTOM_SET_OPTIONS.payload.include)
+		expect(state.params.where).toEqual({ completed: true })
 	})
 	it('should test error list test cases', () => {
 		const ACTION_CUSTOM_ERROR_PAYLOAD = {
