@@ -2,6 +2,8 @@ import listSelectors from '../../../../src/list/listSelectors'
 import modelSelectors from '../../../../src/model/modelSelectors'
 import { DEFAULT_CONFIG } from '../../../../src'
 import _ from 'lodash'
+
+const PAGE_SIZE = 3
 const data = {
 	'1': {
 		text: 'Remember the milk',
@@ -65,7 +67,7 @@ const STATE_FIRST_PAGE = {
 			lists: {
 				completed: {
 					offset: 0,
-					pageSize: 3,
+					pageSize: PAGE_SIZE,
 					total: 7,
 					result: [1, 2, 3],
 					headers: {},
@@ -104,7 +106,7 @@ const STATE_MIDDLE_PAGE = {
 			lists: {
 				completed: {
 					offset: 3,
-					pageSize: 3,
+					pageSize: PAGE_SIZE,
 					total: 7,
 					result: [4, 5, 6],
 					headers: {},
@@ -143,7 +145,7 @@ const STATE_LAST_PAGE = {
 			lists: {
 				completed: {
 					offset: 6,
-					pageSize: 3,
+					pageSize: PAGE_SIZE,
 					total: 7,
 					result: [7],
 					headers: {},
@@ -174,7 +176,10 @@ describe('List Selector', () => {
 		const instances = STATE_FIRST_PAGE.rest.todos.instances
 		expect(selectors.getInstances(STATE_FIRST_PAGE)).toEqual([instances['1'], instances['2'], instances['3']])
 	})
-	it('should return get curent page', () => {
+	it('should return get page Size', () => {
+		expect(selectors.getPageSize(STATE_FIRST_PAGE)).toEqual(PAGE_SIZE)
+	})
+	it('should return get current page', () => {
 		const listObj = selectors.getListObj(STATE_FIRST_PAGE)
 		expect(selectors.getCurrentPage(STATE_FIRST_PAGE)).toEqual(listObj.offset / listObj.pageSize)
 	})
