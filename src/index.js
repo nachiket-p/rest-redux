@@ -63,16 +63,17 @@ export default class Wrapper {
   // }
 }
 
-export const connectModel = (model, filter) => (Component) => {
-  //const actions = createActions(model)
-  // QUESTION:?? Get filtered action here const instances = actions.find()
-  return class ModelComponent extends React.Component {
-    render() {
-      return <Component {...this.props} />
-      // restActions={actions}
-    }
-  }
-}
+// See if HOC is better or this?
+// export const connectModel = (model, filter) => (Component) => {
+//   //const actions = createActions(model)
+//   // QUESTION:?? Get filtered action here const instances = actions.find()
+//   return class ModelComponent extends React.Component {
+//     render() {
+//       return <Component {...this.props} />
+//       // restActions={actions}
+//     }
+//   }
+// }
 
 
 export const paging = pagingHoc

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
-import {connectModel} from 'rest-redux'
 import {getVisibleTodos, isTodosLoading, getTodosCount} from '../selectors'
 import { todo } from '../../api'
 
@@ -32,4 +31,4 @@ const VisibleTodoList = connect(
   mapDispatchToProps
 )(TodoList)
 
-export default connectModel('todos')(VisibleTodoList)
+export default (VisibleTodoList)
