@@ -4,11 +4,16 @@ import Model from '../../../../src/model'
 import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED, CLEAR } from '../../../../src/constants'
 const todoReducer = modelReducer({ modelName: 'todos' })
 
-const DEFAULT_STATE_NO_LIST = { "error": null, "instances": {}, "request": { "loading": false }, last: { find: [], delete: [], custom: {} } }
+const DEFAULT_STATE_NO_LIST = { "error": null, "instances": {}, "request": { "loading": false }, last: {  } }
+
+const BASE_PATH = 'http://localhost:3000/api'
+const TODO_PATH = '/todos'
+const API_PATH = BASE_PATH + TODO_PATH
+
 describe('request reducer', () => {
 	let model
 	beforeEach(() => {
-		model = new Model({ modelName: 'todos' }, { basePath: 'http://localhost:3000/api' })
+		model = new Model({ modelName: 'todos', apiPath: TODO_PATH }, { basePath: BASE_PATH })
 	})
 
 	it('should have initial state', () => {
@@ -91,11 +96,12 @@ describe('request reducer', () => {
 					3,
 					4
 				],
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
 		expect(state.request).toEqual({ "loading": false })
-		expect(state.last.find).toEqual([1, 2, 3, 4])
+		expect(state.last[API_PATH].find).toEqual([1, 2, 3, 4])
 	})
 	it('should test response find_by_id', () => {
 		const state = todoReducer({}, {
@@ -104,22 +110,24 @@ describe('request reducer', () => {
 				id: [
 					1
 				],
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
 		expect(state.request).toEqual({ "loading": false })
-		expect(state.last.findById).toEqual([1])
+		expect(state.last[API_PATH].findById).toEqual([1])
 	})
 	it('should test response create', () => {
 		const store = todoReducer({}, {
 			type: RESPONSE.CREATE,
 			"payload": {
 				id: 6,
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
 		expect(store.request).toEqual({ "loading": false })
-		expect(store.last.create).toEqual(6)
+		expect(store.last[API_PATH].create).toEqual(6)
 	})
 	it('should test response count', () => {
 		const store = todoReducer({}, {
@@ -127,11 +135,12 @@ describe('request reducer', () => {
 			"payload": {
 				count: 2,
 				listName: null,
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
 		expect(store.request).toEqual({ "loading": false })
-		expect(store.last.count).toEqual(2)
+		expect(store.last[API_PATH].count).toEqual(2)
 	})
 	it('should test response delete_by_id', () => {
 		const ID = 7
@@ -139,11 +148,12 @@ describe('request reducer', () => {
 			type: RESPONSE.DELETE_BY_ID,
 			"payload": {
 				id: ID,
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
-		expect(store.request).toEqual({ "loading": false })
-		expect(store.last.deleteById).toEqual(ID)
+		expect(store.request).toEqual({ "loading": false})
+		expect(store.last[API_PATH].deleteById).toEqual(ID)
 		expect(store.instances[ID]).toBeUndefined()
 	})
 	it('should test response delete', () => {
@@ -152,7 +162,8 @@ describe('request reducer', () => {
 			type: RESPONSE.DELETE,
 			"payload": {
 				id: ID,
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
 		expect(store.instances[ID]).toBeUndefined()
@@ -165,21 +176,23 @@ describe('request reducer', () => {
 				data: {
 					text: 'checking working or not '
 				},
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
 		expect(store.request).toEqual({ "loading": false })
-		expect(store.last.update).toEqual(3)
+		expect(store.last[API_PATH].update).toEqual(3)
 	})
 	it('should test response update all', () => {
 		const store = todoReducer({}, {
 			type: RESPONSE.UPDATE_ALL,
 			"payload": {
 				count: 7,
-				modelName: 'todos'
+				modelName: 'todos',
+				apiPath: API_PATH
 			}
 		})
-		expect(store.last.updateAll).toEqual(7)
+		expect(store.last[API_PATH].updateAll).toEqual(7)
 	})
 	it('should test response custom ', () => {
 		const store = todoReducer({}, {
@@ -194,10 +207,12 @@ describe('request reducer', () => {
 						email: 'john@doe.com',
 						password: 'gotthemilk'
 					}
-				}
-			},
-			modelName: 'users'
+				},
+				modelName: 'todos',
+				apiPath: API_PATH
+			}
 		})
-		expect(store.last.custom).toEqual({})
+		console.log("STORE", store)
+		expect(store.last[API_PATH].custom).toEqual({})
 	})
 })

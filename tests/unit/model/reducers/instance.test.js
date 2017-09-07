@@ -6,7 +6,7 @@ import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED, CLEAR } from '../../../..
 const todoReducer = modelReducer({ modelName: 'todos' })
 
 
-const DEFAULT_STATE_NO_LIST = { "error": null, "instances": {}, "request": { "loading": false }, last: { find: [], delete: [], custom: {} } }
+const DEFAULT_STATE_NO_LIST = { "error": null, "instances": {}, "request": { "loading": false }, last: {  } }
 describe('counter reducer', () => {
 	let model
 	beforeEach(() => {

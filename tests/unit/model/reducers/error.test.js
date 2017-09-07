@@ -6,7 +6,7 @@ import { REQUEST, RESPONSE, ERROR, SELECTED, RECEIVED, CLEAR } from '../../../..
 import { error } from '../../../../src/model/modelReducer'
 const todoReducer = modelReducer({ modelName: 'todo' })
 
-const DEFAULT_STATE_NO_LIST = { "error": null, "instances": {}, "request": { "loading": false }, last: { find: [], delete: [], custom: {} } }
+const DEFAULT_STATE_NO_LIST = { "error": null, "instances": {}, "request": { "loading": false }, last: { } }
 describe('error reducer', () => {
     let model
     beforeEach(() => {
@@ -25,7 +25,7 @@ describe('error reducer', () => {
             }
         })
         ).toEqual({
-            "error": null, "instances": {}, "last": { "custom": {}, "delete": [], "find": [] }, "request": {
+            "error": null, "instances": {}, "last": { }, "request": {
                 "loading":
                 false
             }
@@ -39,7 +39,7 @@ describe('error reducer', () => {
             }
         })
         ).toEqual({
-            "error": null, "instances": {}, "last": { "custom": {}, "delete": [], "find": [] }, "request": {
+            "error": null, "instances": {}, "last": { }, "request": {
                 "loading":
                 false
             }

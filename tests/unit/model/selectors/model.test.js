@@ -1,7 +1,9 @@
 import modelSelectors from '../../../../src/model/modelSelectors'
 import { DEFAULT_CONFIG } from '../../../../src'
 import _ from 'lodash'
-const STATE ={
+
+const API_PATH = "http://dummy.path/api"
+const STATE = {
   rest: {
     todos: {
       instances: {
@@ -32,14 +34,16 @@ const STATE ={
         }
       },
       last: {
-        find: [
-          1,
-          2,
-          3
-        ],
-        'delete': [],
-        count : 3 ,
-        custom: {}
+        [API_PATH]: {
+          find: [
+            1,
+            2,
+            3
+          ],
+          'delete': [],
+          count: 3,
+          custom: {}
+        }
       },
       request: {
         loading: false
@@ -72,7 +76,7 @@ const instances = STATE.rest.todos.instances
 describe('Model Selectors ', () => {
   let selectors
   beforeEach(() => {
-    selectors = modelSelectors({ modelName: 'todos' }, {}, DEFAULT_CONFIG.rootSelector)
+    selectors = modelSelectors({ modelName: 'todos' }, API_PATH, DEFAULT_CONFIG.rootSelector)
   })
 
   it('should be defined', () => {
@@ -93,15 +97,15 @@ describe('Model Selectors ', () => {
   })
 
   it('should return found Instances', () => {
-    expect(selectors.getFound(STATE)).toEqual([ instances['1'], instances['2'], instances['3']])
+    expect(selectors.getFound(STATE)).toEqual([instances['1'], instances['2'], instances['3']])
   })
-  it('should return instances' ,() => {
+  it('should return instances', () => {
     expect(selectors.getInstances(STATE)).toEqual(_.values(STATE.rest.todos.instances))
   })
-  it('should return loading',() => {
+  it('should return loading', () => {
     expect(selectors.isLoading(STATE)).toEqual(STATE.rest.todos.request.loading)
   })
-  it('should return count ',() => {
-    expect(selectors.getCount(STATE)).toEqual(STATE.rest.todos.last.count)
+  it('should return count ', () => {
+    expect(selectors.getCount(STATE)).toEqual(STATE.rest.todos.last[API_PATH].count)
   })
 })

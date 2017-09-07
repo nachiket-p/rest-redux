@@ -10,8 +10,10 @@ import { REQUEST, RESPONSE, CLEAR, RECEIVED } from '../../../src/constants'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
-const DEFAULT_STATE = { rest: { todos: { "error": null, "instances": {}, "request": { "loading": false }, last: { find: [], delete: [], custom: {} } } } }
+const DEFAULT_STATE = { rest: { todos: { "error": null, "instances": {}, "request": { "loading": false }, last: { } } } }
 const BASE_PATH = 'http://localhost:3000/api'
+const TODO_PATH = '/todos'
+const API_PATH = BASE_PATH + TODO_PATH
 
 const mockResponse = (status, statusText, response) => {
   return new window.Response(JSON.stringify(response), {
@@ -28,7 +30,7 @@ describe('ModelActions', () => {
   beforeEach(() => {
     const restRedux = new RestRedux({
       basePath: BASE_PATH,
-      models: [{ modelName: 'todos', apiPath: '/todos' }]
+      models: [{ modelName: 'todos', apiPath: TODO_PATH }]
     })
     model = restRedux.get('todos')
   })
@@ -63,9 +65,9 @@ describe('ModelActions', () => {
     const store = mockStore(DEFAULT_STATE)
 
     const expectedActions = [
-      { type: REQUEST.FIND, payload: { modelName: "todos", filter: {} } },
+      { type: REQUEST.FIND, payload: { modelName: "todos", filter: {}, apiPath: API_PATH } },
       { type: RECEIVED, payload: { modelName: "todos", instances: _.keyBy(response, 'id') } },
-      { type: RESPONSE.FIND, payload: { modelName: "todos", ids: response.map(todo => todo.id) } },
+      { type: RESPONSE.FIND, payload: { modelName: "todos", ids: response.map(todo => todo.id), apiPath: API_PATH } },
     ]
 
     return store.dispatch(todoActions.find({})).then(() => {
@@ -89,9 +91,9 @@ describe('ModelActions', () => {
     const store = mockStore(DEFAULT_STATE)
 
     const expectedActions = [
-      { type: REQUEST.CREATE, payload: { modelName: "todos", data: NEW_TODO } },
+      { type: REQUEST.CREATE, payload: { modelName: "todos", apiPath: API_PATH,  data: NEW_TODO } },
       { type: RECEIVED, payload: { modelName: "todos", instances: { [NEW_ID]: response } } },
-      { type: RESPONSE.CREATE, payload: { modelName: "todos", id: NEW_ID } },
+      { type: RESPONSE.CREATE, payload: { modelName: "todos", apiPath: API_PATH, id: NEW_ID } },
     ]
 
     return store.dispatch(todoActions.create(NEW_TODO)).then(() => {
@@ -111,9 +113,9 @@ describe('ModelActions', () => {
     const updateActions = model.actions()
     const store = mockStore(DEFAULT_STATE)
     const expectedActions = [
-      { type: REQUEST.UPDATE, payload: { data: UPDATE_TODO, modelName: 'todos', id: ID } },
+      { type: REQUEST.UPDATE, payload: { data: UPDATE_TODO, apiPath: API_PATH, modelName: 'todos', id: ID } },
       { type: RECEIVED, payload: { modelName: "todos", instances: { [ID]: response } } },
-      { type: RESPONSE.UPDATE, payload: { modelName: "todos", id: ID } }
+      { type: RESPONSE.UPDATE, payload: { modelName: "todos", apiPath: API_PATH, id: ID } }
     ]
     return store.dispatch(updateActions.update(ID, UPDATE_TODO)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -131,8 +133,8 @@ describe('ModelActions', () => {
     const store = mockStore(DEFAULT_STATE)
 
     const expectedActions = [
-      { type: REQUEST.UPDATE_ALL, payload: { where: UPDATE_WHERE, data: UPDATE_DATA, modelName: 'todos' } },
-      { type: RESPONSE.UPDATE_ALL, payload: { count: undefined, modelName: 'todos' } }
+      { type: REQUEST.UPDATE_ALL, payload: { where: UPDATE_WHERE, data: UPDATE_DATA, modelName: 'todos', apiPath: API_PATH } },
+      { type: RESPONSE.UPDATE_ALL, payload: { count: undefined, modelName: 'todos', apiPath: API_PATH } }
     ]
     return store.dispatch(updateActions.updateAll(UPDATE_WHERE, UPDATE_DATA)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -149,8 +151,8 @@ describe('ModelActions', () => {
     const store = mockStore(DEFAULT_STATE)
 
     const expectedActions = [
-      { type: REQUEST.DELETE_BY_ID, payload: { 'id': COUNT, modelName: 'todos' } },
-      { type: RESPONSE.DELETE_BY_ID, payload: { 'id': COUNT, modelName: 'todos' } }
+      { type: REQUEST.DELETE_BY_ID, payload: { 'id': COUNT, modelName: 'todos', apiPath: API_PATH } },
+      { type: RESPONSE.DELETE_BY_ID, payload: { 'id': COUNT, modelName: 'todos', apiPath: API_PATH } }
     ]
     return store.dispatch(deleteActions.deleteById(COUNT)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -168,8 +170,8 @@ describe('ModelActions', () => {
     const store = mockStore(DEFAULT_STATE)
 
     const expectedActions = [
-      { type: REQUEST.COUNT, payload: { 'where': WHERE, 'listName': LISTNAME, modelName: 'todos' } },
-      { type: RESPONSE.COUNT, payload: { 'count': response.count, 'listName': LISTNAME, modelName: 'todos' } }
+      { type: REQUEST.COUNT, payload: { 'where': WHERE, 'listName': LISTNAME, modelName: 'todos', apiPath: API_PATH } },
+      { type: RESPONSE.COUNT, payload: { 'count': response.count, 'listName': LISTNAME, modelName: 'todos', apiPath: API_PATH } }
     ]
     return store.dispatch(countActions.count(WHERE, LISTNAME)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -188,8 +190,8 @@ describe('ModelActions', () => {
     const store = mockStore(DEFAULT_STATE)
 
     const expectedActions = [
-      { type: REQUEST.CUSTOM, payload: { name: NAME, path: PATH, _method: METHOD, _options: OPTION, modelName: 'todos' } },
-      { type: RESPONSE.CUSTOM, payload: { 'response': response, name: NAME, modelName: 'todos' } }
+      { type: REQUEST.CUSTOM, payload: { name: NAME, path: PATH, _method: METHOD, _options: OPTION, modelName: 'todos', apiPath: API_PATH } },
+      { type: RESPONSE.CUSTOM, payload: { 'response': response, name: NAME, modelName: 'todos', apiPath: API_PATH } }
     ]
     return store.dispatch(customAction.custom(NAME, PATH, METHOD, OPTION)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -204,9 +206,9 @@ describe('ModelActions', () => {
     const FindByIdActions = model.actions()
     const store = mockStore(DEFAULT_STATE)
     const expectedActions = [
-      { type: REQUEST.FIND_BY_ID, payload: { id: ID , modelName:'todos'} },
+      { type: REQUEST.FIND_BY_ID, payload: { id: ID , modelName:'todos', apiPath: API_PATH} },
       { type: RECEIVED, payload: { modelName: 'todos', instances: _.keyBy(response, 'id') } },
-      { type: RESPONSE.FIND_BY_ID, payload: { id: response.map(todo => ID) , modelName:'todos'} }
+      { type: RESPONSE.FIND_BY_ID, payload: { id: response.map(todo => ID) , modelName:'todos', apiPath: API_PATH} }
     ]
     return store.dispatch(FindByIdActions.findById(ID)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
