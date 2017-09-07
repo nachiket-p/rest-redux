@@ -27,7 +27,7 @@ export default class Wrapper {
   constructor(_config) {
     this.config = _.merge({}, DEFAULT_CONFIG, _config)
     const { models } = this.config
-    console.log('config set: ', this.config)
+    //console.log('config set: ', this.config)
     this.reducer = _createReducer(models)
     this.middleware = store => next => action => next(action)
     const apiAdapter = new ApiAdapter(this.config)

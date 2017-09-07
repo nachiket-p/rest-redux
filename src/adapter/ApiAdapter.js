@@ -42,7 +42,7 @@ export default class APIAdapter {
       path = `${path}?${queryString.stringify(params)}`
       delete fetchOptions.params
     }
-    console.log('calling with options ', finalOptions, fetchOptions)
+    //console.log('calling with options ', finalOptions, fetchOptions)
     finalOptions.method = method
     return fetch(path, finalOptions)
       .then(handleStatus)

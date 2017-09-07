@@ -16,7 +16,6 @@ export default class RequestResolver {
   }
 
   resolveRouteParams(model, routeParams) {
-    console.log('Resolving Route: ', model, routeParams)
     return template(model.apiPath, routeParams)
   }
 

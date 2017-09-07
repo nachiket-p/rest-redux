@@ -14,10 +14,10 @@ export default class ModelActions {
 
   _successHandler(dispatch, creator) {
     return (response) => {
-      console.log('request succeeded with JSON response', response)
+      //console.log('request succeeded with JSON response', response)
       const actionResult = creator(response)
       const actions = _.isArray(actionResult) ? actionResult : [actionResult]
-      console.log('firing actions:', actions)
+      //console.log('firing actions:', actions)
       actions.forEach(action => dispatch(action))
       return response
     }
@@ -25,7 +25,7 @@ export default class ModelActions {
 
   _errorHandler(dispatch) {
     return (error) => {
-      console.log('request failed', error)
+      //console.log('request failed', error)
       const dispatchError = (error, message) => dispatch({ type: ERROR, payload: { modelName: this.model.modelName, error, message } })
       if (error.response) {
         error.response.json().then((response) => {
@@ -58,7 +58,7 @@ export default class ModelActions {
       } else {
         normalized = normalize(response, this.entitySchema)
       }
-      console.log('normalized: ', normalized)
+      //console.log('normalized: ', normalized)
 
       const actions = _.map(normalized.entities, (entities, modelName) => {
         return { type: RECEIVED, payload: { modelName, instances: entities } }
@@ -92,7 +92,7 @@ export default class ModelActions {
   }
 
   find(filter, listName = undefined) {
-    console.log('using apiPath', this.apiPath)
+    //console.log('using apiPath', this.apiPath)
     const {url, method, options} = this.requestAdapter.find(filter, { apiPath: this.apiPath })
     return this._call(url, method, options,
       () => this._createAction(REQUEST.FIND, { filter, listName }),
