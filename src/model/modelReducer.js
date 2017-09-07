@@ -101,12 +101,13 @@ export default (model) => {
         if (newState[apiPath].findById == payload.id) newState[apiPath].findById = null
         if (newState[apiPath].create == payload.id) newState[apiPath].create = null
         if (newState[apiPath].update == payload.id) newState[apiPath].update = null
-        if (newState[apiPath].find.indexOf(payload.id) > -1) {
+        if (newState[apiPath].find && newState[apiPath].find.indexOf(payload.id) > -1) {
           newState[apiPath].find = newState[apiPath].find.filter(id => id !== payload.id)
         }
         return newState
       case RESPONSE.CUSTOM:
-        return { ...state, [apiPath]:{ ...state[apiPath], custom: { ...state.custom, [payload.name]: payload.response } } }
+        const oldCustom = state[apiPath] ? state[apiPath].custom : {} 
+        return { ...state, [apiPath]:{ ...state[apiPath], custom: { ...oldCustom, [payload.name]: payload.response } } }
       case CLEAR:
         return { ...DEFAULT_LAST_STATE }
       default:
