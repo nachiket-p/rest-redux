@@ -40,7 +40,10 @@ module.exports = function (app) {
       Comment.create([
         { text: 'How are you gonna do this?', todoId: todos[0].id, addedBy: users[0].id },
         { text: 'Fear is a great motivator :)', todoId: todos[0].id, addedBy: users[1].id },
-        { text: 'Oh, good strategy.', todoId: todos[0].id, addedBy: users[0].id }
+        { text: 'Oh, good strategy.', todoId: todos[0].id, addedBy: users[0].id },
+        { text: 'Reminder will help', todoId: todos[1].id, addedBy: users[0].id },
+        { text: 'Thanks, but whats the reminder? :)', todoId: todos[1].id, addedBy: users[1].id },
+        { text: 'You will be remembered.', todoId: todos[1].id, addedBy: users[0].id }
       ], cb);
     });
   }

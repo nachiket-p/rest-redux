@@ -39,8 +39,10 @@ const todos = restRedux.get('todos')
 const todoComments = restRedux.get('todoComments')
 const users = restRedux.get('users')
 
+
+
 //Stateless View Component
-const ListComponent = ({ todos, todoComments }) => <div>
+const ListComponent = ({ todos, todo1Comments, todo2Comments }) => <div>
   <h3>Todos</h3>
   <ul>
     {todos.map(todo => <li key={todo.id} style={{
@@ -50,17 +52,23 @@ const ListComponent = ({ todos, todoComments }) => <div>
 
   <h4>Comments of a First Todo</h4>
   <ul>
-    {todoComments.map(comment => <li key={comment.id}>{comment.text}</li>)}
+    {todo1Comments.map(comment => <li key={comment.id}>{comment.text}</li>)}
+  </ul>
+
+  <h4>Comments of a Second Todo</h4>
+  <ul>
+    {todo2Comments.map(comment => <li key={comment.id}>{comment.text}</li>)}
   </ul>
 </div>
 
-//First TODO
-const TODO_ID = 1;
+const FIRST_TODO_ID = 1;
+const SECOND_TODO_ID = 2;
 
 //Redux Connect
 const App = connect((state) => ({
   todos: todos.selectors().getFound(state),
-  todoComments: todoComments.selectors({id: TODO_ID}).getFound(state)
+  todo1Comments: todoComments.selectors({id: FIRST_TODO_ID}).getFound(state), 
+  todo2Comments: todoComments.selectors({id: SECOND_TODO_ID}).getFound(state), 
 }), null)(ListComponent)
 
 //RENDER APP
@@ -83,5 +91,6 @@ store.dispatch(users.actions().custom('LOGIN', 'login', 'POST', options))
     //Dispatch Fetch Action
     store.dispatch(todos.actions().find({}))
     //Returns todos of URL with TODO_ID
-    store.dispatch(todoComments.actions({id: TODO_ID}).find({}))
+    store.dispatch(todoComments.actions({id: FIRST_TODO_ID}).find({}))
+    store.dispatch(todoComments.actions({id: SECOND_TODO_ID}).find({}))
   })
