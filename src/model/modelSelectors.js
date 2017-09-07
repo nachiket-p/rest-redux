@@ -3,8 +3,8 @@ import _ from 'lodash'
 export default (model, apiPath, rootSelector) => {
 
   const getModelObj = state => rootSelector(state)[model.modelName]
-  const getInstances = state => _.values(rootSelector(state)[model.modelName].instances)
-  const isLoading = state => rootSelector(state)[model.modelName].request.loading
+  const getInstances = state => _.values(getModelObj(state).instances)
+  const isLoading = state => getModelObj(state).request.loading
   
   const getCount = state => {
     const modelObj = getModelObj(state)
