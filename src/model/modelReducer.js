@@ -67,41 +67,46 @@ export default (model) => {
     }
   }
 
-  const DEFAULT_LAST_STATE = { find: [], delete: [], custom: {} }
+  const DEFAULT_LAST_STATE = { }
   const last = (state = DEFAULT_LAST_STATE, { type, payload }) => {
-    if (payload && payload.modelName !== model.modelName) {
+    if(!payload) { 
       return state
     }
 
-    if (payload && payload.listName) {
+    if (payload.modelName !== model.modelName ) {
       return state
     }
 
+    if (payload.listName || !payload.apiPath) {
+      return state
+    }
+
+    const apiPath = payload.apiPath
     switch (type) {
       case RESPONSE.FIND:
-        return { ...state, find: payload.ids }
+        return { ...state, [apiPath]:{ ...state[apiPath], find: payload.ids }}
       case RESPONSE.FIND_BY_ID:
-        return { ...state, findById: payload.id }
+        return { ...state, [apiPath]:{ ...state[apiPath], findById: payload.id }}
       case RESPONSE.CREATE:
-        return { ...state, create: payload.id }
+        return { ...state, [apiPath]:{ ...state[apiPath], create: payload.id }}
       case RESPONSE.UPDATE:
-        return { ...state, update: payload.id }
+        return { ...state, [apiPath]:{ ...state[apiPath], update: payload.id }}
       case RESPONSE.UPDATE_ALL:
-        return { ...state, updateAll: payload.count }
+        return { ...state, [apiPath]:{ ...state[apiPath], updateAll: payload.count }}
       case RESPONSE.COUNT:
-        return { ...state, count: payload.count }
+        return { ...state, [apiPath]:{ ...state[apiPath], count: payload.count }}
       case RESPONSE.DELETE_BY_ID:
         //case RESPONSE.DELETE:
-        const newState = { ...state, deleteById: payload.id }
-        if (newState.findById == payload.id) newState.findById = null
-        if (newState.create == payload.id) newState.create = null
-        if (newState.update == payload.id) newState.update = null
-        if (newState.find.indexOf(payload.id) > -1) {
-          newState.find = newState.find.filter(id => id !== payload.id)
+        const newState = { ...state, [apiPath]:{ ...state[apiPath], deleteById: payload.id }}
+        if (newState[apiPath].findById == payload.id) newState[apiPath].findById = null
+        if (newState[apiPath].create == payload.id) newState[apiPath].create = null
+        if (newState[apiPath].update == payload.id) newState[apiPath].update = null
+        if (newState[apiPath].find.indexOf(payload.id) > -1) {
+          newState[apiPath].find = newState[apiPath].find.filter(id => id !== payload.id)
         }
         return newState
       case RESPONSE.CUSTOM:
-        return { ...state, custom: { ...state.custom, [payload.name]: payload.response } }
+        return { ...state, [apiPath]:{ ...state[apiPath], custom: { ...state.custom, [payload.name]: payload.response } } }
       case CLEAR:
         return { ...DEFAULT_LAST_STATE }
       default:

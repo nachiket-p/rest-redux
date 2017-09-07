@@ -8,11 +8,14 @@ export default class Model {
 
     this.modelName = model.modelName
     this.config = config
+    
     this.actions = (routeParams) => {
-      return new ModelActions(model, config, routeParams, apiAdapter, requestAdapter)
+      const apiPath = requestAdapter.resolveRouteParams(model, routeParams)          
+      return new ModelActions(model, config, apiPath, apiAdapter, requestAdapter)
     }
     this.selectors = (routeParams) => {
-      return modelSelectors(model, routeParams, config.rootSelector)
+      const apiPath = requestAdapter.resolveRouteParams(model, routeParams)       
+      return modelSelectors(model, apiPath, config.rootSelector)
     }
     this.lists = {}
     if(model.lists) {
