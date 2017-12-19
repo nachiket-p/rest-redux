@@ -91,7 +91,11 @@ export default class RequestResolver {
   custom(name, path, method, options = {}, requestOptions) {
     const _options = { headers: options.headers }
     if (options.params) _options.params = _.mapValues(options.params,(value)=>{
-      return JSON.stringify(value);
+      if(_.isObject(value))
+      {
+        return JSON.stringify(value);
+      }
+      return value;
     })
     if (options.body) _options.body = JSON.stringify(options.body)
 
